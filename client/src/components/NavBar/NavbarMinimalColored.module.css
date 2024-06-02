@@ -1,0 +1,34 @@
+.navbar {
+    width: 5vmax;
+    height: 100%;
+    padding: var(--mantine-spacing-md);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(74, 199, 248);
+  }
+  
+  .navbarMain {
+    flex: 1;
+  }
+  
+  .link {
+    width: 3vmax;
+    height: 3vmax;
+    border-radius: 0.5vmax;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    &:hover {
+      background-color: white;
+    }
+  
+    &[data-active] {
+      &,
+      &:hover {
+        box-shadow: var(--mantine-shadow-sm);
+        background-color: white;
+      }
+    }
+  }
