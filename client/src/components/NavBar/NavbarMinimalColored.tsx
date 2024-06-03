@@ -1,10 +1,10 @@
 import React from 'react';
 import { Tooltip, UnstyledButton, Stack } from '@mantine/core';
 import classes from './NavbarMinimalColored.module.css';
-
-
+import { useNavigate } from 'react-router-dom';
 
 export function NavbarMinimalColored(props) {
+  const navigate = useNavigate()
   console.log(props.active)
 
   function NavbarLink({ icon: Icon, label, active, onClick }: any) {
@@ -31,7 +31,7 @@ export function NavbarMinimalColored(props) {
       {...link}
       key={link.label}
       // active={index === active}
-      // onClick={() => setActive(index)}
+      onClick={() => navigate("/auth")}
     />
   ));
 

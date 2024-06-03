@@ -19,8 +19,8 @@ export const fixNavBarItems = async () => {
         { icon: IconGauge, label: 'New Order' },
       ],
       bottom: [
-        { icon: IconSwitchHorizontal, label: 'Change account' },
-        { icon: IconLogout, label: 'Logout' },
+        { icon: IconSwitchHorizontal, label: 'Change account', onCl: 'changeAccount'},
+        { icon: IconLogout, label: 'Logout', onCl: 'logout'},
       ]
     }
 

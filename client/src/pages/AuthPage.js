@@ -7,7 +7,7 @@ import { fixText } from '../fix/fixText.js';
 import { AuthenticationNew } from '../components/Auth/AuthenticationNew.tsx';
 
 function AuthPage() {
-  const [step, setStep] = useState(2)
+  const [step, setStep] = useState(1)
   const [newServiceName, setNewServiceName] = useState(false)
   const [text, setText] = useState(false)
   const [email, setEmail] = useState(false)

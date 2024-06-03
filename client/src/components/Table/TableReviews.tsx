@@ -48,7 +48,7 @@ export function TableReviews(props) {
 
   return (
     <Table.ScrollContainer minWidth={200}>
-      <Table verticalSpacing="xs">
+      <Table verticalSpacing="xs" striped withRowBorders={false}>
         <Table.Thead>
           <Table.Tr key={'new'}>
             <Table.Th>Book title</Table.Th>

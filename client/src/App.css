@@ -7,30 +7,27 @@
 
 #root {
   display: flex;
-  justify-content: center;
-}
-
-.mainPage {
-  display: flex;
   justify-content: flex-start;
-  /* height: 50vh; */
-  width: 100vw;
+  width: 99vw;
   height: 100vh;
 }
 
-.order {
-  margin: 3vmax 3vmax 3vmax 3vmax;
-  /* display: flex;
-  justify-content: center; */
+.NavBar {
+  position: fixed;
 }
 
-.App {
-  
-  /* text-align: center; */
-  /* width: 800px; */
-
+.NavBarTop {
+  position: fixed;
 }
 
-/* .Nav {
-  width: 100px;
-} */
+.NewOrder {
+  margin: 100px 100px 100px 100px;
+  align-items: center;
+}
+
+.WorkScreen {
+  width: calc(99vw - 5vmax);
+  position: absolute;
+  margin-top: 3.5vmax;
+  margin-left: 5vmax;
+}

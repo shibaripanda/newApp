@@ -6,7 +6,7 @@ export function ModalWindow(props) {
     
   const [opened, { open, close }] = useDisclosure(false);
 
-  console.log(props.data)
+  // console.log(props.data)
 
     return (
         <>

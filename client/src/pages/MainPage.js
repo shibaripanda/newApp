@@ -6,6 +6,10 @@ import { fixColorApp } from '../fix/fixColorApp.js';
 import { fixText } from '../fix/fixText.js';
 import { ServiceScreen } from '../mainScreens/ServiceScreen.tsx';
 import { NewOrderScreen } from '../mainScreens/NewOrderScreen.tsx';
+import { Affix } from '@mantine/core';
+import '../App.css';
+import { HeaderSearch } from '../components/HeaderSearch/HeaderSearch.tsx';
+
 
 
 function MainPage() {
@@ -21,9 +25,9 @@ function MainPage() {
     getAppColor()
     getText()
 
-    window.addEventListener('resize', (e) => {
-      console.log(e);
-    });
+    // window.addEventListener('resize', (e) => {
+    //   console.log(e);
+    // });
   }, [])
 
   const getText = async () => {
@@ -43,10 +47,12 @@ function MainPage() {
   if(navBar && appColor && text){
 
     const screen = () => {
+      
       const listScreens = [
-      <ServiceScreen/>,
-      <div className='order'><NewOrderScreen/></div>
-    ]
+        <ServiceScreen/>,
+        <div className={'NewOrder'}><NewOrderScreen/></div>
+      ]
+
       if(listScreens.length !== navBar.top.length){
         console.log('Какойто пиздец, Навбаров не столько сколько скринов!!!')
       }
@@ -61,13 +67,32 @@ function MainPage() {
       )
       
     }
-  
+
     return (
-          <div className='mainPage'>
-            <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
-            {screen()}
-          </div>
-    )
+      <div>
+        <div className={'WorkScreen'}>
+          {screen()}
+        </div>
+        <div className={'NavBar'}>
+          <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
+        </div>
+        <div className={'NavBarTop'}>
+          <HeaderSearch/> 
+        </div>
+      </div>
+)
+  
+    // return (
+    //       <div>
+    //         <div className={'NavBar'}>
+    //           <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
+    //         </div>
+    //         <div>
+    //           <div className={'NavBar'}><HeaderSearch/></div>
+    //           <div className={'WorkScreen'}>{screen()}</div>
+    //         </div>
+    //       </div>
+    // )
   }
   else{
     return (
