@@ -10,6 +10,17 @@
   justify-content: center;
 }
 
+.mainPage {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.order {
+  margin: 3vmax 3vmax 3vmax 3vmax;
+  /* display: flex;
+  justify-content: center; */
+}
+
 .App {
   
   /* text-align: center; */

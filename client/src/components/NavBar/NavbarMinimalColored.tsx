@@ -1,11 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
 import { Tooltip, UnstyledButton, Stack } from '@mantine/core';
 import classes from './NavbarMinimalColored.module.css';
 
 
 
 export function NavbarMinimalColored(props) {
+  console.log(props.active)
 
   function NavbarLink({ icon: Icon, label, active, onClick }: any) {
     return (
@@ -17,15 +17,12 @@ export function NavbarMinimalColored(props) {
     );
   }
 
-  console.log(props.navBar.top)
-  const [active, setActive] = useState(0);
-
   const topLinks = props.navBar.top.map((link, index) => (
     <NavbarLink
       {...link}
       key={link.label}
-      active={index === active}
-      onClick={() => setActive(index)}
+      active={index === props.active}
+      onClick={() => props.setActive(index)}
     />
   ));
 

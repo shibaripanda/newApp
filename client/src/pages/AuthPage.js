@@ -1,35 +1,152 @@
 import '@mantine/core/styles.css';
-import { fixNavBarItems } from '../fix/fixNavBarItems.js';
 import { useEffect, useState } from 'react';
-import { fixColorApp } from '../fix/fixColorApp.js';
-import { AuthenticationTitle } from '../components/Auth/AuthenticationTitle.tsx';
-
+import { AuthenticationPassword } from '../components/Auth/AuthenticationPassword.tsx';
+import { AuthenticationEmail } from '../components/Auth/AuthenticationEmail.tsx';
+import { validateEmail } from '../modules/validateEmail.js';
+import { fixText } from '../fix/fixText.js';
+import { AuthenticationNew } from '../components/Auth/AuthenticationNew.tsx';
 
 function AuthPage() {
-  const [navBar, setNavBar] = useState(false)
-  const [appColor, setAppColor] = useState(false)
+  const [step, setStep] = useState(2)
+  const [newServiceName, setNewServiceName] = useState(false)
+  const [text, setText] = useState(false)
+  const [email, setEmail] = useState(false)
+  const [password, setPassword] = useState(false)
+  const [errorInputData, setErrorInputData] = useState('')
+  const [errorInputName, setErrorInputName] = useState('')
+  const [activBotton, setActivBotton] = useState(false)
+  const [activBottonName, setActivBottonName] = useState(false)
 
   useEffect(() => {
-    getNavBar()
-    getAppColor()
+    getText()
   }, [])
 
-  const getNavBar = async () => {
-    const res = await fixNavBarItems()
-    setNavBar(res)
-  }
-  const getAppColor = async () => {
-    const res = await fixColorApp()
-    setAppColor(res)
+  const getText = async () => {
+    const res = await fixText()
+    setText(res)
   }
 
+  const clickOnBut = () => {
+    console.log('email', email)
+    console.log('password', password)
+    console.log('step', step)
+    console.log('newServiceName', newServiceName)
+  }
 
-if(navBar && appColor){
+  const stepSet = (step) => {
+    setEmail(false)
+    setPassword(false)
+    setNewServiceName(false)
+    setActivBotton(false)
+    setActivBottonName(false)
+    setErrorInputName('')
+    setErrorInputData('')
+    setStep(step)
+  }
+
+  const setValidatedEmail = (email) => {
+    setErrorInputData('')
+    setActivBotton(false)
+    const res = validateEmail(email)
+    if(res){
+      setEmail(email)
+      setErrorInputData('')
+      setActivBotton(true)
+    }
+    else if(email === ''){
+      setActivBotton(false)
+      setErrorInputData('')
+    }
+    else{
+      setActivBotton(false)
+      setErrorInputData(text.badEmail)
+    }
+  }
+
+  const setValidatedPassword = (password) => {
+    setErrorInputData('')
+    setActivBotton(false)
+    const res = /^\d+$/.test(password)
+    console.log(res)
+    if(res){
+      setPassword(email)
+      setErrorInputData('')
+      setActivBotton(true)
+    }
+    else if(password === ''){
+      setActivBotton(false)
+      setErrorInputData('')
+    }
+    else{
+      setActivBotton(false)
+      setErrorInputData(text.badPassword)
+    }
+  }
+
+  const setValidatedNameNew = (name) => {
+    setErrorInputName('')
+    setActivBottonName(false)
+    const res = /^[A-z\d]+$/.test(name)
+    console.log(res)
+    if(res){
+      setNewServiceName(name)
+      setErrorInputName('')
+      setActivBottonName(true)
+    }
+    else if(name === ''){
+      setActivBottonName(false)
+      setErrorInputName('')
+    }
+    else{
+      setActivBottonName(false)
+      setErrorInputName(text.badServiceName)
+    }
+  }
+
+  if(step === 1){
+      return (
+            <div>
+              <AuthenticationEmail 
+              setStep={stepSet} 
+              text={text} 
+              setEmail={setValidatedEmail} 
+              clickOnBut={clickOnBut} 
+              errorInputData={errorInputData} 
+              activBotton={activBotton}
+              />
+            </div>
+      );
+  }
+  else if(step === 2){
     return (
-          <div style={{height: window.innerHeight}}>
-            <AuthenticationTitle />
+          <div>
+            <AuthenticationPassword 
+            setStep={stepSet} 
+            text={text} 
+            setPassword={setValidatedPassword} 
+            clickOnBut={clickOnBut} 
+            errorInputData={errorInputData} 
+            activBotton={activBotton}
+            />
           </div>
-    );
+    )
+  }
+  else if(step === 3){
+    return (
+          <div>
+            <AuthenticationNew 
+            setStep={stepSet} 
+            text={text} 
+            setValidatedNameNew={setValidatedNameNew}  
+            setEmail={setValidatedEmail}
+            errorInputData={errorInputData}
+            errorInputName={errorInputName} 
+            clickOnBut={clickOnBut}
+            activBotton={activBotton}
+            activBottonName={activBottonName}
+            />
+          </div>
+    )
   }
   else{
     return (

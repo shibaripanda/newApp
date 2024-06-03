@@ -13,7 +13,7 @@ import {
   } from '@mantine/core';
   import classes from './AuthenticationTitle.module.css';
   
-  export function AuthenticationTitle() {
+  export function AuthenticationTitle(props) {
     return (
       <Container size={420} my={40}>
         <Title ta="center" className={classes.title}>
@@ -27,15 +27,15 @@ import {
         </Text>
   
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput label="Email" placeholder="you@mantine.dev" required />
-          <PasswordInput label="Password" placeholder="Your password" required mt="md" />
+          <TextInput label="Email" placeholder="you@mantine.dev" required onChange={event => {props.setEmail(event.currentTarget.value)}} error=""/>
+          <PasswordInput label="Password" placeholder="Your password" required mt="md" onChange={event => {props.setPassword(event.currentTarget.value)}}/>
           <Group justify="space-between" mt="lg">
             <Checkbox label="Remember me" />
             <Anchor component="button" size="sm">
               Forgot password?
             </Anchor>
           </Group>
-          <Button fullWidth mt="xl">
+          <Button fullWidth mt="xl" onClick={e => props.clickOnBut()}>
             Sign in
           </Button>
         </Paper>

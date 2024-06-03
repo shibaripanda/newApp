@@ -3,17 +3,27 @@ import '@mantine/core/styles.css';
 import { fixNavBarItems } from '../fix/fixNavBarItems.js';
 import { useEffect, useState } from 'react';
 import { fixColorApp } from '../fix/fixColorApp.js';
+import { fixText } from '../fix/fixText.js';
+import { ServiceScreen } from '../mainScreens/ServiceScreen.tsx';
+import { NewOrderScreen } from '../mainScreens/NewOrderScreen.tsx';
 
 
 function MainPage() {
+  const [active, setActive] = useState(0);
   const [navBar, setNavBar] = useState(false)
   const [appColor, setAppColor] = useState(false)
+  const [text, setText] = useState(false)
 
   useEffect(() => {
     getNavBar()
     getAppColor()
+    getText()
   }, [])
 
+  const getText = async () => {
+    const res = await fixText()
+    setText(res)
+  }
   const getNavBar = async () => {
     const res = await fixNavBarItems()
     setNavBar(res)
@@ -24,12 +34,34 @@ function MainPage() {
   }
 
 
-if(navBar && appColor){
+  if(navBar && appColor && text){
+
+    const screen = () => {
+      const listScreens = [
+      <ServiceScreen/>,
+      <div className='order'><NewOrderScreen/></div>
+    ]
+      if(listScreens.length !== navBar.top.length){
+        console.log('Какойто пиздец, Навбаров не столько сколько скринов!!!')
+      }
+
+      if(listScreens[active]){
+        return (
+          listScreens[active]
+        )
+      }
+      return (
+        <div>Что-то не так!</div>
+      )
+      
+    }
+  
     return (
-          <div style={{height: window.innerHeight}}>
-            <NavbarMinimalColored navBar={navBar} appColor={appColor}/>
+          <div className='mainPage' style={{height: window.innerHeight}}>
+            <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
+            {screen()}
           </div>
-    );
+    )
   }
   else{
     return (
