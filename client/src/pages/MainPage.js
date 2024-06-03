@@ -14,10 +14,16 @@ function MainPage() {
   const [appColor, setAppColor] = useState(false)
   const [text, setText] = useState(false)
 
+  
+
   useEffect(() => {
     getNavBar()
     getAppColor()
     getText()
+
+    window.addEventListener('resize', (e) => {
+      console.log(e);
+    });
   }, [])
 
   const getText = async () => {
@@ -57,7 +63,7 @@ function MainPage() {
     }
   
     return (
-          <div className='mainPage' style={{height: window.innerHeight}}>
+          <div className='mainPage'>
             <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
             {screen()}
           </div>

@@ -8,19 +8,19 @@ export const ServiceScreen = () => {
           title: 'Foundation',
           author: 'Isaac Asimov',
           year: 1951,
-          reviews: { positive: 2223, negative: 259 },
+          reviews: { positive: 5, negative: 2 },
         },
         {
           title: 'Frankenstein',
           author: 'Mary Shelley',
           year: 1818,
-          reviews: { positive: 5677, negative: 1265 },
+          reviews: { positive: 5, negative: 1 },
         },
         {
           title: 'Solaris',
           author: 'Stanislaw Lem',
           year: 1961,
-          reviews: { positive: 3487, negative: 1845 },
+          reviews: { positive: 5, negative: 5 },
         },
         {
           title: 'Dune',

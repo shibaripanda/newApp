@@ -13,6 +13,9 @@
 .mainPage {
   display: flex;
   justify-content: flex-start;
+  /* height: 50vh; */
+  width: 100vw;
+  height: 100vh;
 }
 
 .order {
