@@ -21,8 +21,8 @@
 }
 
 .NewOrder {
-  margin: 100px 100px 100px 100px;
-  align-items: center;
+  /* margin: 10px 10px 10px 10px; */
+  /* align-items: center; */
 }
 
 .WorkScreen {
@@ -30,4 +30,10 @@
   position: absolute;
   margin-top: 3.5vmax;
   margin-left: 5vmax;
+}
+
+.mainScreenLoader {
+  margin: 3vmax;
+  display: flex;
+  justify-content: center;
 }

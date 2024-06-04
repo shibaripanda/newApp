@@ -1,228 +1,34 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { TableReviews } from "../components/Table/TableReviews.tsx";
+import { fixOrders } from "../fix/fixOrders.js";
+import { LoaderItem } from "../components/Loader/LoaderItem.tsx";
 
-export const ServiceScreen = () => {
+export const ServiceScreen = (props) => {
 
-    const data = [
-        {
-          title: 'Foundation',
-          author: 'Isaac Asimov',
-          year: 1951,
-          reviews: { positive: 5, negative: 2 },
-        },
-        {
-          title: 'Frankenstein',
-          author: 'Mary Shelley',
-          year: 1818,
-          reviews: { positive: 5, negative: 1 },
-        },
-        {
-          title: 'Solaris',
-          author: 'Stanislaw Lem',
-          year: 1961,
-          reviews: { positive: 5, negative: 5 },
-        },
-        {
-          title: 'Dune',
-          author: 'Frank Herbert',
-          year: 1965,
-          reviews: { positive: 8576, negative: 663 },
-        },
-        {
-          title: 'The Left Hand of Darkness',
-          author: 'Ursula K. Le Guin',
-          year: 1969,
-          reviews: { positive: 6631, negative: 993 },
-        },
-        {
-          title: 'A Scanner Darkly',
-          author: 'Philip K Dick',
-          year: 1977,
-          reviews: { positive: 8124, negative: 1847 },
-        },
-        {
-          title: 'Foundation',
-          author: 'Isaac Asimov',
-          year: 1951,
-          reviews: { positive: 5, negative: 2 },
-        },
-        {
-          title: 'Frankenstein',
-          author: 'Mary Shelley',
-          year: 1818,
-          reviews: { positive: 5, negative: 1 },
-        },
-        {
-          title: 'Solaris',
-          author: 'Stanislaw Lem',
-          year: 1961,
-          reviews: { positive: 5, negative: 5 },
-        },
-        {
-          title: 'Dune',
-          author: 'Frank Herbert',
-          year: 1965,
-          reviews: { positive: 8576, negative: 663 },
-        },
-        {
-          title: 'The Left Hand of Darkness',
-          author: 'Ursula K. Le Guin',
-          year: 1969,
-          reviews: { positive: 6631, negative: 993 },
-        },
-        {
-          title: 'A Scanner Darkly',
-          author: 'Philip K Dick',
-          year: 1977,
-          reviews: { positive: 8124, negative: 1847 },
-        },
-        {
-          title: 'Foundation',
-          author: 'Isaac Asimov',
-          year: 1951,
-          reviews: { positive: 5, negative: 2 },
-        },
-        {
-          title: 'Frankenstein',
-          author: 'Mary Shelley',
-          year: 1818,
-          reviews: { positive: 5, negative: 1 },
-        },
-        {
-          title: 'Solaris',
-          author: 'Stanislaw Lem',
-          year: 1961,
-          reviews: { positive: 5, negative: 5 },
-        },
-        {
-          title: 'Dune',
-          author: 'Frank Herbert',
-          year: 1965,
-          reviews: { positive: 8576, negative: 663 },
-        },
-        {
-          title: 'The Left Hand of Darkness',
-          author: 'Ursula K. Le Guin',
-          year: 1969,
-          reviews: { positive: 6631, negative: 993 },
-        },
-        {
-          title: 'A Scanner Darkly',
-          author: 'Philip K Dick',
-          year: 1977,
-          reviews: { positive: 8124, negative: 1847 },
-        },
-        {
-          title: 'Foundation',
-          author: 'Isaac Asimov',
-          year: 1951,
-          reviews: { positive: 5, negative: 2 },
-        },
-        {
-          title: 'Frankenstein',
-          author: 'Mary Shelley',
-          year: 1818,
-          reviews: { positive: 5, negative: 1 },
-        },
-        {
-          title: 'Solaris',
-          author: 'Stanislaw Lem',
-          year: 1961,
-          reviews: { positive: 5, negative: 5 },
-        },
-        {
-          title: 'Dune',
-          author: 'Frank Herbert',
-          year: 1965,
-          reviews: { positive: 8576, negative: 663 },
-        },
-        {
-          title: 'The Left Hand of Darkness',
-          author: 'Ursula K. Le Guin',
-          year: 1969,
-          reviews: { positive: 6631, negative: 993 },
-        },
-        {
-          title: 'A Scanner Darkly',
-          author: 'Philip K Dick',
-          year: 1977,
-          reviews: { positive: 8124, negative: 1847 },
-        },
-        {
-          title: 'Foundation',
-          author: 'Isaac Asimov',
-          year: 1951,
-          reviews: { positive: 5, negative: 2 },
-        },
-        {
-          title: 'Frankenstein',
-          author: 'Mary Shelley',
-          year: 1818,
-          reviews: { positive: 5, negative: 1 },
-        },
-        {
-          title: 'Solaris',
-          author: 'Stanislaw Lem',
-          year: 1961,
-          reviews: { positive: 5, negative: 5 },
-        },
-        {
-          title: 'Dune',
-          author: 'Frank Herbert',
-          year: 1965,
-          reviews: { positive: 8576, negative: 663 },
-        },
-        {
-          title: 'The Left Hand of Darkness',
-          author: 'Ursula K. Le Guin',
-          year: 1969,
-          reviews: { positive: 6631, negative: 993 },
-        },
-        {
-          title: 'A Scanner Darkly',
-          author: 'Philip K Dick',
-          year: 1977,
-          reviews: { positive: 8124, negative: 1847 },
-        },
-        {
-          title: 'Foundation',
-          author: 'Isaac Asimov',
-          year: 1951,
-          reviews: { positive: 5, negative: 2 },
-        },
-        {
-          title: 'Frankenstein',
-          author: 'Mary Shelley',
-          year: 1818,
-          reviews: { positive: 5, negative: 1 },
-        },
-        {
-          title: 'Solaris',
-          author: 'Stanislaw Lem',
-          year: 1961,
-          reviews: { positive: 5, negative: 5 },
-        },
-        {
-          title: 'Dune',
-          author: 'Frank Herbert',
-          year: 1965,
-          reviews: { positive: 8576, negative: 663 },
-        },
-        {
-          title: 'The Left Hand of Darkness',
-          author: 'Ursula K. Le Guin',
-          year: 1969,
-          reviews: { positive: 6631, negative: 993 },
-        },
-        {
-          title: 'A Scanner Darkly',
-          author: 'Philip K Dick',
-          year: 1977,
-          reviews: { positive: 8124, negative: 1847 },
-        },
-    ];
+  const [orders, setOrders] = useState([])
+  
+  useEffect(() => {
+    setTimeout(() => getOrders(), 1500)
+  },[])
 
+  const getOrders = async () => {
+    const res = await fixOrders()
+    setOrders(res)
+  }
+
+  const filteringOrders = useMemo(() => {
+    return orders.filter(order => Object.values(order).join().toLowerCase().includes(props.filter.toLowerCase()))
+    }, [props.filter, orders]
+)
+
+  if(orders.length){
     return (
-       <TableReviews data={data}/>
+      <TableReviews data={filteringOrders}/>
     )
+  }
+  return (
+    <div className={'mainScreenLoader'}><LoaderItem/></div>
+  )
+
+  
 }

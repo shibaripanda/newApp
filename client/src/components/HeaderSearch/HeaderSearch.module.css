@@ -10,21 +10,41 @@
   .inner {
     height: 3.5vmax;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
   }
   
   .link {
+    cursor: pointer;
     display: block;
     line-height: 1;
     padding: 0.5vmax 0.75vmax;
     border-radius: var(--mantine-radius-sm);
     text-decoration: none;
-    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+    color: rgb(0, 0, 0);
     font-size: var(--mantine-font-size-sm);
     font-weight: 500;
-  
-    @mixin hover {
-      background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+
+    &:hover {
+      color: rgb(10, 113, 231);
+      font-weight: 500;
+    }
+  }
+
+  .activlink {
+    cursor: pointer;
+    display: block;
+    line-height: 1;
+    padding: 0.5vmax 0.75vmax;
+    border-radius: var(--mantine-radius-sm);
+    text-decoration: none;
+    color: rgb(10, 113, 231);
+    font-size: var(--mantine-font-size-sm);
+    font-weight: 500;
+    text-decoration: underline;
+
+    &:hover {
+      color: rgb(10, 113, 231);
+      font-weight: 500;
     }
   }

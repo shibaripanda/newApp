@@ -1,16 +1,12 @@
-import { useState } from 'react';
 import { Combobox, TextInput, useCombobox } from '@mantine/core';
 import React from 'react';
 
-const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
-
 export function ComboBoxInput(props) {
   const combobox = useCombobox();
-  const [value, setValue] = useState('');
-  const shouldFilterOptions = !groceries.some((item) => item === value);
+  const shouldFilterOptions = !props.data.some((item) => item === props.value);
   const filteredOptions = shouldFilterOptions
-    ? groceries.filter((item) => item.toLowerCase().includes(value.toLowerCase().trim()))
-    : groceries;
+    ? props.data.filter((item) => item.toLowerCase().includes(props.value[props.index].toLowerCase().trim()))
+    : props.data;
 
   const options = filteredOptions.map((item) => (
     <Combobox.Option value={item} key={item}>
@@ -33,7 +29,7 @@ export function ComboBoxInput(props) {
   return (
     <Combobox
       onOptionSubmit={(optionValue) => {
-        setValue(optionValue);
+        props.setValue({...props.value, [props.index]: optionValue});
         combobox.closeDropdown();
       }}
       store={combobox}
@@ -42,9 +38,9 @@ export function ComboBoxInput(props) {
         <TextInput
           label={props.label}
           placeholder={props.placeholder}
-          value={value}
+          value={props.value[props.index]}
           onChange={(event) => {
-            setValue(event.currentTarget.value);
+            props.setValue({...props.value, [props.index]: event.currentTarget.value});
             combobox.openDropdown();
             combobox.updateSelectedOptionIndex();
           }}

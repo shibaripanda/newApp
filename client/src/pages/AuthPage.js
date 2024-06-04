@@ -5,6 +5,7 @@ import { AuthenticationEmail } from '../components/Auth/AuthenticationEmail.tsx'
 import { validateEmail } from '../modules/validateEmail.js';
 import { fixText } from '../fix/fixText.js';
 import { AuthenticationNew } from '../components/Auth/AuthenticationNew.tsx';
+import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 
 function AuthPage() {
   const [step, setStep] = useState(1)
@@ -150,7 +151,7 @@ function AuthPage() {
   }
   else{
     return (
-      <div>Загрузка...</div>
+      <div className={'mainScreenLoader'}><LoaderItem/></div>
     )
   }
 

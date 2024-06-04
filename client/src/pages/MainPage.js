@@ -9,30 +9,43 @@ import { NewOrderScreen } from '../mainScreens/NewOrderScreen.tsx';
 import { Affix } from '@mantine/core';
 import '../App.css';
 import { HeaderSearch } from '../components/HeaderSearch/HeaderSearch.tsx';
-
-
+import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
+import { fixServiceSettings } from '../fix/fixServiceSettings.js';
 
 function MainPage() {
   const [active, setActive] = useState(0);
   const [navBar, setNavBar] = useState(false)
   const [appColor, setAppColor] = useState(false)
   const [text, setText] = useState(false)
-
-  
+  const [filter, setFilter] = useState('')
+  const [serviceSettings, setServiceSettings] = useState(false)
+  const [value, setValue] = useState('');
 
   useEffect(() => {
+    const defaultValue = (r) => {
+      const obj = {}
+      for(let i of r){
+          obj[i.index] = ''
+      }
+      return obj
+    }
+    const fieldSet = (r) => {
+      const res = defaultValue(r)
+      setValue(res)
+    }
     getNavBar()
     getAppColor()
     getText()
-
-    // window.addEventListener('resize', (e) => {
-    //   console.log(e);
-    // });
-  }, [])
+    getFixServiceSettings().then((res) => fieldSet(res.listOrdersFields))
+  }, [serviceSettings.listOrdersFields])
 
   const getText = async () => {
     const res = await fixText()
     setText(res)
+  }
+  const getFixServiceSettings = async () => {
+    const res = await fixServiceSettings()
+    setServiceSettings(res)
   }
   const getNavBar = async () => {
     const res = await fixNavBarItems()
@@ -42,15 +55,22 @@ function MainPage() {
     const res = await fixColorApp()
     setAppColor(res)
   }
+  
+  
 
+  if(navBar && appColor && text && serviceSettings){
 
-  if(navBar && appColor && text){
+    
+
+    
+    
+  
 
     const screen = () => {
       
       const listScreens = [
-        <ServiceScreen/>,
-        <div className={'NewOrder'}><NewOrderScreen/></div>
+        <ServiceScreen filter={filter}/>,
+        <div className={'NewOrder'}><NewOrderScreen defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/></div>
       ]
 
       if(listScreens.length !== navBar.top.length){
@@ -77,26 +97,15 @@ function MainPage() {
           <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
         </div>
         <div className={'NavBarTop'}>
-          <HeaderSearch/> 
+          <HeaderSearch filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/> 
         </div>
       </div>
-)
+  )
   
-    // return (
-    //       <div>
-    //         <div className={'NavBar'}>
-    //           <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
-    //         </div>
-    //         <div>
-    //           <div className={'NavBar'}><HeaderSearch/></div>
-    //           <div className={'WorkScreen'}>{screen()}</div>
-    //         </div>
-    //       </div>
-    // )
   }
   else{
     return (
-      <div>Загрузка...</div>
+      <div className={'mainScreenLoader'}><LoaderItem/></div>
     )
   }
 

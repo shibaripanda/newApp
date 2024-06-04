@@ -1,17 +1,47 @@
-import React from "react";
-import { TextInput } from "@mantine/core";
-import { ComboBoxInput } from "../components/ComboInputBox/ComboBoxInput.tsx";
+import React, { useEffect, useState } from "react";
+import { FeaturesGrid } from "../components/FeaturesGrid/FeaturesGrid.tsx";
+import { Button } from "@mantine/core";
+import { LoaderItem } from "../components/Loader/LoaderItem.tsx";
 
-export const NewOrderScreen = () => {
+export const NewOrderScreen = (props) => {
 
-    return (
-        <div style={{width: '200px'}}>
-            <div>
-                <TextInput label="Shipping address" placeholder="15329 Huston 21st" />
-            </div> 
-            <div>
-                <ComboBoxInput label="Shipping address" placeholder="15329 Huston 21st" />
-            </div>
-       </div>
-    )
+    // const defaultValue = () => {
+    //     const obj = {}
+    //     for(let i of props.serviceSettings.listOrdersFields){
+    //         obj[i.index] = ''
+    //     }
+    //     return obj
+    // }
+    
+
+    // const [value, setValue] = useState(false);
+
+
+    // useEffect(() => {
+    //     const defaultValue2 = () => {
+    //         const obj = {}
+    //         for(let i of props.serviceSettings.listOrdersFields){
+    //             obj[i.index] = ''
+    //         }
+    //         return obj
+    //     }
+    //     const defaultSetValue = () => {
+    //         const res = defaultValue2()
+    //         setValue(res)
+    //     } 
+    //     defaultSetValue()
+    // },[props.serviceSettings.listOrdersFields])
+
+    
+    console.log(props.value)
+    if(props.value){
+       return (
+            <FeaturesGrid defaultValue={props.defaultValue} value={props.value} setValue={props.setValue} serviceSettings={props.serviceSettings}/>
+        ) 
+    }
+    else{
+        <div className={'mainScreenLoader'}><LoaderItem/></div>
+    }
+
+    
 }
