@@ -1,54 +1,52 @@
 import React from "react";
 import { Button, Container, SimpleGrid } from "@mantine/core";
-import { features } from "process";
 
 
 export const ButtonsForNewOrder = (props) => {
 
+    const  checkDisabledClean = () => {
+        if(Object.values(props.value).filter(item => item === '').length === Object.values(props.value).length){
+            return true
+        }
+        return false
+    }
+    const  checkDisabledSave = () => {
+        if(Object.values(props.value).filter(item => item !== '').length === Object.values(props.value).length){
+            return false
+        }
+        return true
+    }
 
-    
     const controlOrderButtons = [
-
         {
-            func: props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
-            title: 'Очистить'
+            func: () => props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
+            title: 'Очистить',
+            disabled: checkDisabledClean()
         },
         {
-            func: props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
-            title: 'Сохранить'
+            func: () => props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
+            title: 'Сохранить',
+            disabled: checkDisabledSave()
         },
         {
-            func: props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
-            title: 'Сохранить и распечатать'
-        },
-        // <Button  onClick={() => props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))}>
-        // Очистить
-        // </Button>,
-        // // &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        // <Button>
-        // Сохранить
-        // </Button>,
-        // <Button>
-        // Сохранить и распечатать
-        // </Button>
+            func: () => props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
+            title: 'Сохранить и распечатать',
+            disabled: checkDisabledSave()
+        }
     ]
         
-  
-    
+    const features = controlOrderButtons.map((but, index) => <Button disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>)
 
-const features = controlOrderButtons.map(but => <Button onClick={but.func}>{but.title}</Button>)
-
-return (
-    <Container style={{marginTop: '50px'}}>
-        <ButtonsForNewOrder defaultValue={props.defaultValue} setValue={props.setValue} serviceSettings={props.serviceSettings}/>
-        <SimpleGrid
-            mt={30}
-            cols={{ base: 1, sm: 2, md: 3 }}
-            spacing={{ base: 'xl', md: 50 }}
-            verticalSpacing={{ base: 'xl', md: 30 }}
-        >
-            {features}
-        </SimpleGrid>
-    </Container>
+    return (
+        <Container style={{marginTop: '50px'}}>
+            <SimpleGrid
+                mt={30}
+                cols={{ base: 1, sm: 2, md: 3 }}
+                spacing={{ base: 'xl', md: 50 }}
+                verticalSpacing={{ base: 'xl', md: 30 }}
+            >
+                {features}
+            </SimpleGrid>
+        </Container>
     )
 }

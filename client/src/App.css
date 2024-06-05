@@ -20,11 +20,6 @@
   position: fixed;
 }
 
-.NewOrder {
-  /* margin: 10px 10px 10px 10px; */
-  /* align-items: center; */
-}
-
 .WorkScreen {
   width: calc(99vw - 5vmax);
   position: absolute;

@@ -6,7 +6,7 @@ import { fixColorApp } from '../fix/fixColorApp.js';
 import { fixText } from '../fix/fixText.js';
 import { ServiceScreen } from '../mainScreens/ServiceScreen.tsx';
 import { NewOrderScreen } from '../mainScreens/NewOrderScreen.tsx';
-import { Affix } from '@mantine/core';
+// import { Affix } from '@mantine/core';
 import '../App.css';
 import { HeaderSearch } from '../components/HeaderSearch/HeaderSearch.tsx';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
@@ -61,7 +61,7 @@ function MainPage() {
       
       const listScreens = [
         <ServiceScreen filter={filter}/>,
-        <div className={'NewOrder'}><NewOrderScreen defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/></div>
+        <NewOrderScreen defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>
       ]
 
       if(listScreens.length !== navBar.top.length){

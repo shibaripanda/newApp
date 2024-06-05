@@ -19,7 +19,7 @@ export const ServiceScreen = (props) => {
   const filteringOrders = useMemo(() => {
     return orders.filter(order => Object.values(order).join().toLowerCase().includes(props.filter.toLowerCase()))
     }, [props.filter, orders]
-)
+  )
 
   if(orders.length){
     return (
@@ -30,5 +30,4 @@ export const ServiceScreen = (props) => {
     <div className={'mainScreenLoader'}><LoaderItem/></div>
   )
 
-  
 }
