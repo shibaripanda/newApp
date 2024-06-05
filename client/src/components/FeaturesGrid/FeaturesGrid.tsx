@@ -1,4 +1,4 @@
-import { Button, Container, SimpleGrid, TextInput } from '@mantine/core';
+import { Container, SimpleGrid, TextInput } from '@mantine/core';
 // import classes from './FeaturesGrid.module.css';
 import React from 'react';
 import { ComboBoxInput } from '../ComboInputBox/ComboBoxInput.tsx';
@@ -12,7 +12,7 @@ export function FeaturesGrid(props) {
         if(field.variants){
             return <ComboBoxInput index={field.index} value={props.value} setValue={props.setValue} key={index} label={field.label} placeholder={field.label} data={field.data}/>
         }
-        return <TextInput  key={index} label={field.label} placeholder={field.label} onChange={(event) => {
+        return <TextInput  value={props.value[field.index]}  key={index} label={field.label} placeholder={field.label} onChange={(event) => {
             props.setValue({...props.value, [field.index]: event.currentTarget.value})
           }}/>
     }
@@ -21,8 +21,7 @@ export function FeaturesGrid(props) {
 
     return (
         <Container style={{marginTop: '50px'}}>
-            
-        {/* <ButtonsForNewOrder setValue={props.setValue}/> */}
+        <ButtonsForNewOrder defaultValue={props.defaultValue} setValue={props.setValue} serviceSettings={props.serviceSettings}/>
         <SimpleGrid
             mt={30}
             cols={{ base: 1, sm: 2, md: 3 }}

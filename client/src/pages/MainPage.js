@@ -21,23 +21,20 @@ function MainPage() {
   const [serviceSettings, setServiceSettings] = useState(false)
   const [value, setValue] = useState('');
 
+  const defaultValue = (r) => {
+    const obj = {}
+    for(let i of r){
+        obj[i.index] = ''
+    }
+    return obj
+  }
+
   useEffect(() => {
-    const defaultValue = (r) => {
-      const obj = {}
-      for(let i of r){
-          obj[i.index] = ''
-      }
-      return obj
-    }
-    const fieldSet = (r) => {
-      const res = defaultValue(r)
-      setValue(res)
-    }
     getNavBar()
     getAppColor()
     getText()
-    getFixServiceSettings().then((res) => fieldSet(res.listOrdersFields))
-  }, [serviceSettings.listOrdersFields])
+    getFixServiceSettings()
+  }, [])
 
   const getText = async () => {
     const res = await fixText()
@@ -45,6 +42,8 @@ function MainPage() {
   }
   const getFixServiceSettings = async () => {
     const res = await fixServiceSettings()
+    const res1 = defaultValue(res.listOrdersFields)
+    setValue(res1)
     setServiceSettings(res)
   }
   const getNavBar = async () => {
@@ -56,15 +55,7 @@ function MainPage() {
     setAppColor(res)
   }
   
-  
-
   if(navBar && appColor && text && serviceSettings){
-
-    
-
-    
-    
-  
 
     const screen = () => {
       
