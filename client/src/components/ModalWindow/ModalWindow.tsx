@@ -1,7 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Table } from '@mantine/core';
+import { Modal, Table, Text } from '@mantine/core';
 import React from 'react';
-import { OpenOrder } from '../FeaturesGrid/OpenOrder.tsx';
+import { OpenOrder } from '../../mainScreens/OpenOrder.tsx';
 
 export function ModalWindow(props) {
     
@@ -11,7 +11,7 @@ export function ModalWindow(props) {
 
     return (
         <>
-            <Modal radius={'md'} size={'xxl'} opened={opened} onClose={close} title={props.data.title} withCloseButton={false}>
+            <Modal radius={'md'} size={'xxl'} opened={opened} onClose={close} title={<Text fw={700}>{props.data.orderId + ' ' + props.data.date + ' ' + props.data.status}</Text>} withCloseButton={false}>
                 <div><OpenOrder serviceSettings={props.serviceSettings} data={props.data}/></div>
             </Modal>
             <Table.Tr key={props.data.title} style={{cursor: 'pointer'}} onClick={open}>

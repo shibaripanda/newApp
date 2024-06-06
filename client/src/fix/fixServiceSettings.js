@@ -10,18 +10,161 @@ export const fixServiceSettings = async () => {
 
     const listOrdersFields = [
 
-        {client :       { label: 'Заказчик',        variants: false, freez: true, data: false, maintable: true }},
-        {contact :      { label: 'Телефон',         variants: false, freez: true, data: false, maintable: true }},
-        {clientAdress : { label: 'Адрес Заказчика', variants: false, freez: true, data: false, maintable: true }},
-        {title :        { label: 'Устройство',      variants: true,  freez: true, data: false, maintable: true }},
-        {firm :         { label: 'Бренд',           variants: true,  freez: true, data: false, maintable: true }},
-        {problem :      { label: 'Неисправность',   variants: true,  freez: true, data: false, maintable: true }},
-        {model :        { label: 'Модель',          variants: true,  freez: true, data: false, maintable: true }},
-        {sn :           { label: 'Серийный номер',  variants: false, freez: true, data: false, maintable: false }},
-        {look :         { label: 'Внешний вид',     variants: true,  freez: true, data: false, maintable: false }},
-        {speed :        { label: 'Срочность',       variants: true,  freez: true, data: false, maintable: false }},
-        {info :         { label: 'Заметки',         variants: true,  freez: true, data: false, maintable: false }},
-        {cost :         { label: 'Стоимость',       variants: false, freez: true, data: false, maintable: false }},
+        {
+            index: 'client', 
+            label: 'Заказчик',         
+            variants: false, 
+            freez: true, 
+            data: false, 
+            maintable: true,
+            hide: false  
+        },
+        {
+            index: 'contact', 
+            label: 'Телефон',        
+            variants: false, 
+            freez: true, 
+            data: false, 
+            maintable: true,
+            hide: false  
+        },
+        {
+            index: 'clientAdress', 
+            label: 'Адрес Заказчика',
+            variants: false, 
+            freez: true, 
+            data: false, 
+            maintable: true,
+            hide: false
+        },
+        {
+            index: 'title' , 
+            label: 'Устройство',      
+            variants: true,  
+            freez: true, 
+            data: false, 
+            maintable: true,
+            hide: false 
+        },
+        {
+            index: 'firm', 
+            label: 'Бренд',           
+            variants: true,  
+            freez: true, 
+            data: false, 
+            maintable: true,
+            hide: false  
+        },
+        {
+            index: 'problem', 
+            label: 'Неисправность',   
+            variants: true,  
+            freez: true, 
+            data: false,
+            maintable: true,
+            hide: false  
+        },
+        {
+            index: 'model', 
+            label: 'Модель',          
+            variants: true,  
+            freez: true, 
+            data: false, 
+            maintable: true,
+            hide: false  
+        },
+        {
+            index: 'sn' , 
+            label: 'Серийный номер',  
+            variants: false, 
+            freez: true,
+            data: false, 
+            maintable: false,
+            hide: false 
+        },
+        {
+            index: 'look', 
+            label: 'Внешний вид',     
+            variants: true,  
+            freez: true, 
+            data: false, 
+            maintable: false,
+            hide: false   
+        },
+        {
+            index: 'speed', 
+            label: 'Срочность',       
+            variants: true,  
+            freez: true, 
+            data: false, 
+            maintable: false,
+            hide: false   
+        },
+        {
+            index: 'info', 
+            label: 'Заметки',         
+            variants: true,  
+            freez: true, 
+            data: false, 
+            maintable: false,
+            hide: false  
+        },
+        {
+            index: 'cost', 
+            label: 'Стоимость',      
+            variants: false, 
+            freez: true, 
+            data: false,
+            maintable: false,
+            hide: false   
+        },
+        {
+            index: 'orderId', 
+            label: 'ID',      
+            variants: false, 
+            freez: true, 
+            data: false,
+            maintable: true,
+            hide: true  
+        },
+        {
+            index: 'date', 
+            label: 'Дата',      
+            variants: false, 
+            freez: true, 
+            data: false,
+            maintable: true,
+            hide: true 
+        },
+        {
+            index: 'status', 
+            label: 'Статус',      
+            variants: false, 
+            freez: true, 
+            data: false,
+            maintable: true,
+            hide: true 
+        },
+        {
+            index: 'manager', 
+            label: 'Мененджер',      
+            variants: false, 
+            freez: true, 
+            data: false,
+            maintable: true,
+            hide: true 
+        },
+        {
+            index: 'masters', 
+            label: 'Мастер',      
+            variants: false, 
+            freez: true, 
+            data: false,
+            maintable: true,
+            hide: true 
+        },
+        
+
     ]
 
     const listOfDataForFastInput = {
@@ -29,7 +172,7 @@ export const fixServiceSettings = async () => {
               contact: ['dfdf'],
         clientAdress : ['rtrtrt'],
                 title: ['bnbnbn'],
-                 firm: ['cvcvcbc'],
+                firm: ['cvcvcbc'],
               problem: ['qw'],
                 model: ['ete'],
                    sn: ['fg'],

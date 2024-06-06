@@ -5,8 +5,8 @@ import { ModalWindow } from '../ModalWindow/ModalWindow.tsx';
 
 export function TableReviews(props) {
   
-  const activTableCols = props.serviceSettings.listOrdersFields.filter(item => item[(Object.keys(item)[0])].maintable === true)
-  const activTableColsHeader = activTableCols.map(item => (Object.keys(item)[0]))
+  const activTableCols = props.serviceSettings.listOrdersFields.filter(item => item.maintable === true)
+  const activTableColsHeader = activTableCols.map(item => item.index)
 
   const makeRows = (row) => {
     return activTableColsHeader.map((item, index) => <Table.Td key={index}>{row[item]}</Table.Td>)
@@ -19,7 +19,7 @@ export function TableReviews(props) {
       <Table verticalSpacing="xs" striped withRowBorders={false}>
         <Table.Thead>
           <Table.Tr key={'new'}>
-            {activTableCols.map((item, index) => <Table.Th key={index}>{item[(Object.keys(item)[0]).toString()].label}</Table.Th>)}
+            {activTableCols.map((item, index) => <Table.Th key={index}>{item.label}</Table.Th>)}
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>

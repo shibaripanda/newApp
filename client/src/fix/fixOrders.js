@@ -12,7 +12,13 @@ export const fixOrders = async () => {
           look: 'бу потерт',
           speed: 'стандарт',
           info: 'Профилактика системы охлаждения',
-          problem: 'Профилактика'
+          problem: 'Профилактика',
+          sdsdsd: 'aaaaa',
+          orderId: '3434_SDF',
+          date: 2432442424,
+          status: 'new',
+          manager: 'Василий Сумкин',
+          masters: 'Аркадий Паровозов'
           },
           {
             client: 'Ноутбук',
@@ -25,7 +31,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -38,7 +45,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -51,7 +59,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -64,7 +73,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -77,7 +87,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -90,7 +101,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -103,7 +115,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -116,7 +129,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -129,7 +143,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -142,7 +157,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           },
           {
             client: 'Ноутбук',
@@ -155,7 +171,8 @@ export const fixOrders = async () => {
           sn: 1961,
           look: 1961,
           speed: 1961,
-          info: 'вотвотвот'
+          info: 'вотвотвот',
+          orderId: '3434_SDF'
           }
     ]
     return orders

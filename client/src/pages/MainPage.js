@@ -24,7 +24,9 @@ function MainPage() {
   const defaultValue = (r) => {
     const obj = {}
     for(let i of r){
-        obj[Object.keys(i)[0]] = ''
+      if(!i.hide){
+        obj[i.index] = ''
+      }
     }
     return obj
   }
