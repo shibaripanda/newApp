@@ -133,7 +133,7 @@ export const fixServiceSettings = async () => {
             variants: false, 
             freez: true, 
             data: false,
-            maintable: true,
+            maintable: false,
             hide: true 
         },
         {
@@ -142,7 +142,7 @@ export const fixServiceSettings = async () => {
             variants: false, 
             freez: true, 
             data: false,
-            maintable: true,
+            maintable: false,
             hide: true 
         },
         {
@@ -151,7 +151,7 @@ export const fixServiceSettings = async () => {
             variants: false, 
             freez: true, 
             data: false,
-            maintable: true,
+            maintable: false,
             hide: true 
         },
         {
@@ -160,7 +160,7 @@ export const fixServiceSettings = async () => {
             variants: false, 
             freez: true, 
             data: false,
-            maintable: true,
+            maintable: false,
             hide: true 
         },
         

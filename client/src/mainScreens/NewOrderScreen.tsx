@@ -6,7 +6,7 @@ export const NewOrderScreen = (props) => {
 
     if(props.value){
        return (
-            <FeaturesGrid defaultValue={props.defaultValue} value={props.value} setValue={props.setValue} serviceSettings={props.serviceSettings}/>
+            <FeaturesGrid orders={props.orders} defaultValue={props.defaultValue} value={props.value} setValue={props.setValue} serviceSettings={props.serviceSettings}/>
         ) 
     }
     else{

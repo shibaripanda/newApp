@@ -11,6 +11,10 @@ import '../App.css';
 import { HeaderSearch } from '../components/HeaderSearch/HeaderSearch.tsx';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { fixServiceSettings } from '../fix/fixServiceSettings.js';
+import { fixOrders } from '../fix/fixOrders.js';
+import { createLisener } from '../modules/createLisener.js';
+
+
 
 function MainPage() {
   const [active, setActive] = useState(0);
@@ -20,6 +24,7 @@ function MainPage() {
   const [filter, setFilter] = useState('')
   const [serviceSettings, setServiceSettings] = useState(false)
   const [value, setValue] = useState('');
+  const [orders, setOrders] = useState([])
 
   const defaultValue = (r) => {
     const obj = {}
@@ -30,8 +35,14 @@ function MainPage() {
     }
     return obj
   }
+  
+  createLisener('createNewOrder', (data) => {
+    setOrders([{...data.newOrder}, ...data.orders])
+    setTimeout(setActive(0),)
+  })
 
   useEffect(() => {
+    getOrders()
     getNavBar()
     getAppColor()
     getText()
@@ -39,6 +50,11 @@ function MainPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const getOrders = async () => {
+    const res = await fixOrders()
+    console.log('getOrders')
+    setOrders(res)
+  }
   const getText = async () => {
     const res = await fixText()
     setText(res)
@@ -63,8 +79,8 @@ function MainPage() {
     const screen = () => {
       
       const listScreens = [
-        <ServiceScreen filter={filter} serviceSettings={serviceSettings}/>,
-        <NewOrderScreen defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>
+        <ServiceScreen orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
+        <NewOrderScreen orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>
       ]
 
       if(listScreens.length !== navBar.top.length){
