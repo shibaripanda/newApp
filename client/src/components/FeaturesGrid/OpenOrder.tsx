@@ -1,11 +1,12 @@
-import { Container, SimpleGrid, Text, TextInput } from '@mantine/core';
+import { Container, SimpleGrid, Text } from '@mantine/core';
 // import classes from './FeaturesGrid.module.css';
 import React from 'react';
-import { ComboBoxInput } from '../ComboInputBox/ComboBoxInput.tsx';
+// import { ComboBoxInput } from '../ComboInputBox/ComboBoxInput.tsx';
 
 // {label: 'Модель', index: 'model', variants: true, freez: true, data: []}
 
 export function OpenOrder(props) {
+    console.log(props)
 
     const makeFields = () => {
         const res: Array<object> = []
@@ -13,13 +14,18 @@ export function OpenOrder(props) {
             if( i[0] !== 'reviews'){
                 res.push({'field': i[0], 'info': i[1]})
             }
-            
         }
-        console.log(res)
         return res
     }
 
+    const data1 = () => {
+        const res = props.data.map()
+    }
+    console.log(props.data)
     const data = makeFields()
+
+    const listOfFields = props.serviceSettings.listOrdersFields.map(item => item[Object.keys(item)[0]].label);
+    console.log(listOfFields)
 
     const features = data.map((item, index) => <Text key={index}>{item.info}</Text>);
 
@@ -34,6 +40,7 @@ export function OpenOrder(props) {
         >
             {features}
         </SimpleGrid>
+        {/* ghghghgh */}
         </Container>
     );
 }

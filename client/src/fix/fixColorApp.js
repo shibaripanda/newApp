@@ -3,5 +3,4 @@ export const fixColorApp = async () => {
         mainAppColor: 'grey',
         iconAppColor: 'black'
     }
-      
 }

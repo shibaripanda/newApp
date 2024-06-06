@@ -8,11 +8,11 @@ export const ServiceScreen = (props) => {
   const [orders, setOrders] = useState([])
   
   useEffect(() => {
-    setTimeout(() => getOrders(), 1500)
+    getOrders()
   },[])
 
   const getOrders = async () => {
-    const res = await fixOrders()
+    const res: any = await fixOrders()
     setOrders(res)
   }
 
@@ -23,7 +23,7 @@ export const ServiceScreen = (props) => {
 
   if(orders.length){
     return (
-      <TableReviews data={filteringOrders}/>
+      <TableReviews data={filteringOrders} serviceSettings={props.serviceSettings}/>
     )
   }
   return (

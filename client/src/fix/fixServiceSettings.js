@@ -1,4 +1,5 @@
 export const fixServiceSettings = async () => {
+
     const listFastDevice = [
         {label: 'Ноутбуки', link: 'device4', request: 'Ноутбук'},
         {label: 'Телефоны', link: 'device1', request: 'Телефон'},
@@ -8,23 +9,41 @@ export const fixServiceSettings = async () => {
     ]
 
     const listOrdersFields = [
-        {label: 'Заказчик',        index: 'client',          variants: false, freez: true, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Телефон Заказчика',         index: 'contact', variants: false, freez: true, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Адрес Заказчика', index: 'clientAdress',    variants: true,  freez: false, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Устройство',      index: 'title',           variants: true,  freez: true, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Бренд',           index: 'firm',            variants: true,  freez: true, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Модель',          index: 'model',           variants: true,  freez: true, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Серийный номер',  index: 'sn',              variants: false, freez: true, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Внешний вид',     index: 'look',            variants: true,  freez: true, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Срочность',       index: 'speed',           variants: true,  freez: false, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Заметки',         index: 'info',            variants: false, freez: false, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
-        {label: 'Предварительная стоимость',    index: 'cost',  variants: false, freez: false, data: ['dfdfdf', 'dfdfdfdf', 'dfdfdfsesefs']},
+
+        {client :       { label: 'Заказчик',        variants: false, freez: true, data: false, maintable: true }},
+        {contact :      { label: 'Телефон',         variants: false, freez: true, data: false, maintable: true }},
+        {clientAdress : { label: 'Адрес Заказчика', variants: false, freez: true, data: false, maintable: true }},
+        {title :        { label: 'Устройство',      variants: true,  freez: true, data: false, maintable: true }},
+        {firm :         { label: 'Бренд',           variants: true,  freez: true, data: false, maintable: true }},
+        {problem :      { label: 'Неисправность',   variants: true,  freez: true, data: false, maintable: true }},
+        {model :        { label: 'Модель',          variants: true,  freez: true, data: false, maintable: true }},
+        {sn :           { label: 'Серийный номер',  variants: false, freez: true, data: false, maintable: false }},
+        {look :         { label: 'Внешний вид',     variants: true,  freez: true, data: false, maintable: false }},
+        {speed :        { label: 'Срочность',       variants: true,  freez: true, data: false, maintable: false }},
+        {info :         { label: 'Заметки',         variants: true,  freez: true, data: false, maintable: false }},
+        {cost :         { label: 'Стоимость',       variants: false, freez: true, data: false, maintable: false }},
     ]
 
+    const listOfDataForFastInput = {
+               client: ['dfdfdf'],
+              contact: ['dfdf'],
+        clientAdress : ['rtrtrt'],
+                title: ['bnbnbn'],
+                 firm: ['cvcvcbc'],
+              problem: ['qw'],
+                model: ['ete'],
+                   sn: ['fg'],
+                 look: ['rtyrtrtrt'],
+                speed: ['uiuiui'],
+                 info: ['565656'],
+                 cost: ['676767']
+    }
+    
     return (
         {
             listFastDevice: listFastDevice,
-            listOrdersFields: listOrdersFields
+            listOrdersFields: listOrdersFields,
+            listOfDataForFastInput: listOfDataForFastInput
         }
     )
 }

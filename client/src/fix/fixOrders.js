@@ -1,76 +1,161 @@
 export const fixOrders = async () => {
     const orders = [
          {
-            title: 'Ноутбук',
-            author: 'Stanislaw Lem',
-            year: 1961,
-            reviews: { positive: 5, negative: 5 }
+          client: 'Аркадий Бобров',
+          contact: '+375 44 5598599',
+          clientAdress: 'Одинцова 23 1 224',
+          title: 'Ноутбук',
+          cost: 150,
+          firm: 'Samsung',
+          model: 'R515',
+          sn: 'JSL8979SD79SD79SDSD',
+          look: 'бу потерт',
+          speed: 'стандарт',
+          info: 'Профилактика системы охлаждения',
+          problem: 'Профилактика'
           },
           {
-            title: 'Телефон',
-            author: 'Frank Herbert',
-            year: 1965,
-            reviews: { positive: 8576, negative: 663 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Планшет',
-            author: 'Ursula K. Le Guin',
-            year: 1969,
-            reviews: { positive: 6631, negative: 993 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Картридж',
-            author: 'Philip K Dick',
-            year: 1977,
-            reviews: { positive: 8124, negative: 1847 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Ноутбук',
-            author: 'Stanislaw Lem',
-            year: 1961,
-            reviews: { positive: 5, negative: 5 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Телефон',
-            author: 'Frank Herbert',
-            year: 1965,
-            reviews: { positive: 8576, negative: 663 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Планшет',
-            author: 'Ursula K. Le Guin',
-            year: 1969,
-            reviews: { positive: 6631, negative: 993 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Картридж',
-            author: 'Philip K Dick',
-            year: 1977,
-            reviews: { positive: 8124, negative: 1847 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Ноутбук',
-            author: 'Stanislaw Lem',
-            year: 1961,
-            reviews: { positive: 5, negative: 5 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Телефон',
-            author: 'Frank Herbert',
-            year: 1965,
-            reviews: { positive: 8576, negative: 663 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Планшет',
-            author: 'Ursula K. Le Guin',
-            year: 1969,
-            reviews: { positive: 6631, negative: 993 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           },
           {
-            title: 'Картридж',
-            author: 'Philip K Dick',
-            year: 1977,
-            reviews: { positive: 8124, negative: 1847 }
+            client: 'Ноутбук',
+          contact: 'Stanislaw Lem',
+          clientAdress: 1961,
+          title: 1961,
+          cost: 1961,
+          firm: 1961,
+          model: 1961,
+          sn: 1961,
+          look: 1961,
+          speed: 1961,
+          info: 'вотвотвот'
           }
     ]
     return orders

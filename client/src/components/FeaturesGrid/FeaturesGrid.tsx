@@ -4,17 +4,27 @@ import React from 'react';
 import { ComboBoxInput } from '../ComboInputBox/ComboBoxInput.tsx';
 import { ButtonsForNewOrder } from '../ButtonsForNewOrder/ButtonsForNewOrder.tsx';
 
-// {label: 'Модель', index: 'model', variants: true, freez: true, data: []}
-
 export function FeaturesGrid(props) {
 
     const makeFields = (field, index) => {
-        if(field.variants){
-            return <ComboBoxInput index={field.index} value={props.value} setValue={props.setValue} key={index} label={field.label} placeholder={field.label} data={field.data}/>
+        const firstKey = (Object.keys(field)[0])
+        if(field[firstKey].variants){
+            return <ComboBoxInput 
+                index={firstKey} 
+                value={props.value} 
+                setValue={props.setValue} 
+                key={index} 
+                label={field[firstKey].label} 
+                placeholder={field[firstKey].label} 
+                data={props.serviceSettings.listOfDataForFastInput[firstKey]}
+            />
         }
-        return <TextInput  value={props.value[field.index]}  key={index} label={field.label} placeholder={field.label} onChange={(event) => {
-            props.setValue({...props.value, [field.index]: event.currentTarget.value})
-          }}/>
+        return <TextInput  
+            value={props.value[firstKey]}  
+            key={index} label={field[firstKey].label} 
+            placeholder={field[firstKey].label} 
+            onChange={(event) => {props.setValue({...props.value, [firstKey]: event.currentTarget.value})}}
+        />
     }
 
     const features = props.serviceSettings.listOrdersFields.map((field, index) => makeFields(field, index));

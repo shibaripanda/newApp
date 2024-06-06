@@ -24,7 +24,7 @@ function MainPage() {
   const defaultValue = (r) => {
     const obj = {}
     for(let i of r){
-        obj[i.index] = ''
+        obj[Object.keys(i)[0]] = ''
     }
     return obj
   }
@@ -34,6 +34,7 @@ function MainPage() {
     getAppColor()
     getText()
     getFixServiceSettings()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getText = async () => {
@@ -60,7 +61,7 @@ function MainPage() {
     const screen = () => {
       
       const listScreens = [
-        <ServiceScreen filter={filter}/>,
+        <ServiceScreen filter={filter} serviceSettings={serviceSettings}/>,
         <NewOrderScreen defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>
       ]
 

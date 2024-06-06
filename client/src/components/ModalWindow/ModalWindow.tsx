@@ -12,7 +12,7 @@ export function ModalWindow(props) {
     return (
         <>
             <Modal radius={'md'} size={'xxl'} opened={opened} onClose={close} title={props.data.title} withCloseButton={false}>
-                <div><OpenOrder data={props.data}/></div>
+                <div><OpenOrder serviceSettings={props.serviceSettings} data={props.data}/></div>
             </Modal>
             <Table.Tr key={props.data.title} style={{cursor: 'pointer'}} onClick={open}>
             {props.row}
