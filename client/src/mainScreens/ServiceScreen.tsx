@@ -15,6 +15,9 @@ export const ServiceScreen = (props) => {
     const res: any = await fixOrders()
     setOrders(res)
   }
+  const addOrder = () => {
+    
+  }
 
   const filteringOrders = useMemo(() => {
     return orders.filter(order => Object.values(order).join().toLowerCase().includes(props.filter.toLowerCase()))
