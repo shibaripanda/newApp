@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Container, SimpleGrid } from "@mantine/core";
 import { myEmitter } from "../../modules/createLisener";
+import { createNewOrder } from "../../modules/creatingNewOrder";
 
 export const ButtonsForNewOrder = (props) => {
 
@@ -26,7 +27,7 @@ export const ButtonsForNewOrder = (props) => {
         },
         {
             func: () => {
-                myEmitter.emit('createNewOrder', {newOrder: props.value, orders: props.orders})
+                myEmitter.emit('createNewOrder', {newOrder: createNewOrder(props.value), orders: props.orders})
                 props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
             },
             title: 'Сохранить',

@@ -2,16 +2,27 @@ import { Container, SimpleGrid, Text } from '@mantine/core';
 // import classes from './FeaturesGrid.module.css';
 import React from 'react';
 import { ComboBoxInput } from '../components/ComboInputBox/ComboBoxInput.tsx';
+import { dateToLokalFormatFull } from '../modules/dateToLocalFormat.js';
+import { ButtonsForNewOrder } from '../components/ButtonsForNewOrder/ButtonsForNewOrder.tsx';
 // import { ComboBoxInput } from '../ComboInputBox/ComboBoxInput.tsx';
 
 export function OpenOrder(props) {
+
     const fieldsOfOrder = Object.keys(props.data)
     const settingsField = props.serviceSettings.listOrdersFields.map(item => item.index)
+
     const dataForShow = () => {
         const newAr = []
+        const lookData = (i) => {
+            if(i === 'date'){
+              return dateToLokalFormatFull(props.data[i])
+            }
+            return props.data[i]
+          }
         for(let i of fieldsOfOrder){
+            console.log(i)
             if(settingsField.includes(i)){
-                newAr.push({title: (props.serviceSettings.listOrdersFields.find(item => item.index === i)).label, text: props.data[i]})
+                newAr.push({title: (props.serviceSettings.listOrdersFields.find(item => item.index === i)).label, text: lookData(i)})
             }
             else{
                 newAr.push({title: i, text: props.data[i]})
@@ -20,14 +31,13 @@ export function OpenOrder(props) {
        return newAr
     }
     const data = dataForShow()
-
     const features = data.map((item, index) => 
-    <div key={index}>
-        <Container>
-            <Text fw={700}>{item.title}</Text>
-            <Text>{item.text}</Text>
-        </Container>
-    </div>
+        <div key={index}>
+            <Container>
+                <Text fw={700}>{item.title}</Text>
+                <Text>{item.text}</Text>
+            </Container>
+        </div>
     )
 
     return (

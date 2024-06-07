@@ -32,3 +32,12 @@
   display: flex;
   justify-content: center;
 }
+
+.orderOpenMenu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderButtons {
+  margin: 0.5vmax
+}

@@ -2,6 +2,7 @@ import { Table } from '@mantine/core';
 // import classes from './TableReviews.module.css';
 import React from 'react';
 import { ModalWindow } from '../ModalWindow/ModalWindow.tsx';
+import { dateToLokalFormatForMainTable } from '../../modules/dateToLocalFormat.js';
 
 export function TableReviews(props) {
   
@@ -9,7 +10,13 @@ export function TableReviews(props) {
   const activTableColsHeader = activTableCols.map(item => item.index)
 
   const makeRows = (row) => {
-    return activTableColsHeader.map((item, index) => <Table.Td key={index}>{row[item]}</Table.Td>)
+    const lookData = (row, item) => {
+      if(item === 'date'){
+        return dateToLokalFormatForMainTable(row[item])
+      }
+      return row[item]
+    }
+    return activTableColsHeader.map((item, index) => <Table.Td key={index}>{lookData(row, item)}</Table.Td>)
   }
 
   const rows = props.data.map((row) => <>{makeRows(row)}</>)
