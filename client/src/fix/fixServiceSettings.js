@@ -138,7 +138,7 @@ export const fixServiceSettings = async () => {
         },
         {
             index: 'dateOut', 
-            label: 'Дата',      
+            label: 'Дата Выдачи',      
             variants: false, 
             freez: true, 
             data: false,

@@ -13,6 +13,7 @@ import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { fixServiceSettings } from '../fix/fixServiceSettings.js';
 import { fixOrders } from '../fix/fixOrders.js';
 import { createLisener } from '../modules/createLisener.js';
+import { SettingsScreen } from '../mainScreens/SettingsScreen.tsx';
 
 
 
@@ -80,7 +81,8 @@ function MainPage() {
       
       const listScreens = [
         <ServiceScreen orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
-        <NewOrderScreen orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>
+        <NewOrderScreen orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
+        <SettingsScreen serviceSettings={serviceSettings}/>
       ]
 
       if(listScreens.length !== navBar.top.length){

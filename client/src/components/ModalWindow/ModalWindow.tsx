@@ -1,7 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Button, Container, Modal, SimpleGrid, Table, Text } from '@mantine/core';
 import React from 'react';
-import { OpenOrder } from '../../mainScreens/OpenOrder.tsx';
+import { OpenOrder } from '../../mainScreens/newOrderItems/OpenOrder.tsx';
 import { dateToLokalFormat } from '../../modules/dateToLocalFormat.js';
 
 export function ModalWindow(props) {
@@ -13,25 +13,7 @@ export function ModalWindow(props) {
       <div>
         <Text 
           fw={700}>{props.data.orderId + ' / ' + dateToLokalFormat(props.data.date) + ' /' + props.data.status}
-        </Text> 
-        <Container>
-          <SimpleGrid
-            mt={5}
-            cols={{ base: 1, sm: 2, md: 3 }}
-            spacing={{ base: 'xl', md: 15 }}
-            verticalSpacing={{ base: 'md', md: 20 }}
-          >
-            <Button>
-              edfdf
-            </Button>
-            <Button>
-              edfdf
-            </Button>
-            <Button>
-              edfdf
-            </Button>
-          </SimpleGrid>
-        </Container>
+        </Text>
       </div>
     )
   }
