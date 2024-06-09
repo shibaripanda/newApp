@@ -42,6 +42,11 @@ function MainPage() {
     setTimeout(setActive(0),)
   })
 
+  createLisener('updateTableColams', (data) => {
+    setServiceSettings(data)
+    console.log('dfdfdf')
+  })
+
   useEffect(() => {
     getOrders()
     getNavBar()
@@ -61,6 +66,7 @@ function MainPage() {
     setText(res)
   }
   const getFixServiceSettings = async () => {
+    console.log('upSettingsList')
     const res = await fixServiceSettings()
     const res1 = defaultValue(res.listOrdersFields)
     setValue(res1)
