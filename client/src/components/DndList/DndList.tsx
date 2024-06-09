@@ -4,10 +4,12 @@ import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import classes from './DndList.module.css';
 import React from 'react';
+import { GridForItems } from '../GridForItems/GridForItems.tsx';
 
 export function DndList(props) {
     console.log(props.data)
   const [state, handlers] = useListState(props.data);
+  console.log(state)
 
   const items = state.map((item, index) => (
     <Draggable key={item} index={index} draggableId={item}>
@@ -35,7 +37,7 @@ export function DndList(props) {
       <Droppable droppableId="dnd-list"  direction="horizontal">
         {(provided) => (
           <div className={classes.horizont} {...provided.droppableProps} ref={provided.innerRef}>
-            {items}
+           {items}
             {provided.placeholder}
           </div>
         )}
