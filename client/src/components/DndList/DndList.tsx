@@ -1,21 +1,22 @@
 import cx from 'clsx';
-import { Text } from '@mantine/core';
-import { useListState } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import classes from './DndList.module.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { GridForItems } from '../GridForItems/GridForItems.tsx';
-import { myEmitter } from '../../modules/createLisener.js';
+import { CheckBox1 } from '../CheckBox1/CheckBox1.tsx';
 
 export function DndList(props) {
+  
+  const [state, setState] = useState(props.data)
+  const [dataChecks, setDataChecks] = useState(props.serviceSettings.listOrdersFields.sort((a,b) => a.index - b.index))
 
-  const [state, handlers] = useListState(props.data)
-  if(state !== props.data){
-    const res = state.concat(props.serviceSettings.listOrdersFields.filter(item => item.maintable === false))
-    myEmitter.emit('updateTableColams', res)
+  async function swap(arr, a, b) {
+      console.log(arr)
+      arr[a] = arr.splice(b, 1, arr[a])[0]
+      console.log(arr)
   }
 
-  const items = state.map((item: Object<string>, index) => (
+  const items = state.map((item: any, index) => (
     <Draggable key={item.index} index={index} draggableId={item.label}>
       {(provided, snapshot) => (
         <div
@@ -24,8 +25,8 @@ export function DndList(props) {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <div>
-            <Text size='15'>{item.label}</Text>
+          <div className={classes.text}>
+            {item.label}
           </div>
         </div>
       )}
@@ -33,19 +34,32 @@ export function DndList(props) {
   ));
 
   return (
-    <DragDropContext
-      onDragEnd={({ destination, source }) => {
-        handlers.reorder({ from: source.index, to: destination?.index || 0 })
-      }}
-    >
-      <Droppable droppableId="dnd-list"  direction="horizontal">
-        {(provided) => (
-          <div className={classes.horizont} {...provided.droppableProps} ref={provided.innerRef}>
-           {items}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <div>
+      <div>
+        <DragDropContext
+          onDragEnd={async ({ destination, source }) => {
+            await swap(state, source.index, destination?.index || 0)
+            const res = state.concat(props.serviceSettings.listOrdersFields.filter(item => item.maintable === false))
+            props.serviceSettings.listOrdersFields = res
+            props.setServiceSettings(props.serviceSettings)
+            setState([...state])
+          }}
+        >
+          <Droppable droppableId="dnd-list"  direction="horizontal">
+            {(provided) => (
+              <div className={classes.horizont} {...provided.droppableProps} ref={provided.innerRef}>
+              {items}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
+      <div className={classes.check}>
+      <GridForItems data={
+        dataChecks.map((item, index) => <CheckBox1 setState={setState} key={index} item={item} serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>)
+        } count={4}/>
+      </div>
+    </div>
   );
 }

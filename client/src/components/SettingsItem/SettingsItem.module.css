@@ -1,7 +1,7 @@
 .wrapper {
-    display: flex;
+    /* display: flex; */
     margin: 2vmax 2vmax 2vmax 2vmax;
-    align-items: center;
+    /* align-items: left; */
     padding: var(--mantine-spacing-md);
     border-radius: var(--mantine-radius-sm);
     background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));

@@ -42,11 +42,6 @@ function MainPage() {
     setTimeout(setActive(0),)
   })
 
-  createLisener('updateTableColams', (data) => {
-    setServiceSettings(data)
-    console.log('dfdfdf')
-  })
-
   useEffect(() => {
     getOrders()
     getNavBar()
@@ -66,7 +61,6 @@ function MainPage() {
     setText(res)
   }
   const getFixServiceSettings = async () => {
-    console.log('upSettingsList')
     const res = await fixServiceSettings()
     const res1 = defaultValue(res.listOrdersFields)
     setValue(res1)
@@ -88,7 +82,7 @@ function MainPage() {
       const listScreens = [
         <ServiceScreen orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
         <NewOrderScreen orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
-        <SettingsScreen serviceSettings={serviceSettings}/>
+        <SettingsScreen serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>
       ]
 
       if(listScreens.length !== navBar.top.length){

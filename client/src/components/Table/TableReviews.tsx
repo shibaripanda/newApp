@@ -3,6 +3,7 @@ import { Table } from '@mantine/core';
 import React from 'react';
 import { ModalWindow } from '../ModalWindow/ModalWindow.tsx';
 import { dateToLokalFormatForMainTable } from '../../modules/dateToLocalFormat.js';
+import { DndList } from '../DndList/DndList.tsx';
 
 export function TableReviews(props) {
   

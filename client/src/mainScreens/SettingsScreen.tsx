@@ -1,15 +1,14 @@
 import React from "react";
-import { FeaturesGrid } from "../components/FeaturesGrid/FeaturesGrid.tsx";
 import { LoaderItem } from "../components/Loader/LoaderItem.tsx";
 import { SettingsItem } from "../components/SettingsItem/SettingsItem.tsx";
 import { ColmsMainTable } from "./settingsItems/ColmsMainTable.tsx";
 
-export const SettingsScreen = (props) => {
+export const SettingsScreen = (props: any) => {
 
-    if(true){
+    if(props){
        return (
             <div>
-                <SettingsItem title={'Settings'} body={<ColmsMainTable serviceSettings={props.serviceSettings}/>}/>
+                <SettingsItem title={'Settings'} body={<ColmsMainTable serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>}/>
             </div>
         ) 
     }
