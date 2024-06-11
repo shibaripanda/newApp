@@ -13,7 +13,9 @@ export const fixText = async () => {
         NameForNewService: 'Название вашего сервиса',
         CreateNewService: 'Создать новый сервис',
 
-        main: 'Главная'
+        main: 'Главная',
+
+        settingsMainTable: 'Настройка полей главной таблицы'
         
     }
 }

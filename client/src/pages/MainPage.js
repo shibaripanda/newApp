@@ -82,7 +82,7 @@ function MainPage() {
       const listScreens = [
         <ServiceScreen orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
         <NewOrderScreen orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
-        <SettingsScreen serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>
+        <SettingsScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>
       ]
 
       if(listScreens.length !== navBar.top.length){

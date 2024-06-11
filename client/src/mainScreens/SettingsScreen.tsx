@@ -8,7 +8,7 @@ export const SettingsScreen = (props: any) => {
     if(props){
        return (
             <div>
-                <SettingsItem title={'Settings'} body={<ColmsMainTable serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>}/>
+                <SettingsItem title={props.text.settingsMainTable} body={<ColmsMainTable serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>}/>
             </div>
         ) 
     }
