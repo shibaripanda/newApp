@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-export const OrderSchema = new mongoose.Schema({
+export const FixSchema = new mongoose.Schema({
   client: {type: String},
   contact: {type: String},
   clientAdress: {type: String},
@@ -21,7 +21,7 @@ export const OrderSchema = new mongoose.Schema({
   date: {type: Number},
 }, {timestamps: true})
 
-export interface Order {
+export interface Fix {
   orderId: string,
   date: number,
   title: string;

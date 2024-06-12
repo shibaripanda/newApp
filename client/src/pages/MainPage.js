@@ -14,6 +14,7 @@ import { fixServiceSettings } from '../fix/fixServiceSettings.js';
 import { fixOrders } from '../fix/fixOrders.js';
 import { createLisener } from '../modules/createLisener.js';
 import { SettingsScreen } from '../mainScreens/SettingsScreen.tsx';
+import { axiosCall } from '../modules/axiosCall.js';
 
 
 
@@ -37,8 +38,10 @@ function MainPage() {
     return obj
   }
   
-  createLisener('createNewOrder', (data) => {
+  createLisener('createNewOrder', async (data) => {
     setOrders([{...data.newOrder}, ...data.orders])
+    const newOrder = await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
+    console.log(newOrder)
     setTimeout(setActive(0),)
   })
 
