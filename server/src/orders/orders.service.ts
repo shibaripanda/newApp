@@ -9,11 +9,10 @@ import { CreateOrderDto } from './dto/create-order.dto';
 export class OrdersService {
 
     constructor(
-        @InjectModel('Order', 'fxdb') private orderModelFxdb: Model<Order>, 
-        @InjectModel('Order', 'nestreact') private orderModelNestreact: Model<Order>) {}
+        @InjectModel('Order') private orderModel: Model<Order>) {}
 
     async createOrder(dto: CreateOrderDto){
-        const order = await this.orderModelNestreact.create(dto)
+        const order = await this.orderModel.create(dto)
         return order
     }
 
@@ -23,7 +22,7 @@ export class OrdersService {
     // }
 
     async getAllOrders(){
-        const orders = await this.orderModelNestreact.find()
+        const orders = await this.orderModel.find()
         console.log(orders.length)
         // const orders2 = await this.orderModel1.updateMany({}, { $rename :{"name":"client", "addres":"clientAdress", "clientTel":"contact", "order":"orderId", "view":"look"}})
         return orders

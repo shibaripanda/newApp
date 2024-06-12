@@ -6,6 +6,7 @@ import { validateEmail } from '../modules/validateEmail.js';
 import { fixText } from '../fix/fixText.js';
 import { AuthenticationNew } from '../components/Auth/AuthenticationNew.tsx';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
+import { axiosCall } from '../modules/axiosCall.js';
 
 function AuthPage() {
   const [step, setStep] = useState(1)
@@ -32,6 +33,29 @@ function AuthPage() {
     console.log('password', password)
     console.log('step', step)
     console.log('newServiceName', newServiceName)
+  }
+
+  const startRequest = async () => {
+    await axiosCall('POST', 'http://localhost:5000/auth/login', {email: email})
+    .then((res) => {
+      setStep(2)
+      console.log('ok')
+    })
+    .catch((error) => {
+        console.log(error.response.data.message)
+    })
+  }
+
+  const startPasswordRequest = async () => {
+    await axiosCall('POST', 'http://localhost:5000/auth/authemailcode', {authcode: password, email: email})
+    .then((res) => {
+      console.log(res)
+      setStep(2)
+      console.log('ok')
+    })
+    .catch((error) => {
+        console.log(error.response.data.message)
+    })
   }
 
   const stepSet = (step) => {
@@ -70,7 +94,7 @@ function AuthPage() {
     const res = /^\d+$/.test(password)
     console.log(res)
     if(res){
-      setPassword(email)
+      setPassword(password)
       setErrorInputData('')
       setActivBotton(true)
     }
@@ -111,7 +135,7 @@ function AuthPage() {
               setStep={stepSet} 
               text={text} 
               setEmail={setValidatedEmail} 
-              clickOnBut={clickOnBut} 
+              clickOnBut={startRequest} 
               errorInputData={errorInputData} 
               activBotton={activBotton}
               />
@@ -125,7 +149,7 @@ function AuthPage() {
             setStep={stepSet} 
             text={text} 
             setPassword={setValidatedPassword} 
-            clickOnBut={clickOnBut} 
+            clickOnBut={startPasswordRequest} 
             errorInputData={errorInputData} 
             activBotton={activBotton}
             />

@@ -4,12 +4,17 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrdersModule } from './orders/orders.module';
 import { FixModule } from './fix/fix.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_TOKEN, {connectionName: 'nestreact',}), 
-    MongooseModule.forRoot(process.env.MONGO_TOKEN1, {connectionName: 'fxdb',}), 
-    OrdersModule, FixModule],
+    MongooseModule.forRoot(process.env.MONGO_TOKEN),
+    OrdersModule, 
+    FixModule, 
+    AuthModule, 
+    UsersModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

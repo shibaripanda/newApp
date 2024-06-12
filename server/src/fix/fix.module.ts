@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { FixSchema } from './fix.model';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Order', schema: FixSchema }], 'nestreact')],
+  imports: [MongooseModule.forFeature([{ name: 'Order', schema: FixSchema }])],
   controllers: [FixController],
   providers: [FixService]
 })

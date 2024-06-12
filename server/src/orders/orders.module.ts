@@ -8,8 +8,7 @@ import { OrderSchema } from './order.model';
 @Module({
 
   imports: [
-    MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }], 'fxdb'), 
-    MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }], 'nestreact')
+    MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }])
   ],
   controllers: [OrdersController],
   providers: [OrdersService]
