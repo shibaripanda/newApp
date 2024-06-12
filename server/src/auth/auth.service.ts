@@ -9,18 +9,18 @@ import { UsersService } from 'src/users/users.service';
 // import { sendEmail } from 'src/modules/sendMail';
 import { User } from 'src/users/user.model';
 import * as bcrypt from 'bcryptjs'
+import { CampsService } from 'src/camps/camps.service';
 
 @Injectable()
 export class AuthService {
 
     constructor(
         private usersService: UsersService,
-        // private compService: CompsService,
+        private campService: CampsService,
         private jwtService: JwtService){}
 
     async login(userDto: CreateUserDto){
         const user = await this.usersService.getUserByEmail(userDto.email)
-        console.log(user.email)
         if(user){
             const code = rendomNumberOrder()
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: false}})
@@ -31,26 +31,27 @@ export class AuthService {
             throw new UnauthorizedException('не существует')
         }
     }
-    // async registration(userDto: CreateUserDto){
-    // const code = rendomNumberOrder()
-    // let user = await this.userService.getUserByEmail(userDto.email)
-    // if(!user){
-    //     const hashPassword = await bcrypt.hash(userDto.password, 7)
-    //     user = await this.userService.createUser({...userDto, password: hashPassword, emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: userDto.nameCamp}})
-    // }
-    // else{
-    //     await this.userService.updateUser({_id: user._id}, {emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: userDto.nameCamp}})
-    // }
-    // await sendEmail(user.email, 'Временный пароль: ', String(code))
-    // return 'временный пароль выслан на почту'
-    // }
-    async authemailcode(userDto: CreateUserDto){
-        console.log(userDto)  
+
+    async registration(userDto: CreateUserDto){
+        const code = rendomNumberOrder()
+        let user = await this.usersService.getUserByEmail(userDto.email)
+        if(!user){
+            const hashPassword = await bcrypt.hash(userDto.password, 7)
+            user = await this.usersService.createUser({...userDto, password: hashPassword, emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: userDto.newServiceName}})
+        }
+        else{
+            await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: userDto.newServiceName}})
+        }
+        // await sendEmail(user.email, 'Временный пароль: ', String(code))
+        return 'временный пароль выслан на почту'
+    }
+    
+    async authemailcode(userDto: any){
         const user = await this.usersService.getUserByEmail(userDto.email)
         if((userDto.authcode === user.emailAuthCode['code'] && Date.now() - user.emailAuthCode['time'] < 900000) || userDto.authcode === String(111)){
-            // if(user.emailAuthCode['name'] !== false){
-            //     await this.compService.createComp({namecomp: user.emailAuthCode['name'], owner: user.email, supermanagers: [{email: user.email, name: 'Фамилия Имя'}]})
-            // }
+            if(user.emailAuthCode['name'] !== false){
+                await this.campService.createCamp({name: user.emailAuthCode['name'], owner: user.email})
+            }
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: user.emailAuthCode['code'], time: Date.now(), step: 1, name: false}})
             // const result = await this.validateUser(userDto)
             return this.generateToken(user)
@@ -59,7 +60,9 @@ export class AuthService {
     }
 
     private async generateToken(user: User){
-    const payload = {email: user.email, _id: user._id}
+        const ownerCamps = await this.campService.getCampsByOwnerEmail({owner: user.email})
+
+        const payload = {email: user.email, _id: user._id, camps: ownerCamps}
         return{
             token: this.jwtService.sign(payload)
         }

@@ -22,7 +22,7 @@ function App() {
         <ContextMenuProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/auth" element={<MainPage/>} />
+              <Route path="/main" element={<MainPage/>} />
               <Route path="/" element={<AuthPage/>} />
               {/* <Route path="*" element={<Page404/>} /> */}
             </Routes>

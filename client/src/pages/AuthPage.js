@@ -7,6 +7,7 @@ import { fixText } from '../fix/fixText.js';
 import { AuthenticationNew } from '../components/Auth/AuthenticationNew.tsx';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
+import { useNavigate } from 'react-router-dom';
 
 function AuthPage() {
   const [step, setStep] = useState(1)
@@ -23,16 +24,11 @@ function AuthPage() {
     getText()
   }, [])
 
+  const navigate = useNavigate()
+
   const getText = async () => {
     const res = await fixText()
     setText(res)
-  }
-
-  const clickOnBut = () => {
-    console.log('email', email)
-    console.log('password', password)
-    console.log('step', step)
-    console.log('newServiceName', newServiceName)
   }
 
   const startRequest = async () => {
@@ -48,6 +44,19 @@ function AuthPage() {
 
   const startPasswordRequest = async () => {
     await axiosCall('POST', 'http://localhost:5000/auth/authemailcode', {authcode: password, email: email})
+    .then((res) => {
+      console.log(res.data.token)
+      sessionStorage.setItem('token', res.data.token)
+      navigate('/main')
+      console.log('ok')
+    })
+    .catch((error) => {
+        console.log(error.response.data.message)
+    })
+  }
+
+  const createNewCamp = async () => {
+    await axiosCall('POST', 'http://localhost:5000/auth/registration', {newServiceName: newServiceName, email: email, password: 'password'})
     .then((res) => {
       console.log(res)
       setStep(2)
@@ -166,7 +175,7 @@ function AuthPage() {
             setEmail={setValidatedEmail}
             errorInputData={errorInputData}
             errorInputName={errorInputName} 
-            clickOnBut={clickOnBut}
+            clickOnBut={createNewCamp}
             activBotton={activBotton}
             activBottonName={activBottonName}
             />

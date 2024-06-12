@@ -3,5 +3,7 @@ export class CreateUserDto {
     readonly email: string
     readonly authcode: string
     readonly password: string
+    readonly newServiceName: string
+    readonly emailAuthCode: object 
 
 }
