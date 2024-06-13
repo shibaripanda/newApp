@@ -47,7 +47,8 @@ function AuthPage() {
     .then((res) => {
       console.log(res.data.token)
       sessionStorage.setItem('token', res.data.token)
-      setTimeout(navigate('/main'), 1000)
+      setStep(4)
+      // setTimeout(navigate('/main'), 1000)
       console.log('ok')
     })
     .catch((error) => {
@@ -96,7 +97,6 @@ function AuthPage() {
       setErrorInputData(text.badEmail)
     }
   }
-
   const setValidatedPassword = (password) => {
     setErrorInputData('')
     setActivBotton(false)
@@ -116,7 +116,6 @@ function AuthPage() {
       setErrorInputData(text.badPassword)
     }
   }
-
   const setValidatedNameNew = (name) => {
     setErrorInputName('')
     setActivBottonName(false)

@@ -18,4 +18,9 @@ export class CampsService {
         const camps = await this.campModel.find(dto)
         return camps.map(item => item._id)
     }
+
+    async getUsersCamps(data){
+        const camps = await this.campModel.find(data, {_id: 1, name: 1})
+        return camps
+    }
 }

@@ -220,6 +220,7 @@ export class FixService {
                 passwordSentToEmail: 'Пароль выслан на вашу почту',
                 NameForNewService: 'Название вашего сервиса',
                 CreateNewService: 'Создать новый сервис',
+                YourCampanies: 'Ваши компании',
         
                 main: 'Главная',
         
