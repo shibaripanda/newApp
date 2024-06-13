@@ -63,6 +63,7 @@ export class AuthService {
         const ownerCamps = await this.campService.getCampsByOwnerEmail({owner: user.email})
 
         const payload = {email: user.email, _id: user._id, camps: ownerCamps}
+        console.log(payload)
         return{
             token: this.jwtService.sign(payload)
         }

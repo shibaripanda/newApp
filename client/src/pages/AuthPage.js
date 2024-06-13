@@ -47,7 +47,7 @@ function AuthPage() {
     .then((res) => {
       console.log(res.data.token)
       sessionStorage.setItem('token', res.data.token)
-      navigate('/main')
+      setTimeout(navigate('/main'), 1000)
       console.log('ok')
     })
     .catch((error) => {
