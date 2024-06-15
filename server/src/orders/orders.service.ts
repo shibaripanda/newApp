@@ -21,8 +21,8 @@ export class OrdersService {
     //     return orders
     // }
 
-    async getAllOrders(){
-        const orders = await this.orderModel.find()
+    async getAllOrders(campId){
+        const orders = await this.orderModel.find({campId: campId})
         console.log(orders.length)
         // const orders2 = await this.orderModel1.updateMany({}, { $rename :{"name":"client", "addres":"clientAdress", "clientTel":"contact", "order":"orderId", "view":"look"}})
         return orders

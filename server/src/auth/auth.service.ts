@@ -60,10 +60,9 @@ export class AuthService {
     }
 
     private async generateToken(user: User){
-        // const ownerCamps = await this.campService.getCampsByOwnerEmail({owner: user.email})
+        const ownerCamps = await this.campService.getCampsByOwnerEmail({owner: user.email})
 
-        const payload = {email: user.email, _id: user._id}
-        // console.log(payload)
+        const payload = {email: user.email, _id: user._id, campId: ownerCamps}
         return{
             token: this.jwtService.sign(payload)
         }

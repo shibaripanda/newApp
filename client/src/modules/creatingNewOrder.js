@@ -6,5 +6,5 @@ export const createNewOrder = (order) => {
     const letter = () => rendomLetteOrder()
     const date = Date.now()
     
-    return {...order, date: date, orderId: number() + '_' + letter() + letter() + letter()}
+    return {...order, date: date, orderId: number() + '_' + letter() + letter() + letter(), campId: sessionStorage.getItem('campId')}
 }

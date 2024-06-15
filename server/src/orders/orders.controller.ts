@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Param, Request } from '@nestjs/common';
 import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { OrdersService } from './orders.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -18,9 +18,14 @@ export class OrdersController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get()
-    getAllOrders(){
-        return this.ordersService.getAllOrders()
+    @Get(':campId')
+    getAllOrders(@Param('campId') campId: string, @Request() req: any){
+        console.log(req.user.campId)
+        console.log(campId)
+        if(req.user.campId.includes(campId)){
+            return this.ordersService.getAllOrders(campId)
+        }
+        return []
     }
 
     // @UseGuards(JwtAuthGuard)

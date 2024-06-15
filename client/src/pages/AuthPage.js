@@ -7,7 +7,7 @@ import { fixText } from '../fix/fixText.js';
 import { AuthenticationNew } from '../components/Auth/AuthenticationNew.tsx';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
-import { useNavigate } from 'react-router-dom';
+import CampsPage from './CampsPage.js';
 
 function AuthPage() {
   const [step, setStep] = useState(1)
@@ -24,13 +24,10 @@ function AuthPage() {
     getText()
   }, [])
 
-  const navigate = useNavigate()
-
   const getText = async () => {
     const res = await fixText()
     setText(res)
   }
-
   const startRequest = async () => {
     await axiosCall('POST', 'http://localhost:5000/auth/login', {email: email})
     .then((res) => {
@@ -41,21 +38,17 @@ function AuthPage() {
         console.log(error.response.data.message)
     })
   }
-
   const startPasswordRequest = async () => {
     await axiosCall('POST', 'http://localhost:5000/auth/authemailcode', {authcode: password, email: email})
     .then((res) => {
-      console.log(res.data.token)
       sessionStorage.setItem('token', res.data.token)
       setStep(4)
-      // setTimeout(navigate('/main'), 1000)
       console.log('ok')
     })
     .catch((error) => {
         console.log(error.response.data.message)
     })
   }
-
   const createNewCamp = async () => {
     await axiosCall('POST', 'http://localhost:5000/auth/registration', {newServiceName: newServiceName, email: email, password: 'password'})
     .then((res) => {
@@ -67,7 +60,6 @@ function AuthPage() {
         console.log(error.response.data.message)
     })
   }
-
   const stepSet = (step) => {
     setEmail(false)
     setPassword(false)
@@ -78,7 +70,6 @@ function AuthPage() {
     setErrorInputData('')
     setStep(step)
   }
-
   const setValidatedEmail = (email) => {
     setErrorInputData('')
     setActivBotton(false)
@@ -179,6 +170,13 @@ function AuthPage() {
             activBottonName={activBottonName}
             />
           </div>
+    )
+  }
+  else if(step === 4){
+    return (
+      <CampsPage
+      text={text} 
+      />
     )
   }
   else{

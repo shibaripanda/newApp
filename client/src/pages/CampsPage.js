@@ -1,26 +1,18 @@
 import '@mantine/core/styles.css';
 import { useEffect, useState } from 'react';
-import { fixText } from '../fix/fixText.js';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom';
 import { CampSelect } from '../components/Auth/CampSelect.tsx';
 
-function CampsPage() {
+function CampsPage(props) {
+  const navigate = useNavigate()
   const [camps, setCamps] = useState([])
-  const [text, setText] = useState(false)
 
   useEffect(() => {
-    getText()
     getMyCamps()
   }, [])
 
-  const navigate = useNavigate()
-
-  const getText = async () => {
-    const res = await fixText()
-    setText(res)
-  }
   const getMyCamps = async () => {
     await axiosCall('GET', 'http://localhost:5000/api/getmycamps', {})
     .then((res) => {
@@ -31,9 +23,9 @@ function CampsPage() {
         console.log(error.response.data.message)
     })
   }
-
-  const selectCamp = (data) => {
-    console.log(data)
+  const selectCamp = (camp) => {
+    console.log(camp)
+    sessionStorage.setItem('campId', camp)
     navigate('/main')
   }
 
@@ -42,7 +34,7 @@ function CampsPage() {
             <div>
               <CampSelect
               camps={camps}
-              text={text}
+              text={props.text}
               clickOnBut={selectCamp} 
               />
             </div>
