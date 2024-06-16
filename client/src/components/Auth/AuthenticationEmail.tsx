@@ -9,8 +9,10 @@ import {
     Button,
   } from '@mantine/core';
   import classes from './AuthenticationTitle.module.css';
+  import { useNavigate } from 'react-router-dom'
   
   export function AuthenticationEmail(props) {
+    const navigate = useNavigate()
 
     const botton = () => {
       if(props.activBotton){
@@ -26,6 +28,30 @@ import {
         </Button>
       )
     }
+
+    const fastBottons = () => {
+      if(sessionStorage.getItem('activUsers')){
+        const res = sessionStorage.getItem('activUsers')?.split(' ').map((item, index) => 
+        <Button 
+        key={index} 
+        fullWidth 
+        mt="xl" 
+        onClick={
+            () => {
+              sessionStorage.setItem('currentUser', item)
+              props.setStep(4)
+              // navigate('/main')
+          }
+        }
+        >
+          {item}
+        </Button>)
+
+        return (
+          res
+        )
+      }
+    }
     
     return (
       <Container size={420} my={40}>
@@ -40,8 +66,10 @@ import {
         </Text>
   
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <Text>{props.serverError}</Text>
           <TextInput label="Email" placeholder="email" required onChange={event => {props.setEmail(event.currentTarget.value)}} error={props.errorInputData}/>
           {botton()}
+          {fastBottons()}
         </Paper>
       </Container>
     );

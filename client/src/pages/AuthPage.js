@@ -7,9 +7,12 @@ import { fixText } from '../fix/fixText.js';
 import { AuthenticationNew } from '../components/Auth/AuthenticationNew.tsx';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
-import CampsPage from './CampsPage.js';
+import { useNavigate } from 'react-router-dom';
+import { CampSelect } from '../components/Auth/CampSelect.tsx';
 
 function AuthPage() {
+  const navigate = useNavigate()
+  const [camps, setCamps] = useState([])
   const [step, setStep] = useState(1)
   const [newServiceName, setNewServiceName] = useState(false)
   const [text, setText] = useState(false)
@@ -19,8 +22,10 @@ function AuthPage() {
   const [errorInputName, setErrorInputName] = useState('')
   const [activBotton, setActivBotton] = useState(false)
   const [activBottonName, setActivBottonName] = useState(false)
+  const [serverError, setServerError] = useState('')
 
   useEffect(() => {
+    
     getText()
   }, [])
 
@@ -32,21 +37,29 @@ function AuthPage() {
     await axiosCall('POST', 'http://localhost:5000/auth/login', {email: email})
     .then((res) => {
       setStep(2)
-      console.log('ok')
+      console.log('ok', res)
     })
     .catch((error) => {
-        console.log(error.response.data.message)
+      setServerError(text[error.response.data.message])
     })
   }
   const startPasswordRequest = async () => {
     await axiosCall('POST', 'http://localhost:5000/auth/authemailcode', {authcode: password, email: email})
     .then((res) => {
-      sessionStorage.setItem('token', res.data.token)
-      setStep(4)
-      console.log('ok')
+      sessionStorage.setItem(`currentUser`, res.data.email)
+      sessionStorage.setItem(`token ${res.data.email}`, res.data.token)
+      if(sessionStorage.getItem('activUsers')){
+        if(!sessionStorage.getItem('activUsers').split(' ').includes(res.data.email)){
+          sessionStorage.setItem('activUsers', sessionStorage.getItem('activUsers') + ' ' + res.data.email)
+        }
+      }
+      else{
+        sessionStorage.setItem('activUsers', res.data.email)
+      }
+      getMyCamps()
     })
     .catch((error) => {
-        console.log(error.response.data.message)
+      setServerError(error.response.data.message)
     })
   }
   const createNewCamp = async () => {
@@ -127,10 +140,30 @@ function AuthPage() {
     }
   }
 
+  const getMyCamps = async () => {
+    await axiosCall('GET', 'http://localhost:5000/api/getmycamps', {})
+    .then((res) => {
+      setCamps(res.data)
+      if(res.data.length) setStep(4)
+      else setStep(3)
+      console.log('setCamps ok ', res.data)
+    })
+    .catch((error) => {
+        console.log(error.response.data.message)
+    })
+  }
+  const selectCamp = (camp) => {
+    console.log(camp)
+    sessionStorage.setItem(`campId ${sessionStorage.getItem(`currentUser`)}`, camp)
+    navigate('/main')
+  }
+  console.log(sessionStorage.getItem('activUsers'))
+
   if(step === 1){
       return (
             <div>
-              <AuthenticationEmail 
+              <AuthenticationEmail
+              serverError={serverError} 
               setStep={stepSet} 
               text={text} 
               setEmail={setValidatedEmail} 
@@ -173,11 +206,16 @@ function AuthPage() {
     )
   }
   else if(step === 4){
-    return (
-      <CampsPage
-      text={text} 
-      />
-    )
+      return (
+        <div>
+          <CampSelect
+          camps={camps}
+          text={text}
+          clickOnBut={selectCamp}
+          setStep={setStep} 
+          />
+        </div>
+      )
   }
   else{
     return (

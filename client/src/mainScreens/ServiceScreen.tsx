@@ -14,6 +14,11 @@ export const ServiceScreen = (props) => {
       <TableReviews data={filteringOrders} serviceSettings={props.serviceSettings}/>
     )
   }
+  else if(props.orders.length === 0){
+    return (
+    <div className={'mainScreenLoader'}>{props.text.youDontHaveOrders}</div>
+    )
+  }
   return (
     <div className={'mainScreenLoader'}><LoaderItem/></div>
   )

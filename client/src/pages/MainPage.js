@@ -15,10 +15,10 @@ import { fixOrders } from '../fix/fixOrders.js';
 import { createLisener } from '../modules/createLisener.js';
 import { SettingsScreen } from '../mainScreens/SettingsScreen.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
-
-
+import { useNavigate } from 'react-router-dom'
 
 function MainPage() {
+  const navigate = useNavigate()
   const [active, setActive] = useState(0);
   const [navBar, setNavBar] = useState(false)
   const [appColor, setAppColor] = useState(false)
@@ -26,7 +26,7 @@ function MainPage() {
   const [filter, setFilter] = useState('')
   const [serviceSettings, setServiceSettings] = useState(false)
   const [value, setValue] = useState('');
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState(false)
 
   const defaultValue = (r) => {
     const obj = {}
@@ -46,11 +46,19 @@ function MainPage() {
   })
 
   useEffect(() => {
-    getOrders()
-    getNavBar()
-    getAppColor()
-    getText()
-    getFixServiceSettings()
+    const navi = () => {
+      if(!sessionStorage.getItem('currentUser') || !sessionStorage.getItem(`campId ${sessionStorage.getItem('currentUser')}`)){
+        navigate('/')
+      }
+      else{
+        getOrders()
+        getNavBar()
+        getAppColor()
+        getText()
+        getFixServiceSettings()
+      }
+    }
+    navi()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -78,12 +86,12 @@ function MainPage() {
     setAppColor(res)
   }
   
-  if(navBar && appColor && text && serviceSettings){
+  if(navBar && appColor && text && serviceSettings && orders){
 
     const screen = () => {
       
       const listScreens = [
-        <ServiceScreen orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
+        <ServiceScreen text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
         <NewOrderScreen orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
         <SettingsScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>
       ]

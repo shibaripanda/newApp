@@ -5,7 +5,7 @@ export const axiosCall = async (typeRequest, link, objectUpdate) => {
         method: typeRequest,
         url: link,
         data: objectUpdate,
-        headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('token')},
+        headers: {'Authorization': 'Bearer ' + sessionStorage.getItem(`token ${sessionStorage.getItem('currentUser')}`)},
         timeout: 10000
     })
 }

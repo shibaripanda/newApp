@@ -5,6 +5,7 @@ import {
     // IconFingerprint,
     // IconCalendarStats,
     // IconUser,
+    IconPower,
     IconSettings,
     IconLogout,
     IconSwitchHorizontal,
@@ -20,8 +21,21 @@ export const fixNavBarItems = async () => {
         { icon: IconSettings, label: 'Settings' },
       ],
       bottom: [
-        { icon: IconSwitchHorizontal, label: 'Change account', onCl: 'changeAccount'},
-        { icon: IconLogout, label: 'Logout', onCl: 'logout'},
+        { icon: IconSwitchHorizontal, label: 'Change account', onCl: (navigate) => {
+          sessionStorage.removeItem(`currentUser`)
+          navigate("/")
+        }},
+        { icon: IconLogout, label: 'Logout', onCl: (navigate) => {
+          sessionStorage.setItem('activUsers', sessionStorage.getItem('activUsers').split(' ').filter(item => item !== sessionStorage.getItem(`currentUser`)))
+          sessionStorage.removeItem(`token ${sessionStorage.getItem('currentUser')}`)
+          sessionStorage.removeItem(`campId ${sessionStorage.getItem('currentUser')}`)
+          sessionStorage.removeItem(`currentUser`)
+          navigate("/")
+        }},
+        { icon: IconPower, label: 'OFF APP', onCl: (navigate) => {
+          sessionStorage.clear()
+          navigate("/")
+        }}
       ]
     }
 

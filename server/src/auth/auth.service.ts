@@ -28,7 +28,7 @@ export class AuthService {
             return `Check ${userDto.email} for password`
         }
         else{
-            throw new UnauthorizedException('не существует')
+            throw new UnauthorizedException('userNoFind')
         }
     }
 
@@ -43,7 +43,7 @@ export class AuthService {
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: userDto.newServiceName}})
         }
         // await sendEmail(user.email, 'Временный пароль: ', String(code))
-        return 'временный пароль выслан на почту'
+        return 'timePasswordSendToEmail'
     }
     
     async authemailcode(userDto: any){
@@ -63,8 +63,8 @@ export class AuthService {
         const ownerCamps = await this.campService.getCampsByOwnerEmail({owner: user.email})
 
         const payload = {email: user.email, _id: user._id, campId: ownerCamps}
-        return{
-            token: this.jwtService.sign(payload)
+        return {
+            token: this.jwtService.sign(payload), email: user.email
         }
     }
     // private async validateUser(userDto: CreateUserDto){

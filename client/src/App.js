@@ -11,7 +11,6 @@ import '@mantine/core/styles.css';
 import '@mantine/core/styles.layer.css';
 import 'mantine-contextmenu/styles.layer.css';
 import './layout.css';
-import CampsPage from './pages/CampsPage';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -25,7 +24,6 @@ function App() {
             <Routes>
               <Route path="/main" element={<MainPage/>} />
               <Route path="/" element={<AuthPage/>} />
-              <Route path="/camps" element={<CampsPage/>} />
               {/* <Route path="*" element={<Page404/>} /> */}
             </Routes>
           </BrowserRouter>

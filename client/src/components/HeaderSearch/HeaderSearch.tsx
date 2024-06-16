@@ -53,6 +53,8 @@ export function HeaderSearch(props) {
           <Group>
             <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
             <MantineLogo size={28} />
+            {/* <Text>dsdsf</Text> */}
+            {sessionStorage.getItem('currentUser')}
           </Group>
 
           <Group>

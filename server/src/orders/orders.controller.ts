@@ -20,8 +20,6 @@ export class OrdersController {
     @UseGuards(JwtAuthGuard)
     @Get(':campId')
     getAllOrders(@Param('campId') campId: string, @Request() req: any){
-        console.log(req.user.campId)
-        console.log(campId)
         if(req.user.campId.includes(campId)){
             return this.ordersService.getAllOrders(campId)
         }

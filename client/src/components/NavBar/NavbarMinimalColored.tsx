@@ -30,8 +30,7 @@ export function NavbarMinimalColored(props) {
     <NavbarLink
       {...link}
       key={link.label}
-      // active={index === active}
-      onClick={() => navigate("/auth")}
+      onClick={() => link.onCl(navigate)}
     />
   ));
 

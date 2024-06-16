@@ -224,7 +224,10 @@ export class FixService {
         
                 main: 'Главная',
         
-                settingsMainTable: 'Настройка полей главной таблицы'
+                settingsMainTable: 'Настройка полей главной таблицы',
+                userNoFind: 'Вы не являетесь владельцем или сотрудником ни в одном из сервисов',
+                timePasswordSendToEmail: 'Временный пароль выслан на почту',
+                youDontHaveOrders: 'Нет заказов'
                 
             }
         )
