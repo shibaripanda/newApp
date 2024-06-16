@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Anchor,
     Paper,
@@ -8,9 +8,17 @@ import {
     Button,
   } from '@mantine/core';
   import classes from './AuthenticationTitle.module.css';
+  import { useNavigate } from 'react-router-dom';
   
   export function CampSelect(props) {
-    console.log(props)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+      if(props.camps.length === 1){
+        sessionStorage.setItem(`campId ${sessionStorage.getItem(`currentUser`)}`, props.camps[0]._id)
+        navigate('/main')
+      }
+    }, [navigate, props.camps])
 
     const botton = () => {
         return props.camps.map((item, index) => 
@@ -35,5 +43,5 @@ import {
           {botton()}
         </Paper>
       </Container>
-    );
+    )
   }

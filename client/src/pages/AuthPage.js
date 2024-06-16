@@ -37,7 +37,6 @@ function AuthPage() {
     await axiosCall('POST', 'http://localhost:5000/auth/login', {email: email})
     .then((res) => {
       setStep(2)
-      console.log('ok', res)
     })
     .catch((error) => {
       setServerError(text[error.response.data.message])
@@ -65,9 +64,7 @@ function AuthPage() {
   const createNewCamp = async () => {
     await axiosCall('POST', 'http://localhost:5000/auth/registration', {newServiceName: newServiceName, email: email, password: 'password'})
     .then((res) => {
-      console.log(res)
       setStep(2)
-      console.log('ok')
     })
     .catch((error) => {
         console.log(error.response.data.message)
@@ -146,18 +143,15 @@ function AuthPage() {
       setCamps(res.data)
       if(res.data.length) setStep(4)
       else setStep(3)
-      console.log('setCamps ok ', res.data)
     })
     .catch((error) => {
         console.log(error.response.data.message)
     })
   }
   const selectCamp = (camp) => {
-    console.log(camp)
     sessionStorage.setItem(`campId ${sessionStorage.getItem(`currentUser`)}`, camp)
     navigate('/main')
   }
-  console.log(sessionStorage.getItem('activUsers'))
 
   if(step === 1){
       return (
@@ -206,6 +200,10 @@ function AuthPage() {
     )
   }
   else if(step === 4){
+    if(!camps.length){ 
+      getMyCamps()
+    }
+    if(camps.length){
       return (
         <div>
           <CampSelect
@@ -216,6 +214,13 @@ function AuthPage() {
           />
         </div>
       )
+    }
+    else{
+      return (
+        <div className={'mainScreenLoader'}><LoaderItem/></div>
+      )
+    }
+    
   }
   else{
     return (

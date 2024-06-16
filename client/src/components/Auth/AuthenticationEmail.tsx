@@ -9,10 +9,8 @@ import {
     Button,
   } from '@mantine/core';
   import classes from './AuthenticationTitle.module.css';
-  import { useNavigate } from 'react-router-dom'
   
   export function AuthenticationEmail(props) {
-    const navigate = useNavigate()
 
     const botton = () => {
       if(props.activBotton){
@@ -40,7 +38,6 @@ import {
             () => {
               sessionStorage.setItem('currentUser', item)
               props.setStep(4)
-              // navigate('/main')
           }
         }
         >

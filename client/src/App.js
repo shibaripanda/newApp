@@ -24,7 +24,6 @@ function App() {
             <Routes>
               <Route path="/main" element={<MainPage/>} />
               <Route path="/" element={<AuthPage/>} />
-              {/* <Route path="*" element={<Page404/>} /> */}
             </Routes>
           </BrowserRouter>
         </ContextMenuProvider>

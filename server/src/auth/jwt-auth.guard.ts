@@ -20,12 +20,12 @@ export class JwtAuthGuard implements CanActivate {
             }
             const user = this.jwtService.verify(token)
             req.user = user
-            console.log('Авторизация ок')
+            console.log('Авторизация true')
             return true
 
         }
         catch(e){
-            console.log('не пройдено')
+            console.log('Авторизация false')
             throw new UnauthorizedException({message: 'Нет авторизации'})
         }
     }
