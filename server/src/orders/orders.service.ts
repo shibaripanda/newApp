@@ -20,11 +20,13 @@ export class OrdersService {
     //     const orders = await this.orderModel.find({campId: id})
     //     return orders
     // }
+    async deleteOrder(orderId){
+        const orders = await this.orderModel.deleteOne({_id: orderId})
+        return orders
+    }
 
     async getAllOrders(campId){
         const orders = await this.orderModel.find({campId: campId})
-        console.log(orders.length)
-        // const orders2 = await this.orderModel1.updateMany({}, { $rename :{"name":"client", "addres":"clientAdress", "clientTel":"contact", "order":"orderId", "view":"look"}})
         return orders
     }
 

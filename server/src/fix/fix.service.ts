@@ -129,7 +129,7 @@ export class FixService {
                 freez: true, 
                 data: false,
                 maintable: true,
-                hide: true  
+                hide: false 
             },
             {
                 index: 'date', 
@@ -138,7 +138,7 @@ export class FixService {
                 freez: true, 
                 data: false,
                 maintable: true,
-                hide: true 
+                hide: false 
             },
             {
                 index: 'dateOut', 
@@ -147,7 +147,7 @@ export class FixService {
                 freez: true, 
                 data: false,
                 maintable: false,
-                hide: true 
+                hide: false 
             },
             {
                 index: 'status', 
@@ -156,7 +156,7 @@ export class FixService {
                 freez: true, 
                 data: false,
                 maintable: false,
-                hide: true 
+                hide: false 
             },
             {
                 index: 'manager', 
@@ -165,11 +165,47 @@ export class FixService {
                 freez: true, 
                 data: false,
                 maintable: false,
-                hide: true 
+                hide: false 
             },
             {
                 index: 'masters', 
                 label: 'Мастер',      
+                variants: false, 
+                freez: true, 
+                data: false,
+                maintable: false,
+                hide: false 
+            },
+            {
+                index: 'createdAt', 
+                label: 'createdAt',      
+                variants: false, 
+                freez: true, 
+                data: false,
+                maintable: false,
+                hide: true 
+            },
+            {
+                index: 'updatedAt', 
+                label: 'updatedAt',      
+                variants: false, 
+                freez: true, 
+                data: false,
+                maintable: false,
+                hide: true 
+            },
+            {
+                index: '__v', 
+                label: '__v',      
+                variants: false, 
+                freez: true, 
+                data: false,
+                maintable: false,
+                hide: true 
+            },
+            {
+                index: '_id', 
+                label: '_id',      
                 variants: false, 
                 freez: true, 
                 data: false,
@@ -227,7 +263,9 @@ export class FixService {
                 settingsMainTable: 'Настройка полей главной таблицы',
                 userNoFind: 'Вы не являетесь владельцем или сотрудником ни в одном из сервисов',
                 timePasswordSendToEmail: 'Временный пароль выслан на почту',
-                youDontHaveOrders: 'Нет заказов'
+                youDontHaveOrders: 'Нет заказов',
+                UserSettings: 'Настройки пользователя',
+                workers: 'Сотрудники'
                 
             }
         )

@@ -3,13 +3,14 @@ import { Button, Container, SimpleGrid, Text } from '@mantine/core';
 import React from 'react';
 // import { ComboBoxInput } from '../../components/ComboInputBox/ComboBoxInput.tsx';
 import { dateToLokalFormatFull } from '../../modules/dateToLocalFormat.js';
+import { axiosCall } from '../../modules/axiosCall.js';
 // import { ButtonsForNewOrder } from '../../components/ButtonsForNewOrder/ButtonsForNewOrder.tsx';
 // import { ComboBoxInput } from '../ComboInputBox/ComboBoxInput.tsx';
 
 export function OpenOrder(props: any) {
 
     const fieldsOfOrder = Object.keys(props.data)
-    const settingsField = props.serviceSettings.listOrdersFields.map((item: any) => item.index)
+    const settingsField = props.serviceSettings.listOrdersFields.filter(item => item.card === true).map((item: any) => item.index)
 
     const dataForShow = () => {
       const newAr : string[] = []
@@ -19,16 +20,18 @@ export function OpenOrder(props: any) {
         }
         return props.data[i]
       }
-      for(let i of fieldsOfOrder){
-          if(settingsField.includes(i)){
-              const res: any = {title: (props.serviceSettings.listOrdersFields.find((item: any) => item.index === i)).label, text: lookData(i)}
-              newAr.push(res)
-          }
-          else{
-            const res: any = {title: i, text: props.data[i]}
-              newAr.push(res)
-          }
-      }
+      // for(let i of fieldsOfOrder){
+      //     if(settingsField.includes(i)){
+      //         const res: any = {title: (props.serviceSettings.listOrdersFields.find((item: any) => item.index === i)).label, text: lookData(i)}
+      //         newAr.push(res)
+      //     }
+      // }
+      for(let i of settingsField){
+        if(fieldsOfOrder.includes(i)){
+            const res: any = {title: (props.serviceSettings.listOrdersFields.find((item: any) => item.index === i)).label, text: lookData(i)}
+            newAr.push(res)
+        }
+    }
       return newAr
     }
 
@@ -53,14 +56,17 @@ export function OpenOrder(props: any) {
                 spacing={{ base: 'xl', md: 15 }}
                 verticalSpacing={{ base: 'md', md: 20 }}
               >
-                <Button>
-                  edfdf
+                <Button onClick={() =>  {
+                    props.close()
+                    }}>
+                    Закрыть
                 </Button>
-                <Button>
-                  edfdf
-                </Button>
-                <Button>
-                  edfdf
+                <Button onClick={async () =>  {
+                    await axiosCall('DELETE', `http://localhost:5000/api/orders/${props.data._id}`, {})
+                    props.close()
+                    props.getOrders()
+                    }}>
+                    Удалить
                 </Button>
               </SimpleGrid>
             </Container>
@@ -81,5 +87,5 @@ export function OpenOrder(props: any) {
         </SimpleGrid>
         {/* <ComboBoxInput/> */}
         </Container>
-    );
+    )
 }

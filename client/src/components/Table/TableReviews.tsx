@@ -31,7 +31,7 @@ export function TableReviews(props) {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {rows.map((row, index) => <ModalWindow serviceSettings={props.serviceSettings} data={props.data[index]} key={index} row={row}/>)}
+          {rows.map((row, index) => <ModalWindow getOrders={props.getOrders} serviceSettings={props.serviceSettings} data={props.data[index]} key={index} row={row}/>)}
         </Table.Tbody>
       </Table>
     </Table.ScrollContainer>

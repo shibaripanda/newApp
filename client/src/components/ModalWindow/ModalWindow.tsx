@@ -28,7 +28,7 @@ export function ModalWindow(props) {
             title={titleComponent()} 
             withCloseButton={false}
             >
-                <div><OpenOrder serviceSettings={props.serviceSettings} data={props.data}/></div>
+                <div><OpenOrder getOrders={props.getOrders} serviceSettings={props.serviceSettings} data={props.data} close={close}/></div>
             </Modal>
             <Table.Tr key={props.data.title} style={{cursor: 'pointer'}} onClick={open}>
             {props.row}

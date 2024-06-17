@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, Param, Body, Put } from '@nestjs/common';
 import { CampsService } from './camps.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
@@ -17,5 +17,17 @@ export class CampsController {
     @Get('/getmycamps')
     getUsersCamps(@Request() req: any){
         return this.campsService.getUsersCamps({owner: req.user.email})
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('/getsettingscamp/:campId')
+    getSettingsCamp(@Param('campId') campId: string, @Request() req: any){
+        return this.campsService.getSettingsCamp(campId, req.user._id)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('/updatesettingscamp/:campId')
+    updateSettingsCamp(@Param('campId') campId: string, @Body() obj: object, @Request() req: any){
+        return this.campsService.updateSettingsCamp(campId, obj, req.user._id)
     }
 }

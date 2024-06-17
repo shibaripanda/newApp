@@ -31,7 +31,7 @@ function MainPage() {
   const defaultValue = (r) => {
     const obj = {}
     for(let i of r){
-      if(!i.hide){
+      if(i.neworder){
         obj[i.index] = ''
       }
     }
@@ -39,10 +39,11 @@ function MainPage() {
   }
   
   createLisener('createNewOrder', async (data) => {
-    setOrders([{...data.newOrder}, ...data.orders])
-    const newOrder = await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
-    console.log(newOrder)
-    setTimeout(setActive(0),)
+    axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
+    .then((res) => {
+      setOrders([{...res.data}, ...data.orders])
+      setTimeout(setActive(0),)
+    })
   })
 
   useEffect(() => {
@@ -65,7 +66,7 @@ function MainPage() {
   const getOrders = async () => {
     const res = await fixOrders()
     console.log('getOrders')
-    setOrders(res)
+    setOrders(res.sort((a, b) => b.date - a.date))
   }
   const getText = async () => {
     const res = await fixText()
@@ -91,7 +92,7 @@ function MainPage() {
     const screen = () => {
       
       const listScreens = [
-        <ServiceScreen text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
+        <ServiceScreen getOrders={getOrders} text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
         <NewOrderScreen orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
         <SettingsScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>
       ]

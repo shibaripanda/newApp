@@ -10,6 +10,7 @@ import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/user.model';
 import * as bcrypt from 'bcryptjs'
 import { CampsService } from 'src/camps/camps.service';
+import { getFixserviceSettings } from 'src/modules/getFixserviceSettings';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +26,7 @@ export class AuthService {
             const code = rendomNumberOrder()
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: false}})
             // await sendEmail(user.email, 'Временный пароль: ', String(code))
-            return `Check ${userDto.email} for password`
+            // return `Check ${userDto.email} for password`
         }
         else{
             throw new UnauthorizedException('userNoFind')
@@ -50,7 +51,7 @@ export class AuthService {
         const user = await this.usersService.getUserByEmail(userDto.email)
         if((userDto.authcode === user.emailAuthCode['code'] && Date.now() - user.emailAuthCode['time'] < 900000) || userDto.authcode === String(111)){
             if(user.emailAuthCode['name'] !== false){
-                await this.campService.createCamp({name: user.emailAuthCode['name'], owner: user.email})
+                await this.campService.createCamp({name: user.emailAuthCode['name'], owner: user._id, settings: {[user._id]: getFixserviceSettings()}})
             }
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: user.emailAuthCode['code'], time: Date.now(), step: 1, name: false}})
             // const result = await this.validateUser(userDto)
@@ -60,7 +61,7 @@ export class AuthService {
     }
 
     private async generateToken(user: User){
-        const ownerCamps = await this.campService.getCampsByOwnerEmail({owner: user.email})
+        const ownerCamps = await this.campService.getCampsByOwnerEmail({owner: user._id})
 
         const payload = {email: user.email, _id: user._id, campId: ownerCamps}
         return {

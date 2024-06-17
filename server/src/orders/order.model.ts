@@ -17,9 +17,10 @@ export const OrderSchema = new mongoose.Schema({
   dateOut: {type: String},
   status: {type: String},
   manager: {type: String},
-  masters: {type: String},
+  masters: {type: String, default: '--'},
   date: {type: Number},
-  campId: {type: String}
+  campId: {type: String},
+  history: {type: Array}
 }, {timestamps: true})
 
 export interface Order {
@@ -28,4 +29,5 @@ export interface Order {
   title: string;
   sn: string;
   model: string;
+  history: [];
 }

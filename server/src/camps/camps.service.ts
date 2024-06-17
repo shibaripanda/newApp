@@ -23,4 +23,14 @@ export class CampsService {
         const camps = await this.campModel.find(data, {_id: 1, name: 1})
         return camps
     }
+
+    async getSettingsCamp(campId: string, userId: string){
+        const settings = (await this.campModel.findOne({_id: campId}, {_id: 0, settings: 1})).settings
+        return settings[userId]
+    }
+
+    async updateSettingsCamp(campId: string, obj: object, userId: string){
+        const link = 'settings.' + userId
+        await this.campModel.updateOne({_id: campId}, {$set: {[link]: obj}})
+    }
 }

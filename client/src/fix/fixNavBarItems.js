@@ -1,6 +1,6 @@
 import {
-    IconHome2,
-    IconGauge,
+    IconHome,
+    IconCirclePlus,
     // IconDeviceDesktopAnalytics,
     // IconFingerprint,
     // IconCalendarStats,
@@ -16,8 +16,8 @@ export const fixNavBarItems = async () => {
 
     return {
       top: [
-        { icon: IconHome2, label: 'Service' },
-        { icon: IconGauge, label: 'New Order' },
+        { icon: IconHome, label: 'Service' },
+        { icon: IconCirclePlus, label: 'New Order' },
         { icon: IconSettings, label: 'Settings' },
       ],
       bottom: [

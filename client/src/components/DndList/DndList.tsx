@@ -4,11 +4,12 @@ import classes from './DndList.module.css';
 import React, { useState } from 'react';
 import { GridForItems } from '../GridForItems/GridForItems.tsx';
 import { CheckBox1 } from '../CheckBox1/CheckBox1.tsx';
+import { updateServiceSettings } from '../../fix/fixServiceSettings.js';
 
 export function DndList(props) {
   
   const [state, setState] = useState(props.data)
-  const [dataChecks, setDataChecks] = useState(props.serviceSettings.listOrdersFields.sort((a,b) => a.index - b.index))
+  const [dataChecks, setDataChecks] = useState(props.serviceSettings.listOrdersFields.filter(item => item.block === false).sort((a,b) => a.index - b.index))
 
   async function swap(arr, a, b) {
       console.log(arr)
@@ -16,7 +17,7 @@ export function DndList(props) {
       console.log(arr)
   }
 
-  const items = state.map((item: any, index) => (
+  const items = state.map((item: any, index: number) => (
     <Draggable key={item.index} index={index} draggableId={item.label}>
       {(provided, snapshot) => (
         <div
@@ -42,6 +43,7 @@ export function DndList(props) {
             const res = state.concat(props.serviceSettings.listOrdersFields.filter(item => item.maintable === false))
             props.serviceSettings.listOrdersFields = res
             props.setServiceSettings(props.serviceSettings)
+            updateServiceSettings(props.serviceSettings)
             setState([...state])
           }}
         >

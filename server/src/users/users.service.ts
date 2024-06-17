@@ -15,6 +15,11 @@ export class UsersService {
         return user
     }
 
+    async getUser(id){
+        const user = await this.userModelNestreact.findOne({_id: id}, {password: 0, emailAuthCode: 0, createdAt: 0, updatedAt: 0, __v: 0, _id: 0})
+        return user
+    }
+
     async getUserByEmail(email: string){
         const user = await this.userModelNestreact.findOne({email: email})
         return user

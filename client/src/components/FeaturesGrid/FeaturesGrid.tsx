@@ -8,7 +8,7 @@ export function FeaturesGrid(props) {
 
     const makeFields = (field, index) => {
         // const firstKey = (Object.keys(field)[0])
-        if(!field.hide){
+        // if(field.card){
             if(field.variants){
                 return <ComboBoxInput 
                     index={field.index} 
@@ -27,10 +27,10 @@ export function FeaturesGrid(props) {
                 placeholder={field.label} 
                 onChange={(event) => {props.setValue({...props.value, [field.index]: event.currentTarget.value})}}
             />
-    }
+        // }
     }
 
-    const features = props.serviceSettings.listOrdersFields.map((field, index) => makeFields(field, index));
+    const features = props.serviceSettings.listOrdersFields.filter(item => item.neworder === true).map((field, index) => makeFields(field, index));
 
     return (
         <Container style={{marginTop: '50px'}}>
