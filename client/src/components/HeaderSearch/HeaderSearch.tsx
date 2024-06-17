@@ -6,6 +6,7 @@ import { IconCopy, IconDownload, IconSearch } from '@tabler/icons-react';
 import classes from './HeaderSearch.module.css';
 import React from 'react';
 import { MantineLogo } from '@mantinex/mantine-logo';
+import { sessionData } from '../../modules/sessionData';
 
 export function HeaderSearch(props) {
   const { showContextMenu } = useContextMenu()
@@ -54,7 +55,7 @@ export function HeaderSearch(props) {
             <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
             <MantineLogo size={28} />
             {/* <Text>dsdsf</Text> */}
-            {sessionStorage.getItem('currentUser')}
+            {sessionData('read', 'currentUser')}
           </Group>
 
           <Group>

@@ -9,6 +9,7 @@ import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom';
 import { CampSelect } from '../components/Auth/CampSelect.tsx';
+import { sessionData } from '../modules/sessionData.js';
 
 function AuthPage() {
   const navigate = useNavigate()
@@ -45,16 +46,9 @@ function AuthPage() {
   const startPasswordRequest = async () => {
     await axiosCall('POST', 'http://localhost:5000/auth/authemailcode', {authcode: password, email: email})
     .then((res) => {
-      sessionStorage.setItem(`currentUser`, res.data.email)
-      sessionStorage.setItem(`token ${res.data.email}`, res.data.token)
-      if(sessionStorage.getItem('activUsers')){
-        if(!sessionStorage.getItem('activUsers').split(' ').includes(res.data.email)){
-          sessionStorage.setItem('activUsers', sessionStorage.getItem('activUsers') + ' ' + res.data.email)
-        }
-      }
-      else{
-        sessionStorage.setItem('activUsers', res.data.email)
-      }
+      sessionData(`write`, 'currentUser', res.data.email)
+      sessionData(`write`, 'token', res.data.token)
+      sessionData(`write`, 'activUsers', res.data.email)
       getMyCamps()
     })
     .catch((error) => {
@@ -149,7 +143,7 @@ function AuthPage() {
     })
   }
   const selectCamp = (camp) => {
-    sessionStorage.setItem(`campId ${sessionStorage.getItem(`currentUser`)}`, camp)
+    sessionData(`write`, 'campId', camp)
     navigate('/main')
   }
 

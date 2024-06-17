@@ -9,6 +9,7 @@ import {
     Button,
   } from '@mantine/core';
   import classes from './AuthenticationTitle.module.css';
+import { sessionData } from '../../modules/sessionData';
   
   export function AuthenticationEmail(props) {
 
@@ -28,15 +29,15 @@ import {
     }
 
     const fastBottons = () => {
-      if(sessionStorage.getItem('activUsers')){
-        const res = sessionStorage.getItem('activUsers')?.split(' ').map((item, index) => 
+      if(sessionData('read', 'activUsers')){
+        const res = sessionData('read', 'activUsers')?.split(' ').map((item, index) => 
         <Button 
         key={index} 
         fullWidth 
         mt="xl" 
         onClick={
             () => {
-              sessionStorage.setItem('currentUser', item)
+              sessionData('write', 'currentUser', item)
               props.setStep(4)
           }
         }

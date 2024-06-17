@@ -1,6 +1,7 @@
 import { dateToLokalFormatFull } from "./dateToLocalFormat"
 import { rendomLetteOrder } from "./rendomLetteOrder"
 import { rendomNumberOrder } from "./rendomNumberOrder"
+import { sessionData } from "./sessionData"
 
 export const createNewOrder = (order) => {
     const number = () => rendomNumberOrder({min: 1000, max: 9999}) 
@@ -11,7 +12,7 @@ export const createNewOrder = (order) => {
         ...order,
         date: date,
         orderId: number() + '_' + letter() + letter() + letter(),
-        campId: sessionStorage.getItem(`campId ${sessionStorage.getItem('currentUser')}`),
+        campId: sessionData('read', 'campId'),
         history: [{date: dateToLokalFormatFull(date), text: 'Greated' }]
         }
 }

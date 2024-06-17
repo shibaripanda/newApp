@@ -8,6 +8,7 @@ import { axiosCall } from '../../modules/axiosCall.js';
 // import { ComboBoxInput } from '../ComboInputBox/ComboBoxInput.tsx';
 
 export function OpenOrder(props: any) {
+  console.log(props)
 
     const fieldsOfOrder = Object.keys(props.data)
     const settingsField = props.serviceSettings.listOrdersFields.filter(item => item.card === true).map((item: any) => item.index)
@@ -32,6 +33,7 @@ export function OpenOrder(props: any) {
             newAr.push(res)
         }
     }
+      console.log(newAr)
       return newAr
     }
 
@@ -39,44 +41,44 @@ export function OpenOrder(props: any) {
 
     const features = data.map((item: any, index) => 
         <div key={index}>
-            <Container>
-                <Text fw={700}>{item.title}</Text>
-                <Text>{item.text}</Text>
-            </Container>
+          <Container>
+            <Text fw={700}>{item.title}</Text>
+            <Text>{item.text}</Text>
+          </Container>
         </div>
     )
 
-    const titleComponent = () => {
-        return (
-          <div>
-            <Container>
-              <SimpleGrid
-                mt={5}
-                cols={{ base: 1, sm: 2, md: 6 }}
-                spacing={{ base: 'xl', md: 15 }}
-                verticalSpacing={{ base: 'md', md: 20 }}
-              >
-                <Button onClick={() =>  {
-                    props.close()
-                    }}>
-                    Закрыть
-                </Button>
-                <Button onClick={async () =>  {
-                    await axiosCall('DELETE', `http://localhost:5000/api/orders/${props.data._id}`, {})
-                    props.close()
-                    props.getOrders()
-                    }}>
-                    Удалить
-                </Button>
-              </SimpleGrid>
-            </Container>
-          </div>
-        )
-      }
+    // const titleComponent = () => {
+    //     return (
+    //       <div>
+    //         <Container>
+    //           <SimpleGrid
+    //             mt={5}
+    //             cols={{ base: 1, sm: 2, md: 6 }}
+    //             spacing={{ base: 'xl', md: 15 }}
+    //             verticalSpacing={{ base: 'md', md: 20 }}
+    //           >
+    //             <Button onClick={() =>  {
+    //                 props.close()
+    //                 }}>
+    //                 Закрыть
+    //             </Button>
+    //             <Button onClick={async () =>  {
+    //                 await axiosCall('DELETE', `http://localhost:5000/api/orders/${props.data._id}`, {})
+    //                 props.close()
+    //                 props.getOrders()
+    //                 }}>
+    //                 Удалить
+    //             </Button>
+    //           </SimpleGrid>
+    //         </Container>
+    //       </div>
+    //     )
+    // }
 
     return (
         <Container>
-            {titleComponent()}
+            {/* {titleComponent()} */}
         <SimpleGrid
             mt={5}
             cols={{ base: 1, sm: 2, md: 4 }}

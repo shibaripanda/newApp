@@ -16,6 +16,7 @@ import { createLisener } from '../modules/createLisener.js';
 import { SettingsScreen } from '../mainScreens/SettingsScreen.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom'
+import { sessionData } from '../modules/sessionData.js';
 
 function MainPage() {
   const navigate = useNavigate()
@@ -48,7 +49,8 @@ function MainPage() {
 
   useEffect(() => {
     const navi = () => {
-      if(!sessionStorage.getItem('currentUser') || !sessionStorage.getItem(`campId ${sessionStorage.getItem('currentUser')}`)){
+      sessionData('read', 'currentUser')
+      if(!sessionData('read', 'currentUser') || !sessionData('read', 'campId')){
         navigate('/')
       }
       else{

@@ -10,6 +10,7 @@ import {
     IconLogout,
     IconSwitchHorizontal,
   } from '@tabler/icons-react';
+import { sessionData } from '../modules/sessionData';
 
 
 export const fixNavBarItems = async () => {
@@ -22,18 +23,15 @@ export const fixNavBarItems = async () => {
       ],
       bottom: [
         { icon: IconSwitchHorizontal, label: 'Change account', onCl: (navigate) => {
-          sessionStorage.removeItem(`currentUser`)
+          sessionData('close')
           navigate("/")
         }},
         { icon: IconLogout, label: 'Logout', onCl: (navigate) => {
-          sessionStorage.setItem('activUsers', sessionStorage.getItem('activUsers').split(' ').filter(item => item !== sessionStorage.getItem(`currentUser`)))
-          sessionStorage.removeItem(`token ${sessionStorage.getItem('currentUser')}`)
-          sessionStorage.removeItem(`campId ${sessionStorage.getItem('currentUser')}`)
-          sessionStorage.removeItem(`currentUser`)
+          sessionData('exit')
           navigate("/")
         }},
         { icon: IconPower, label: 'OFF APP', onCl: (navigate) => {
-          sessionStorage.clear()
+          sessionData('off')
           navigate("/")
         }}
       ]

@@ -9,13 +9,14 @@ import {
   } from '@mantine/core';
   import classes from './AuthenticationTitle.module.css';
   import { useNavigate } from 'react-router-dom';
+import { sessionData } from '../../modules/sessionData';
   
   export function CampSelect(props) {
     const navigate = useNavigate()
 
     useEffect(() => {
       if(props.camps.length === 1){
-        sessionStorage.setItem(`campId ${sessionStorage.getItem(`currentUser`)}`, props.camps[0]._id)
+        sessionData('write', 'campId', props.camps[0]._id)
         navigate('/main')
       }
     }, [navigate, props.camps])
