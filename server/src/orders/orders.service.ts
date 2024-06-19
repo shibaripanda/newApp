@@ -30,6 +30,12 @@ export class OrdersService {
         return orders
     }
 
+    async updateOrder(id, obj){
+        const order = await this.orderModel.findOneAndUpdate({_id: id}, obj, {returnDocument: 'after'})
+        console.log(order)
+        return order
+    }
+
     // async getAllOrders1(){
     //     const orders = await this.orderModel1.find()
     //     console.log(orders.length)

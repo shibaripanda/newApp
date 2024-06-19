@@ -6,6 +6,7 @@ import { dateToLokalFormatForMainTable } from '../../modules/dateToLocalFormat.j
 import { DndList } from '../DndList/DndList.tsx';
 
 export function TableReviews(props) {
+  console.log(props)
   
   const activTableCols = props.serviceSettings.listOrdersFields.filter(item => item.maintable === true)
   const activTableColsHeader = activTableCols.map(item => item.index)
@@ -20,7 +21,7 @@ export function TableReviews(props) {
     return activTableColsHeader.map((item, index) => <Table.Td key={index}>{lookData(row, item)}</Table.Td>)
   }
 
-  const rows = props.data.map((row) => <>{makeRows(row)}</>)
+  const rows = props.filteringOrders.map((row) => <>{makeRows(row)}</>)
 
   return (
     <Table.ScrollContainer minWidth={200}>
@@ -31,7 +32,7 @@ export function TableReviews(props) {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {rows.map((row, index) => <ModalWindow getOrders={props.getOrders} serviceSettings={props.serviceSettings} data={props.data[index]} key={index} row={row}/>)}
+          {rows.map((row, index) => <ModalWindow filteringOrders={props.filteringOrders} setOrders={props.setOrders} getOrders={props.getOrders} serviceSettings={props.serviceSettings} data={props.filteringOrders[index]} key={index} row={row}/>)}
         </Table.Tbody>
       </Table>
     </Table.ScrollContainer>
