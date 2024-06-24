@@ -40,10 +40,10 @@ function MainPage() {
   }
   
   createLisener('createNewOrder', async (data) => {
-    axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
+    await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
     .then((res) => {
       setOrders([{...res.data}, ...data.orders])
-      setTimeout(setActive(0),)
+      setTimeout(() => setActive(0), 0)
     })
   })
 
@@ -95,7 +95,7 @@ function MainPage() {
       
       const listScreens = [
         <ServiceScreen getOrders={getOrders} text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
-        <NewOrderScreen orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
+        <NewOrderScreen getOrders={getOrders} orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
         <SettingsScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>
       ]
 

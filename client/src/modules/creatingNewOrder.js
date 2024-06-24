@@ -13,6 +13,6 @@ export const createNewOrder = (order) => {
         orderId: number() + '_' + letter() + letter() + letter(),
         campId: sessionData('read', 'campId'),
         history: [{date: Date.now(), text: 'Greated', name: sessionData('read', 'currentUser')}],
-        status: 'New'
+        status: 'new'
         }
 }

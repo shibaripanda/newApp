@@ -229,12 +229,47 @@ export class FixService {
                      info: ['565656'],
                      cost: ['676767']
         }
+        const listOfStatuses = [
+    
+            {
+                index: 'new', 
+                label: 'New',
+                freez: true 
+            },
+            {
+                index: 'process', 
+                label: 'In process',
+                freez: true 
+            },
+            {
+                index: 'redy', 
+                label: 'Redy',
+                freez: true 
+            },
+            {
+                index: 'waranty', 
+                label: 'Waranty',
+                freez: true 
+            },
+            {
+                index: 'close', 
+                label: 'Close',
+                freez: true 
+            },
+            {
+                index: 'wait', 
+                label: 'Waiting',
+                freez: true 
+            },   
+    
+        ]
         
         return (
             {
                 listFastDevice: listFastDevice,
                 listOrdersFields: listOrdersFields,
-                listOfDataForFastInput: listOfDataForFastInput
+                listOfDataForFastInput: listOfDataForFastInput,
+                listOfStatuses: listOfStatuses
             }
         )
 

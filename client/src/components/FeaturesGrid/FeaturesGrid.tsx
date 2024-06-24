@@ -34,7 +34,7 @@ export function FeaturesGrid(props) {
 
     return (
         <Container style={{marginTop: '50px'}}>
-        <ButtonsForNewOrder orders={props.orders} value={props.value} defaultValue={props.defaultValue} setValue={props.setValue} serviceSettings={props.serviceSettings}/>
+        <ButtonsForNewOrder  getOrders={props.getOrders} orders={props.orders} value={props.value} defaultValue={props.defaultValue} setValue={props.setValue} serviceSettings={props.serviceSettings}/>
         <SimpleGrid
             mt={30}
             cols={{ base: 1, sm: 2, md: 3 }}
