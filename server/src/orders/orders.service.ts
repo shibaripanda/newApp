@@ -16,10 +16,6 @@ export class OrdersService {
         return order
     }
 
-    // async getAllServiceOrders(id: any){
-    //     const orders = await this.orderModel.find({campId: id})
-    //     return orders
-    // }
     async deleteOrder(orderId){
         const orders = await this.orderModel.deleteOne({_id: orderId})
         return orders
@@ -32,22 +28,7 @@ export class OrdersService {
 
     async updateOrder(id, obj){
         const order = await this.orderModel.findOneAndUpdate({_id: id}, obj, {returnDocument: 'after'})
-        console.log(order)
         return order
     }
-
-    // async getAllOrders1(){
-    //     const orders = await this.orderModel1.find()
-    //     console.log(orders.length)
-    //     return orders
-    // }
-
-    // async deleteOrder(id: any){
-    //     await this.orderModel.deleteOne({_id: id})
-    // }
-
-    // async updateOrder(id: any, dto: UpdateOrderDto){
-    //     return await this.orderModel.findOneAndUpdate({_id: id}, dto, {returnDocument: 'after'})
-    // }
 
 }

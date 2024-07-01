@@ -217,7 +217,7 @@ export function OpenOrder(props: any) {
           <div style={{ marginTop: '2vmax', marginBottom: '2vmax'}}>
             <SimpleGrid
                 mt={5}
-                cols={{ base: 1, sm: 2, md: 4 }}
+                cols={{ base: 1, sm: 2, md: 7 }}
                 spacing={{ base: 'xl', md: 50 }}
                 verticalSpacing={{ base: 'md', md: 20 }}
             >

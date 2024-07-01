@@ -14,7 +14,6 @@ export class OrdersController {
     @UseGuards(JwtAuthGuard)
     @Post()
     create(@Body() orderDto: CreateOrderDto, @Request() req: any){
-        console.log(req.user.email)
         return this.ordersService.createOrder({...orderDto, manager: req.user.email})
     }
 
@@ -30,33 +29,12 @@ export class OrdersController {
     @UseGuards(JwtAuthGuard)
     @Delete(':orderId')
     deleteOrder(@Param('orderId') orderId: string){
-            return this.ordersService.deleteOrder(orderId)
+        return this.ordersService.deleteOrder(orderId)
     }
 
     @UseGuards(JwtAuthGuard)
     @Put(':orderId')
     updateOrder(@Body() orderDto: CreateOrderDto, @Param('orderId') orderId: string){
-        console.log(orderDto)
-        console.log(orderId)
-            return this.ordersService.updateOrder(orderId, orderDto)
+        return this.ordersService.updateOrder(orderId, orderDto)
     }
-
-    // @UseGuards(JwtAuthGuard)
-    // @Get('service/:id')
-    // getAllServiceOrders(@Param('id') id: string){
-    //     return this.ordersService.getAllServiceOrders(id)
-    // }
-
-    // @UseGuards(JwtAuthGuard)
-    // @Delete(':id')
-    // delOne(@Param('id') id: string){
-    //     return this.ordersService.deleteOrder(id)
-    // }
-
-    // @UseGuards(JwtAuthGuard)
-    // @Put(':id')
-    // update(@Param('id') id: string,
-    //        @Body() updateOrderDto: UpdateOrderDto){
-    //     return this.ordersService.updateOrder(id, updateOrderDto)
-    // }
 }

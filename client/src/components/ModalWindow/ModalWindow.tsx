@@ -29,7 +29,7 @@ export function ModalWindow(props) {
       await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {history: {date: Date.now(), text: 'open', name: sessionData('read', 'currentUser')}}})
       props.getOrders()
       console.log('таймаут')
-    }, 100000))
+    }, 10000))
   }
 
     return (
