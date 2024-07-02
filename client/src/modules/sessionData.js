@@ -30,7 +30,9 @@ export const sessionData = (forward, item, data) => {
         sessionStorage.removeItem('currentUser')
     }
     else if(forward === 'exit'){
-        sessionStorage.setItem('activUsers', sessionStorage.getItem('activUsers').split(' ').filter(item => item !== sessionStorage.getItem(`currentUser`)))
+        console.log(sessionStorage.getItem('activUsers'))
+        sessionStorage.setItem('activUsers', sessionStorage.getItem('activUsers').split(' ').filter(item => item !== sessionStorage.getItem(`currentUser`)).join(' '))
+        console.log(sessionStorage.getItem('activUsers'))
         sessionStorage.removeItem(`token ${sessionStorage.getItem('currentUser')}`)
         sessionStorage.removeItem(`campId ${sessionStorage.getItem('currentUser')}`)
         sessionStorage.removeItem(`currentUser`)

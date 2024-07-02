@@ -19,8 +19,13 @@ export class CampsService {
         return camps.map(item => item._id)
     }
 
-    async getUsersCamps(data){
-        const camps = await this.campModel.find(data, {_id: 1, name: 1})
+    async getUsersCamps(email){
+        const camps = await this.campModel.find({users: {$elemMatch: {email: email}}}, {_id: 1, name: 1})
+        return camps
+    }
+
+    async searchNewUser(email){
+        const camps = await this.campModel.find({users: {$elemMatch: {email: email}}})
         return camps
     }
 
@@ -33,4 +38,8 @@ export class CampsService {
         const link = 'settings.' + userId
         await this.campModel.updateOne({_id: campId}, {$set: {[link]: obj}})
     }
+
+    // async updateSettings(campId: string, obj: object){
+    //     await this.campModel.updateOne({_id: campId}, {$set: {settings: obj}})
+    // }
 }

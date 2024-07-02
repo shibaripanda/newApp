@@ -2,7 +2,7 @@ import { rendomLetteOrder } from "./rendomLetteOrder"
 import { rendomNumberOrder } from "./rendomNumberOrder"
 import { sessionData } from "./sessionData"
 
-export const createNewOrder = (order) => {
+export const createNewOrder = async (order) => {
     const number = () => rendomNumberOrder({min: 1000, max: 9999}) 
     const letter = () => rendomLetteOrder()
     const date = Date.now()

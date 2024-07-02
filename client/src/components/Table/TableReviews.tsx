@@ -6,7 +6,6 @@ import { dateToLokalFormatForMainTable } from '../../modules/dateToLocalFormat.j
 import { DndList } from '../DndList/DndList.tsx';
 
 export function TableReviews(props) {
-  console.log(props)
   
   const activTableCols = props.serviceSettings.listOrdersFields.filter(item => item.maintable === true)
   const activTableColsHeader = activTableCols.map(item => item.index)

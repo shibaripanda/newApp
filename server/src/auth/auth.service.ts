@@ -22,6 +22,7 @@ export class AuthService {
 
     async login(userDto: CreateUserDto){
         const user = await this.usersService.getUserByEmail(userDto.email)
+        console.log(userDto)
         if(user){
             const code = rendomNumberOrder()
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: false}})
@@ -29,7 +30,19 @@ export class AuthService {
             // return `Check ${userDto.email} for password`
         }
         else{
-            throw new UnauthorizedException('userNoFind')
+            const newUsers = await this.campService.searchNewUser(userDto.email)
+            console.log(newUsers)
+            if(newUsers.length){
+                const code = rendomNumberOrder()
+                const hashPassword = await bcrypt.hash('password', 7)
+                const newUs = await this.usersService.createUser({...userDto, password: hashPassword, emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: false}})
+                for(let i of newUsers){
+                    this.campService.updateSettingsCamp(String(i._id), getFixserviceSettings(), newUs._id)
+                }
+            }
+            else{
+               throw new UnauthorizedException('userNoFind') 
+            }
         }
     }
 
@@ -51,7 +64,7 @@ export class AuthService {
         const user = await this.usersService.getUserByEmail(userDto.email)
         if((userDto.authcode === user.emailAuthCode['code'] && Date.now() - user.emailAuthCode['time'] < 900000) || userDto.authcode === String(111)){
             if(user.emailAuthCode['name'] !== false){
-                await this.campService.createCamp({name: user.emailAuthCode['name'], owner: user.email, settings: {[user._id]: getFixserviceSettings()}})
+                await this.campService.createCamp({name: user.emailAuthCode['name'], owner: user.email, users: [{email: user.email, role: 'owner'}], settings: {[user._id]: getFixserviceSettings()}})
             }
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: user.emailAuthCode['code'], time: Date.now(), step: 1, name: false}})
             // const result = await this.validateUser(userDto)
@@ -61,7 +74,8 @@ export class AuthService {
     }
 
     private async generateToken(user: User){
-        const ownerCamps = await this.campService.getCampsByOwnerEmail({owner: user.email})
+        const ownerCamps = await this.campService.getCampsByOwnerEmail({users: {$elemMatch: {email: user.email}}}) //{owner: user.email}
+        console.log( ownerCamps)
 
         const payload = {email: user.email, _id: user._id, campId: ownerCamps}
         return {

@@ -27,7 +27,7 @@ function MainPage() {
   const [filter, setFilter] = useState('')
   const [serviceSettings, setServiceSettings] = useState(false)
   const [value, setValue] = useState('');
-  const [orders, setOrders] = useState(false)
+  const [orders, setOrders] = useState([])
 
   const defaultValue = (r) => {
     const obj = {}
@@ -40,9 +40,12 @@ function MainPage() {
   }
   
   createLisener('createNewOrder', async (data) => {
+    console.log(data)
     await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
-    .then((res) => {
+    .then(async (res) => {
+      console.log(res)
       setOrders([{...res.data}, ...data.orders])
+      // await getOrders()
       setTimeout(() => setActive(0), 0)
     })
   })
@@ -67,7 +70,6 @@ function MainPage() {
 
   const getOrders = async () => {
     const res = await fixOrders()
-    console.log('getOrders')
     setOrders(res.sort((a, b) => b.date - a.date))
   }
   const getText = async () => {

@@ -32,6 +32,28 @@ export function ModalWindow(props) {
     }, 10000))
   }
 
+  const colorStatus = () => {
+    if(props.data.status === 'new'){
+      return 'blue'
+    }
+    else if(props.data.status === 'process'){
+      return 'black'
+    }
+    else if(props.data.status === 'ready'){
+      return 'green'
+    }
+    else if(props.data.status === 'waranty'){
+      return 'red'
+    }
+    else if(props.data.status === 'close'){
+      return 'grey'
+    }
+    else if(props.data.status === 'wait'){
+      return 'yellow'
+    }
+    return 'black'
+  }
+
     return (
         <>
             <Modal 
@@ -44,7 +66,7 @@ export function ModalWindow(props) {
             >
                 <div><OpenOrder timerBlock={timerBlock} getOrders={props.getOrders} serviceSettings={props.serviceSettings} data={props.data} close={close}/></div>
             </Modal>
-            <Table.Tr key={props.data.title} style={{cursor: 'pointer'}} onClick={() => openOrder()}>
+            <Table.Tr key={props.data.title} style={{cursor: 'pointer', color: colorStatus()}} onClick={() => openOrder()}>
             {props.row}
             </Table.Tr>
         </>

@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container, SimpleGrid } from "@mantine/core";
 import { myEmitter } from "../../modules/createLisener";
 import { createNewOrder } from "../../modules/creatingNewOrder";
+import { ModalWindowPrint } from "../ModalWindow/ModalWindowPrint.tsx";
 
 export const ButtonsForNewOrder = (props) => {
 
@@ -26,8 +27,9 @@ export const ButtonsForNewOrder = (props) => {
             disabled: checkDisabledClean()
         },
         {
-            func: () => {
-                myEmitter.emit('createNewOrder', {newOrder: createNewOrder(props.value), orders: props.orders})
+            func: async () => {
+                const newOr = await createNewOrder(props.value)
+                myEmitter.emit('createNewOrder', {newOrder: newOr, orders: props.orders})
                 props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
             },
             title: 'Сохранить',
@@ -39,12 +41,23 @@ export const ButtonsForNewOrder = (props) => {
             disabled: checkDisabledSave()
         },
         {
-            func: () => props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
+            func: async () => {
+                const newOr = await createNewOrder(props.value)
+                myEmitter.emit('createNewOrder', {newOrder: newOr, orders: props.orders})
+                props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
+
+            },
             title: 'Сохр. и печать',
             disabled: checkDisabledSave(),
             color: 'green'
         }
     ]
+
+    const getData = async () => {
+        const newOr = await createNewOrder(props.value)
+        console.log(newOr)
+        return newOr
+    }
         
     const features = controlOrderButtons.map((but, index) => <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>)
 
@@ -57,6 +70,8 @@ export const ButtonsForNewOrder = (props) => {
                 verticalSpacing={{ base: 'xl', md: 30 }}
             >
                 {features}
+                <ModalWindowPrint label='Квитанция' format={'order'} data={getData()}/>
+                <ModalWindowPrint label='Гарантия' format={'var'} data={getData()}/>
             </SimpleGrid>
         </Container>
     )

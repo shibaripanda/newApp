@@ -16,7 +16,7 @@ export class CampsController {
     @UseGuards(JwtAuthGuard)
     @Get('/getmycamps')
     getUsersCamps(@Request() req: any){
-        return this.campsService.getUsersCamps({owner: req.user.email})
+        return this.campsService.getUsersCamps(req.user.email)
     }
 
     @UseGuards(JwtAuthGuard)
