@@ -10,21 +10,17 @@ export class Print extends React.PureComponent {
         super(props)
         this.props = props.props
     }
+
     back = () => {
       this.props.close()
-    }
-    checkPress(e, step){
-      if(e.key === 'Enter'){
-        step()
-      }
     }
     clickPrint(step){
         step()
         this.back()
     }
-    documentSheet(){
-      console.log(this.props)
+    documentSheet(func){
       if(this.props.format === 'order'){
+        setTimeout(() => func(), 1000)
         return <PrintComp props={this.props} ref={el => (this.componentRef = el)}/>
       }
       else if(this.props.format === 'var'){
@@ -33,7 +29,6 @@ export class Print extends React.PureComponent {
     }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <ReactToPrint bodyClass="print-agreement" content={() => this.componentRef}>
@@ -41,9 +36,10 @@ export class Print extends React.PureComponent {
             {({ handlePrint }) => (
               <div>
               <Button onClick={this.back}  style={{width: 775}}>Отмена</Button>
+              <hr></hr>
               <Button autoFocus={true} type="primary" style={{width: 775}} onClick={(e) => this.clickPrint(handlePrint)}>Print</Button>
-              {this.props.toString()}
-              {/* {this.documentSheet()} */}
+              {/* {this.props.toString()} */}
+              {this.documentSheet(this.clickPrint(handlePrint))}
               </div>
             )}
           </PrintContextConsumer>

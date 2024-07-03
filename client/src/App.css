@@ -41,3 +41,25 @@
 .orderButtons {
   margin: 0.5vmax
 }
+
+.table {
+  font-size: 12px;
+}
+
+.App {
+  width:  800px;
+}
+
+.create-line {
+  width: 360px;
+  border-top: 1px solid #000000;
+}
+
+.perenos {
+  white-space: pre-wrap;
+}
+
+.vertical span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}

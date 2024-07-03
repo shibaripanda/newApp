@@ -17,6 +17,7 @@ import { SettingsScreen } from '../mainScreens/SettingsScreen.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom'
 import { sessionData } from '../modules/sessionData.js';
+import { ModalWindowPrint } from '../components/ModalWindow/ModalWindowPrint.tsx';
 
 function MainPage() {
   const navigate = useNavigate()
@@ -47,6 +48,19 @@ function MainPage() {
       setOrders([{...res.data}, ...data.orders])
       // await getOrders()
       setTimeout(() => setActive(0), 0)
+    })
+  })
+
+  createLisener('createNewOrderAndPrint', async (data) => {
+    console.log(data)
+    await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
+    .then(async (res) => {
+      console.log(res)
+      setOrders([{...res.data}, ...data.orders])
+      // await getOrders()
+      // setTimeout(() => setActive(0), 0)
+      // <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={'order'} handler={but.func}/>
+      // return <ModalWindowPrint/>
     })
   })
 

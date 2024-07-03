@@ -2,9 +2,25 @@ import React from "react"
 
 
 export const PrintComp = React.forwardRef((props, ref) => {
+
+    // console.log(props.props.data)
+
+    const camp = {}
+    camp.docprint = {
+        name: 'Заказ на оказание услуг',
+        time: 'пн-сб: 11:00 - 20:00, вскр: 11:00 - 18:00f',
+        maintext: 'hhhhhhhhhhhhhhhhhhhhhhh',
+        varantname: 'Акт приёмки-передачи оборудования и выполненных работ',
+        
+        recviz: 'ЧСУП "Компьютер и Принтер" , РБ, Минск, ул. Лобанка, д. 94, павильон 10',
+        oznak: 'ddd',
+        soglas: 'dddd',
+        filial: 'ffsfsf'
+    }
     
-    const post = props.props.post
-    const camp = props.props.camp
+    const post = props.props.data
+    console.log(post)
+    
     const textSet = (index) => {
         if(typeof camp.docprint[index] !== 'undefined'){
             return camp.docprint[index]
