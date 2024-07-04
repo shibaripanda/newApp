@@ -6,8 +6,6 @@ import { createNewOrder } from '../../modules/creatingNewOrder';
 import { LoaderItem } from '../Loader/LoaderItem.tsx';
 
 export function ModalWindowPrint(props) {
-
-  console.log(props.data)
     
   const [opened, { open, close }] = useDisclosure(false)
   const [order, setOrder] = useState(false)
@@ -29,12 +27,13 @@ export function ModalWindowPrint(props) {
     return (
         <>
             <Modal
-            // style={{textAlign: 'center'}}
+            // style={{alignContent: 'center'}}
             radius={'md'} 
-            size={'850px'} 
+            size="auto"
             opened={opened} 
             onClose={close}
             withCloseButton={false}
+            centered
             >
               {loadPrint()}
               {/* <Print close={close} format={props.format} data={props.data}/> */}

@@ -28,7 +28,7 @@ export const ButtonsForNewOrder = (props) => {
         },
         {
             title: 'Сохранить',
-            disabled: checkDisabledSave(),
+            disabled: false, //checkDisabledSave(),
             print: false,
             func: async () => {
                 const newOr = await createNewOrder(props.value)

@@ -63,3 +63,7 @@
   writing-mode: vertical-rl;
   transform: rotate(180deg);
 }
+
+.print-agreement {
+  margin: 19px;
+}
