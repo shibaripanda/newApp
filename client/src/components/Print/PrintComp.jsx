@@ -56,7 +56,7 @@ export const PrintComp = React.forwardRef((props, ref) => {
                 <td align="left"><b><font size="2">{camp.docprint.namecomp ? camp.docprint.namecomp : 'не настроено'}</font></b></td>  
             </tr>
             <tr>
-                <td align="center"><b><font size="3">{textSet('name')} № {post.orderId} от {new Date(post.date).toLocaleString().split(',')[0]}</font></b></td>
+                <td align="center"><b><font size="3">{textSet('name')} № {post.order} от {new Date(post.date).toLocaleString().split(',')[0]}</font></b></td>
             </tr>
             </tbody>
         </table>
@@ -65,22 +65,22 @@ export const PrintComp = React.forwardRef((props, ref) => {
             <tbody>
             <tr>
                 <td colSpan="5" rowSpan="2" align="center"><b>&nbsp;Исполнитель принимает, а заказчик передает нижеуказанное оборудование</b></td>
-                <td colSpan="3" rowSpan="2" align="center"><b><h2>&nbsp;{post.contact}</h2></b></td>
-                <td colSpan="1" rowSpan="14" className='vertical'><span><h1>&nbsp;{post.orderId}</h1></span></td>
+                <td colSpan="3" rowSpan="2" align="center"><b><h2>&nbsp;{post.clientTel}</h2></b></td>
+                <td colSpan="1" rowSpan="14" className='vertical'><span><h1>&nbsp;{post.order}</h1></span></td>
             </tr>
             <tr>
                 
             </tr>
             <tr>
                 <td colSpan="2"><b>&nbsp;Заказ №</b></td>
-                <td align="center">&nbsp;{post.orderId}</td>
+                <td align="center">&nbsp;{post.order}</td>
                 <td colSpan='2' align="center">&nbsp;{new Date(post.date).toLocaleString()}</td>
                 <td align="center">&nbsp;Сотрудник СЦ:</td>
                 <td colSpan='2' align="center">&nbsp;{post.manager}</td>
             </tr>
             <tr>
                 <td colSpan="2"><b>&nbsp;Заказчик:</b></td>
-                <td colSpan="6">&nbsp;{post.client}, {post.clientAdress}, {post.contact}</td>
+                <td colSpan="6">&nbsp;{post.name}, {post.addres}, {post.clientTel}</td>
             </tr>    
             <tr>
                 <td colSpan="2"><b>&nbsp;Оборудование:</b></td>

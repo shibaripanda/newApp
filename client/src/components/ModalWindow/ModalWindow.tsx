@@ -15,7 +15,7 @@ export function ModalWindow(props) {
     return (
       <div>
         <Text 
-          fw={700}>{props.data.orderId + ' / ' + dateToLokalFormat(props.data.date) + ' /' + props.data.status}
+          fw={700}>{props.data.order + ' / ' + dateToLokalFormat(props.data.date) + ' /' + props.data.status}
         </Text>
       </div>
     )
@@ -29,7 +29,7 @@ export function ModalWindow(props) {
       await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {history: {date: Date.now(), text: 'open', name: sessionData('read', 'currentUser')}}})
       props.getOrders()
       console.log('таймаут')
-    }, 10000))
+    }, 1000000))
   }
 
   const colorStatus = () => {
