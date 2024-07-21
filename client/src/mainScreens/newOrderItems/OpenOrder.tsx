@@ -4,11 +4,19 @@ import { dateToLokalFormatFull } from '../../modules/dateToLocalFormat.js'
 import { axiosCall } from '../../modules/axiosCall.js'
 import { sessionData } from '../../modules/sessionData.js'
 import { TableOpenOrder } from '../../components/TableOpenOrder/TableOpenOrder.tsx'
+import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.tsx'
 
 export function OpenOrder(props: any) {
 
-    // console.log(props)
-
+    const historyUpdate = async (text, status) => {
+      if(!status){
+        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {historylist: {date: Date.now(), text: text, name: sessionData('read', 'currentUser')}}})
+      }
+      else{
+        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {status: status, $addToSet: {historylist: {date: Date.now(), text: text, name: sessionData('read', 'currentUser')}}})
+      }
+      props.getOrders()
+    }
     const dataForShow = () => {
 
       const fieldsOfOrder = Object.keys(props.data).filter(item => item !== 'historylist')
@@ -29,6 +37,83 @@ export function OpenOrder(props: any) {
         }
       }
       return newAr
+    }
+    const changeStatusBut = () => {
+      const status = props.data.historylist.find(item => item.text === 'block' || 'open')
+      const disabledModeButtons = () => {
+        if(status.text === 'open' && status.name !== sessionData('read', 'currentUser')){
+            return true
+        }
+        return false
+      }
+      const printBut = (but, index) => {
+          if(but.print){
+              if(!but.disabled){
+                  return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={'order'} handler={but.func} data={props.data}/>
+              }
+          }
+          return <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>
+      }
+
+      const arrayButtons = [
+        {title: 'Готов',
+          disabled: disabledModeButtons(),
+          print: false,
+          // color: 'green',
+          func: async () => await historyUpdate('Назначен статус готов', 'close'),
+        },
+        {title: 'Закрыть',
+          disabled: disabledModeButtons(),
+          print: false,
+          // color: 'green',
+          func: async () => {
+            props.close()
+            clearTimeout(props.timerBlock)
+            }, 
+        },
+        {title: 'Удалить',
+          disabled: disabledModeButtons(),
+          // color: 'green',
+          print: false,
+          func: async () =>  {
+            await axiosCall('DELETE', `http://localhost:5000/api/orders/${props.data._id}`, {})
+            props.close()
+            clearTimeout(props.timerBlock)
+            props.getOrders()
+            }
+        },
+        {title: 'Готов',
+          disabled: disabledModeButtons(),
+          // color: 'green',
+          print: false,
+          func: async () =>  {
+            await historyUpdate('Назначен статус готов', 'ready')
+          },
+        },
+        {title: 'В ремонт',
+          disabled: disabledModeButtons(),
+          // color: 'green',
+          print: false,
+          func: async () =>  {
+            await historyUpdate('Назначен статус В ремонте', 'process')
+          },
+        },
+        {title: 'Печать',
+          disabled: disabledModeButtons(),
+          // color: 'green',
+          print: true,
+          func: async () =>  {
+            
+          },
+        }
+    ]
+
+        return (
+          <>
+          {arrayButtons.map((but, index) => printBut(but, index))}
+          {/* {arrayButtons.filter(item => item.key !== props.data.status)} */}
+          </>
+        )
     }
     const titleComponent = () => {
         return (
@@ -57,147 +142,6 @@ export function OpenOrder(props: any) {
         )
       )
     }
-    const changeStatusBut = () => {
-      const status = props.data.historylist.find(item => item.text === 'block' || 'open')
-      const disabledModeButtons = () => {
-        if(status.text === 'open' && status.name !== sessionData('read', 'currentUser')){
-            return true
-        }
-        return false
-      }
-      const arrayButtons = [
-        <Button 
-          onClick={() =>  {
-          props.close()
-          clearTimeout(props.timerBlock)
-          }}
-          key='freez'
-          >
-          Закрыть
-        </Button>,
-        <Button onClick={async () =>  {
-          await axiosCall('DELETE', `http://localhost:5000/api/orders/${props.data._id}`, {})
-          props.close()
-          clearTimeout(props.timerBlock)
-          props.getOrders()
-          }}
-          disabled={disabledModeButtons()}
-          key='freez1'
-          >
-          Удалить
-        </Button>,
-        <Button onClick={async () =>  {
-          await historyUpdate('Назначен статус готов', 'ready')
-          // props.close()
-          }}
-          disabled={disabledModeButtons()}
-          key='reаdy'
-          >
-          Готов
-        </Button>,
-        <Button onClick={async () =>  {
-          await historyUpdate('Назначен статус В ремонте', 'process')
-          // props.close()
-          }}
-          disabled={disabledModeButtons()}
-          key='process'
-          >
-          В ремонт
-        </Button>,
-        <Button onClick={async () =>  {
-          await historyUpdate('Назначен статус Ожидает', 'waiting')
-          // props.close()
-          }}
-          disabled={disabledModeButtons()}
-          key='waiting'
-          >
-          Ожидает
-        </Button>,
-        <Button onClick={async () =>  {
-          await historyUpdate('Назначен статус готов', 'close')
-          // props.close()
-          }}
-          disabled={disabledModeButtons()}
-          key='close'
-          >
-          Готов
-        </Button>,
-        // <Button onClick={async () =>  {
-        //   await historyUpdate('Назначен статус готов', 'Ready')
-        //   // props.close()
-        //   }}
-        //   disabled={disabledModeButtons()}
-        //   key='waiting'
-        //   >
-        //   Готов
-        // </Button>,
-      ]
-
-        return (
-          <>
-          {arrayButtons.filter(item => item.key !== props.data.status)}
-          {/* <Button onClick={() =>  {
-            props.close()
-            clearTimeout(props.timerBlock)
-            }}
-            >
-            Закрыть
-          </Button>
-          <Button onClick={async () =>  {
-              await axiosCall('DELETE', `http://localhost:5000/api/orders/${props.data._id}`, {})
-              props.close()
-              clearTimeout(props.timerBlock)
-              props.getOrders()
-              }}
-              disabled={disabledModeButtons()}
-              >
-              Удалить
-          </Button>
-          <Button onClick={async () =>  {
-              await historyUpdate('Назначен статус готов', 'Ready')
-              // props.close()
-              }}
-              disabled={disabledModeButtons()}
-              >
-              Готов
-          </Button>
-          <Button onClick={async () =>  {
-              await historyUpdate('Назначен статус готов', 'Ready')
-              // props.close()
-              }}
-              disabled={disabledModeButtons()}
-              >
-              Готов
-          </Button>
-          <Button onClick={async () =>  {
-              await historyUpdate('Назначен статус готов', 'Ready')
-              // props.close()
-              }}
-              disabled={disabledModeButtons()}
-              >
-              Готов
-          </Button>
-          <Button onClick={async () =>  {
-              await historyUpdate('Назначен статус готов', 'Ready')
-              // props.close()
-              }}
-              disabled={disabledModeButtons()}
-              >
-              Готов
-          </Button> */}
-          </>
-        )
-    }
-    const historyUpdate = async (text, status) => {
-      if(!status){
-        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {historylist: {date: Date.now(), text: text, name: sessionData('read', 'currentUser')}}})
-      }
-      else{
-        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {status: status, $addToSet: {historylist: {date: Date.now(), text: text, name: sessionData('read', 'currentUser')}}})
-      }
-      props.getOrders()
-    }
-
     
     return (
         <Container>
