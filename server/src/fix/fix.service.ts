@@ -238,17 +238,18 @@ export class FixService {
             },
             {
                 index: 'process', 
-                label: 'In process',
+                label: 'In the process',
                 freez: true 
             },
             {
-                index: 'redy', 
-                label: 'Redy',
+                index: 'wait', 
+                label: 'Waiting',
                 freez: true 
             },
+            
             {
-                index: 'waranty', 
-                label: 'Waranty',
+                index: 'ready', 
+                label: 'Ready',
                 freez: true 
             },
             {
@@ -257,10 +258,15 @@ export class FixService {
                 freez: true 
             },
             {
-                index: 'wait', 
-                label: 'Waiting',
+                index: 'cancel', 
+                label: 'Сancel',
                 freez: true 
-            },   
+            },
+            {
+                index: 'warranty', 
+                label: 'Warranty',
+                freez: true 
+            },    
     
         ]
         

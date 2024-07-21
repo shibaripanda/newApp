@@ -41,27 +41,16 @@ function MainPage() {
   }
   
   createLisener('createNewOrder', async (data) => {
-    console.log(data)
     await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
     .then(async (res) => {
-      console.log(res)
       setOrders([{...res.data}, ...data.orders])
-      // await getOrders()
       setTimeout(() => setActive(0), 0)
     })
   })
 
   createLisener('createNewOrderAndPrint', async (data) => {
-    console.log(data)
     await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
-    .then(async (res) => {
-      console.log(res)
-      setOrders([{...res.data}, ...data.orders])
-      // await getOrders()
-      // setTimeout(() => setActive(0), 0)
-      // <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={'order'} handler={but.func}/>
-      // return <ModalWindowPrint/>
-    })
+    .then(async (res) => {setOrders([{...res.data}, ...data.orders])})
   })
 
   useEffect(() => {

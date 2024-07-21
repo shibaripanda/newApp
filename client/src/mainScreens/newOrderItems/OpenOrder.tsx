@@ -7,8 +7,26 @@ import { TableOpenOrder } from '../../components/TableOpenOrder/TableOpenOrder.t
 import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.tsx'
 
 export function OpenOrder(props: any) {
+  console.log(props.serviceSettings.listOfStatuses)
+  console.log(props.data)
 
+    const printBut = (but, index) => {
+      if(but.print){
+          if(!but.disabled){
+              return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={but.format} handler={but.func} data={props.data}/>
+          }
+      }
+      return <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>
+    }
+    const disabledModeButtons = () => {
+      const status = props.data.historylist.find(item => item.text === 'block' || 'open')
+      if(status.text === 'open' && status.name !== sessionData('read', 'currentUser')){
+          return true
+      }
+      return false
+    }
     const historyUpdate = async (text, status) => {
+      console.log(text, status)
       if(!status){
         await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {historylist: {date: Date.now(), text: text, name: sessionData('read', 'currentUser')}}})
       }
@@ -16,6 +34,103 @@ export function OpenOrder(props: any) {
         await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {status: status, $addToSet: {historylist: {date: Date.now(), text: text, name: sessionData('read', 'currentUser')}}})
       }
       props.getOrders()
+    }
+    const colorButton = (index) => {
+      if(index === props.data.status) return 'red'
+    }
+
+    const topButtonsLine = () => {
+
+      const arrayButtons = [
+          {title: 'Удалить',
+            disabled: disabledModeButtons(),
+            print: false,
+            color: 'red',
+            func: async () =>  {
+              await axiosCall('DELETE', `http://localhost:5000/api/orders/${props.data._id}`, {})
+              props.close()
+              clearTimeout(props.timerBlock)
+              props.getOrders()
+            }
+          },
+          {title: 'Закрыть окно',
+            disabled: disabledModeButtons(),
+            print: false,
+            func: async () => {
+              props.close()
+              clearTimeout(props.timerBlock)
+              }, 
+          },
+          {title: '🖨 Заказ',
+          disabled: false, //checkDisabledSave(),
+          color: 'green',
+          print: true,
+          format: 'order',
+          func: async () => {
+              return props.data
+          },
+          },
+          {title: '🖨 Гарантия',
+          disabled: false, //checkDisabledSave(),
+          color: 'green',
+          print: true,
+          format: 'var',
+          func: async () => {
+              return props.data
+          },
+          },
+          {title: '🖨 Без ремонта',
+          disabled: false, //checkDisabledSave(),
+          color: 'green',
+          print: true,
+          format: 'var',
+          func: async () => {
+              return props.data
+          },
+          }
+      ]
+
+        return (
+          <div>
+            <Container>
+              <SimpleGrid
+                mt={5}
+                cols={{ base: 1, sm: 2, md: 6 }}
+                spacing={{ base: 'xl', md: 15 }}
+                verticalSpacing={{ base: 'md', md: 20 }}
+              >
+              {arrayButtons.map((but, index) => printBut(but, index))}
+              </SimpleGrid>
+            </Container>
+          </div>
+        )
+    }
+    const bottomButtonsLine = () => {
+      const arrayButtons: any = []
+      for(let i of props.serviceSettings.listOfStatuses){
+        arrayButtons.push({
+          title: i.label,
+          color: colorButton(i.index),
+          disabled: disabledModeButtons(),
+          print: false,
+          func: async () => await historyUpdate('Установлен статус: ' + `"${i.label}"`, i.index)
+        })
+      }
+
+      return (
+        <div>
+          <Container>
+            <SimpleGrid
+              mt={5}
+              cols={{ base: 1, sm: 2, md: 6 }}
+              spacing={{ base: 'xl', md: 15 }}
+              verticalSpacing={{ base: 'md', md: 20 }}
+            >
+            {arrayButtons.map((but, index) => printBut(but, index))}
+            </SimpleGrid>
+          </Container>
+        </div>
+      )
     }
     const dataForShow = () => {
 
@@ -36,118 +151,27 @@ export function OpenOrder(props: any) {
             newAr.push(res)
         }
       }
-      return newAr
-    }
-    const changeStatusBut = () => {
-      const status = props.data.historylist.find(item => item.text === 'block' || 'open')
-      const disabledModeButtons = () => {
-        if(status.text === 'open' && status.name !== sessionData('read', 'currentUser')){
-            return true
-        }
-        return false
-      }
-      const printBut = (but, index) => {
-          if(but.print){
-              if(!but.disabled){
-                  return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={'order'} handler={but.func} data={props.data}/>
-              }
-          }
-          return <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>
-      }
-
-      const arrayButtons = [
-        {title: 'Готов',
-          disabled: disabledModeButtons(),
-          print: false,
-          // color: 'green',
-          func: async () => await historyUpdate('Назначен статус готов', 'close'),
-        },
-        {title: 'Закрыть',
-          disabled: disabledModeButtons(),
-          print: false,
-          // color: 'green',
-          func: async () => {
-            props.close()
-            clearTimeout(props.timerBlock)
-            }, 
-        },
-        {title: 'Удалить',
-          disabled: disabledModeButtons(),
-          // color: 'green',
-          print: false,
-          func: async () =>  {
-            await axiosCall('DELETE', `http://localhost:5000/api/orders/${props.data._id}`, {})
-            props.close()
-            clearTimeout(props.timerBlock)
-            props.getOrders()
-            }
-        },
-        {title: 'Готов',
-          disabled: disabledModeButtons(),
-          // color: 'green',
-          print: false,
-          func: async () =>  {
-            await historyUpdate('Назначен статус готов', 'ready')
-          },
-        },
-        {title: 'В ремонт',
-          disabled: disabledModeButtons(),
-          // color: 'green',
-          print: false,
-          func: async () =>  {
-            await historyUpdate('Назначен статус В ремонте', 'process')
-          },
-        },
-        {title: 'Печать',
-          disabled: disabledModeButtons(),
-          // color: 'green',
-          print: true,
-          func: async () =>  {
-            
-          },
-        }
-    ]
-
-        return (
-          <>
-          {arrayButtons.map((but, index) => printBut(but, index))}
-          {/* {arrayButtons.filter(item => item.key !== props.data.status)} */}
-          </>
-        )
-    }
-    const titleComponent = () => {
-        return (
-          <div>
-            <Container>
-              <SimpleGrid
-                mt={5}
-                cols={{ base: 1, sm: 2, md: 6 }}
-                spacing={{ base: 'xl', md: 15 }}
-                verticalSpacing={{ base: 'md', md: 20 }}
-              >
-              {changeStatusBut()}
-              </SimpleGrid>
-            </Container>
-          </div>
-        )
+      return  <TableOpenOrder order={newAr}/>
     }
     const historyList = () => {
       return (
         props.data.historylist.sort((a, b) => b.date - a.date).map((item, index) => 
         <Container key={index}>
-          <Text fw={700}>{dateToLokalFormatFull(item.date)} {`(`}{item.name}{`)`}</Text>
-          <Text>{item.text}</Text>
+          <Text fw={700}>{dateToLokalFormatFull(item.date)} {`(`}{item.name}{`)`} {item.text}</Text>
+          {/* <Text>{item.text}</Text> */}
           <hr></hr>
         </Container>
         )
       )
     }
-    
+
     return (
         <Container>
-          {titleComponent()}
+          {topButtonsLine()}
+          <hr style={{ marginTop: '0.75vmax', marginBottom: '0.75vmax'}}></hr>
+          {bottomButtonsLine()}
           <div style={{ marginTop: '2vmax', marginBottom: '2vmax'}}>
-          <TableOpenOrder order={dataForShow()}/>
+          {dataForShow()}
           </div>
           {/* <hr style={{ marginTop: '1vmax', marginBottom: '1vmax'}}></hr>
           <hr style={{ marginTop: '1vmax', marginBottom: '1vmax'}}></hr> */}

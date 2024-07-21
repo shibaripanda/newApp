@@ -1,7 +1,6 @@
 import React from "react"
 
 export const TableOpenOrder = (props: any) => {
-    console.log(props)
 
     const table = () => {
         let rows = [<tr key={1000}><td width={'30%'} align="center"></td><td width={'70%'} align="center"></td></tr>]

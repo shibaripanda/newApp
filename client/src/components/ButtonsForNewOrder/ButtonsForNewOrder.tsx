@@ -26,31 +26,33 @@ export const ButtonsForNewOrder = (props) => {
             print: false,
             func: () => props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
         },
+        // {
+        //     title: 'Сохранить',
+        //     disabled: checkDisabledSave(),
+        //     print: false,
+        //     func: async () => {
+        //         const newOr = await createNewOrder(props.value)
+        //         myEmitter.emit('createNewOrder', {newOrder: newOr, orders: props.orders})
+        //         props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
+        //     }, 
+        // },
+        // {
+        //     title: 'Сохр. и открыть',
+        //     disabled: checkDisabledSave(),
+        //     print: false,
+        //     func: () => props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
+        // },
         {
-            title: 'Сохранить',
-            disabled: checkDisabledSave(),
-            print: false,
-            func: async () => {
-                const newOr = await createNewOrder(props.value)
-                myEmitter.emit('createNewOrder', {newOrder: newOr, orders: props.orders})
-                props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
-            }, 
-        },
-        {
-            title: 'Сохр. и открыть',
-            disabled: checkDisabledSave(),
-            print: false,
-            func: () => props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
-        },
-        {
-            title: 'Сохр. и печать',
+            title: 'Сохранить и распечатать',
             disabled: false, //checkDisabledSave(),
             color: 'green',
             print: true,
+            format: 'order',
             func: async () => {
                 const newOr = await createNewOrder(props.value)
-                // myEmitter.emit('createNewOrderAndPrint', {newOrder: newOr, orders: props.orders})
-                // props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
+                myEmitter.emit('createNewOrderAndPrint', {newOrder: newOr, orders: props.orders})
+                props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
+                return newOr
             },
         }
     ]
@@ -58,13 +60,12 @@ export const ButtonsForNewOrder = (props) => {
     const printBut = (but, index) => {
         if(but.print){
             if(!but.disabled){
-                return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={'order'} handler={but.func} data={props.value}/>
+                return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={but.format} handler={but.func} data={props.value}/>
             }
         }
         return <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>
     }
         
-    // const features = controlOrderButtons.map((but, index) => <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>)
     const features = controlOrderButtons.map((but, index) => printBut(but, index))
 
     return (
