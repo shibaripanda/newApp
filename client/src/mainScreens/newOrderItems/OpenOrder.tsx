@@ -13,7 +13,7 @@ export function OpenOrder(props: any) {
     const printBut = (but, index) => {
       if(but.print){
           if(!but.disabled){
-              return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={but.format} handler={but.func} data={props.data}/>
+              return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={but.format} handler={but.func} data={props.data} settings={props.serviceSettings}/>
           }
       }
       return <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>
@@ -122,7 +122,7 @@ export function OpenOrder(props: any) {
           <Container>
             <SimpleGrid
               mt={5}
-              cols={{ base: 1, sm: 2, md: 6 }}
+              cols={{ base: 1, sm: 2, md: 7 }}
               spacing={{ base: 'xl', md: 15 }}
               verticalSpacing={{ base: 'md', md: 20 }}
             >

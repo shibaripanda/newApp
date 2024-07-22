@@ -6,6 +6,7 @@ import { createNewOrder } from '../../modules/creatingNewOrder';
 import { LoaderItem } from '../Loader/LoaderItem.tsx';
 
 export function ModalWindowPrint(props) {
+  console.log(props)
     
   const [opened, { open, close }] = useDisclosure(false)
   const [order, setOrder] = useState(false)
@@ -21,7 +22,7 @@ export function ModalWindowPrint(props) {
 
   const loadPrint = () => {
     if(order){
-      return <Print close={close} format={props.format} data={order}/>
+      return <Print close={close} format={props.format} data={order} settings={props.settings}/>
     }
     return <div className={'mainScreenLoader'}><LoaderItem/></div>
   }

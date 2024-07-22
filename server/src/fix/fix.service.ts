@@ -306,6 +306,7 @@ export class FixService {
                 timePasswordSendToEmail: 'Временный пароль выслан на почту',
                 youDontHaveOrders: 'Нет заказов',
                 UserSettings: 'Настройки пользователя',
+                CampSettings: 'Настройки компании',
                 workers: 'Сотрудники'
                 
             }

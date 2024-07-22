@@ -60,7 +60,7 @@ export const ButtonsForNewOrder = (props) => {
     const printBut = (but, index) => {
         if(but.print){
             if(!but.disabled){
-                return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={but.format} handler={but.func} data={props.value}/>
+                return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={but.format} handler={but.func} data={props.value} settings={props.serviceSettings}/>
             }
         }
         return <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>
