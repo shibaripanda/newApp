@@ -12,3 +12,9 @@ export const updateServiceSettings = async (obj) => {
     await axiosCall('PUT', `http://localhost:5000/api/updatesettingscamp/${sessionData('read', 'campId')}`, obj)
 
 }
+
+export const updatecampsettings = async (obj) => {
+
+    await axiosCall('PUT', `http://localhost:5000/api/updatecampsettings/${sessionData('read', 'campId')}`, obj)
+
+}

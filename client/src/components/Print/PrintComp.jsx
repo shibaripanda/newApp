@@ -10,7 +10,7 @@ export const PrintComp = React.forwardRef((props, ref) => {
     
     const textSet = (index) => {
         if(typeof camp.docprint[index] !== 'undefined'){
-            return camp.docprint[index]
+            return camp.docprint[index].text
         }
         return 'не настроено'
     }
@@ -21,7 +21,7 @@ export const PrintComp = React.forwardRef((props, ref) => {
         <table border="0" cellSpacing="0" cellPadding="0" width='775px' className="table">
             <tbody>
             <tr>
-                <td align="left"><b><font size="2">{camp.docprint.namecomp ? camp.docprint.namecomp : 'не настроено'}</font></b></td>  
+                <td align="left"><b><font size="2">{camp.docprint.namecomp.text ? camp.docprint.namecomp.text : 'не настроено'}</font></b></td>  
             </tr>
             <tr>
                 <td align="center"><b><font size="3">{textSet('name')} № {post.order} от {new Date(post.date).toLocaleString().split(',')[0]}</font></b></td>
@@ -76,20 +76,20 @@ export const PrintComp = React.forwardRef((props, ref) => {
                 <td colSpan="6"><b>&nbsp;{post.cost} бел.руб.</b></td>
             </tr>
             <tr>
-                <td colSpan="8"><b>&nbsp;{camp.docprint.soglas ? camp.docprint.soglas : 'не настроено'}</b></td>
+                <td colSpan="8"><b>&nbsp;{camp.docprint.soglas.text ? camp.docprint.soglas.text : 'не настроено'}</b></td>
             </tr>
             <tr>
                 <td colSpan={2}><b>&nbsp;Телефоны для справок:</b></td>
-                <td colSpan={6}>&nbsp;{camp.docprint.telefonnumber ? camp.docprint.telefonnumber : 'не настроено'}</td>
+                <td colSpan={6}>&nbsp;{camp.docprint.telefonnumber.text ? camp.docprint.telefonnumber.text : 'не настроено'}</td>
                 
             </tr>
             <tr>
                 <td colSpan={2}><b>&nbsp;Исполнитель:</b></td>
-                <td colSpan={6}>&nbsp;{camp.docprint.recviz}</td>
+                <td colSpan={6}>&nbsp;{camp.docprint.recviz.text}</td>
             </tr>
             <tr>
                 <td colSpan={2}><b>&nbsp;Время работы исполнителя:</b></td>
-                <td colSpan={6}>&nbsp;{camp.docprint.time ? camp.docprint.time : 'не настроено'}</td>
+                <td colSpan={6}>&nbsp;{camp.docprint.time.text ? camp.docprint.time.text : 'не настроено'}</td>
             </tr>
             </tbody>
         </table>
@@ -102,12 +102,12 @@ export const PrintComp = React.forwardRef((props, ref) => {
             <tr>
                 <td className="border" colSpan={5}>
                 <font size="3">
-                <div className="perenos"><Text size="15px">{camp.docprint.maintext ? camp.docprint.maintext : 'не настроено'}</Text></div>
+                <div className="perenos"><Text size="15px">{camp.docprint.maintext.text ? camp.docprint.maintext.text : 'не настроено'}</Text></div>
                 </font>
                 </td>
             </tr>
             <tr>
-                <td colSpan={5}><font size="4"><b>&nbsp;{camp.docprint.oznak ? camp.docprint.oznak : 'не настроено'}</b></font></td>
+                <td colSpan={5}><font size="4"><b>&nbsp;{camp.docprint.oznak.text ? camp.docprint.oznak.text : 'не настроено'}</b></font></td>
             </tr>
             <tr>
                 <td colSpan={5}>&nbsp;</td>

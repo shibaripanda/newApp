@@ -7,8 +7,6 @@ import { TableOpenOrder } from '../../components/TableOpenOrder/TableOpenOrder.t
 import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.tsx'
 
 export function OpenOrder(props: any) {
-  console.log(props.serviceSettings.listOfStatuses)
-  console.log(props.data)
 
     const printBut = (but, index) => {
       if(but.print){
@@ -26,7 +24,6 @@ export function OpenOrder(props: any) {
       return false
     }
     const historyUpdate = async (text, status) => {
-      console.log(text, status)
       if(!status){
         await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {historylist: {date: Date.now(), text: text, name: sessionData('read', 'currentUser')}}})
       }

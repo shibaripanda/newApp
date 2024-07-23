@@ -18,6 +18,8 @@ import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom'
 import { sessionData } from '../modules/sessionData.js';
 import { ModalWindowPrint } from '../components/ModalWindow/ModalWindowPrint.tsx';
+import { AdminScreen } from '../mainScreens/AdminScreen.tsx';
+import { GroupUsersScreen } from '../mainScreens/GroupUsersScreen.tsx';
 
 function MainPage() {
   const navigate = useNavigate()
@@ -101,9 +103,11 @@ function MainPage() {
       const listScreens = [
         <ServiceScreen getOrders={getOrders} text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
         <NewOrderScreen getOrders={getOrders} orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
-        <SettingsScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>
+        <SettingsScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
+        <GroupUsersScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
+        <AdminScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
       ]
-
+      
       if(listScreens.length !== navBar.top.length){
         console.log('Какойто пиздец, Навбаров не столько сколько скринов!!!')
       }

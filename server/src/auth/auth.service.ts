@@ -64,7 +64,14 @@ export class AuthService {
         const user = await this.usersService.getUserByEmail(userDto.email)
         if((userDto.authcode === user.emailAuthCode['code'] && Date.now() - user.emailAuthCode['time'] < 900000) || userDto.authcode === String(111)){
             if(user.emailAuthCode['name'] !== false){
-                await this.campService.createCamp({name: user.emailAuthCode['name'], owner: user.email, users: [{email: user.email, role: 'owner'}], settings: {[user._id]: getFixserviceSettings()}})
+                const settings = getFixserviceSettings()
+                await this.campService.createCamp({
+                    name: user.emailAuthCode['name'], 
+                    owner: user.email, 
+                    users: [{email: user.email, role: 'owner'}], 
+                    settings: {[user._id]: settings.user},
+                    campSettings: settings.camp.campSettings
+                })
             }
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: user.emailAuthCode['code'], time: Date.now(), step: 1, name: false}})
             // const result = await this.validateUser(userDto)

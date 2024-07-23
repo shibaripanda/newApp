@@ -5,6 +5,8 @@ import {
     // IconFingerprint,
     // IconCalendarStats,
     // IconUser,
+    IconUsersGroup,
+    IconUser,
     IconPower,
     IconSettings,
     IconLogout,
@@ -19,7 +21,10 @@ export const fixNavBarItems = async () => {
       top: [
         { icon: IconHome, label: 'Service' },
         { icon: IconCirclePlus, label: 'New Order' },
-        { icon: IconSettings, label: 'Settings' },
+        { icon: IconUser, label: 'Settings' },
+        { icon: IconUsersGroup, label: 'Users' },
+        { icon: IconSettings, label: 'Admin' },
+        
       ],
       bottom: [
         { icon: IconSwitchHorizontal, label: 'Change account', onCl: (navigate) => {

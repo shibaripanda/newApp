@@ -30,4 +30,10 @@ export class CampsController {
     updateSettingsCamp(@Param('campId') campId: string, @Body() obj: object, @Request() req: any){
         return this.campsService.updateSettingsCamp(campId, obj, req.user._id)
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('/updatecampsettings/:campId')
+    updateCampSettings(@Param('campId') campId: string, @Body() obj: object){
+        return this.campsService.updateCampSettings(campId, obj)
+    }
 }
