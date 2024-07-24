@@ -1,15 +1,12 @@
-'use client';
-import { useContextMenu } from 'mantine-contextmenu';
-import { Autocomplete, Burger, Group } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconCopy, IconDownload, IconSearch } from '@tabler/icons-react';
-import classes from './HeaderSearch.module.css';
-import React from 'react';
-import { MantineLogo } from '@mantinex/mantine-logo';
-import { sessionData } from '../../modules/sessionData';
+'use client'
+import { Autocomplete, Burger, Group } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { IconSearch } from '@tabler/icons-react'
+import classes from './HeaderSearch.module.css'
+import React from 'react'
+import { sessionData } from '../../modules/sessionData'
 
 export function HeaderSearch(props) {
-  const { showContextMenu } = useContextMenu()
 
   const [opened, { toggle }] = useDisclosure(false);
 
@@ -35,27 +32,11 @@ export function HeaderSearch(props) {
 
   return (
     <header className={classes.header}>
-      <div 
-      onContextMenu={showContextMenu([
-        {
-          key: 'copy',
-          icon: <IconCopy size={16} />,
-          title: 'Copy to clipboard',
-          onClick: () => toggle(),
-        },
-        {
-          key: 'download',
-          icon: <IconDownload size={16} />,
-          title: 'Download to your device',
-          onClick: () => toggle(),
-        },
-      ])}>
+      <div>
         <div className={classes.inner}>
           <Group>
             <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-            <MantineLogo size={28} />
-            {/* <Text>dsdsf</Text> */}
-            {sessionData('read', 'currentUser')}
+            {sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}
           </Group>
 
           <Group>

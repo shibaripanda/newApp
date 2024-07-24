@@ -1,9 +1,8 @@
-import { useDisclosure } from '@mantine/hooks';
-import { Button, Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks'
+import { Button, Modal } from '@mantine/core'
 import React, { useState } from 'react'
-import { Print } from '../Print/Print';
-import { createNewOrder } from '../../modules/creatingNewOrder';
-import { LoaderItem } from '../Loader/LoaderItem.tsx';
+import { Print } from '../Print/Print'
+import { LoaderItem } from '../Loader/LoaderItem.tsx'
 
 export function ModalWindowPrint(props) {
     

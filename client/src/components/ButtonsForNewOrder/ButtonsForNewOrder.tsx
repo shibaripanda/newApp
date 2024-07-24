@@ -44,12 +44,13 @@ export const ButtonsForNewOrder = (props) => {
         // },
         {
             title: 'Сохранить и распечатать',
-            disabled: false, //checkDisabledSave(),
+            disabled: checkDisabledSave(),
             color: 'green',
             print: true,
             format: 'order',
             func: async () => {
                 const newOr = await createNewOrder(props.value)
+                console.log(newOr)
                 myEmitter.emit('createNewOrderAndPrint', {newOrder: newOr, orders: props.orders})
                 props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
                 return newOr

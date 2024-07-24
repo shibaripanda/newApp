@@ -1,5 +1,6 @@
 import React from "react"
 import { Text } from "@mantine/core";
+import { sessionData } from "../../modules/sessionData";
 
 
 export const PrintComp = React.forwardRef((props, ref) => {
@@ -44,7 +45,7 @@ export const PrintComp = React.forwardRef((props, ref) => {
                 <td align="center">&nbsp;{post.order}</td>
                 <td colSpan='2' align="center">&nbsp;{new Date(post.date).toLocaleString()}</td>
                 <td align="center">&nbsp;Сотрудник СЦ:</td>
-                <td colSpan='2' align="center">&nbsp;{post.manager}</td>
+                <td colSpan='2' align="center">&nbsp;{sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}</td>
             </tr>
             <tr>
                 <td colSpan="2"><b>&nbsp;Заказчик:</b></td>
@@ -127,7 +128,7 @@ export const PrintComp = React.forwardRef((props, ref) => {
                 <td align="right" width={'35%'}><font size="3">{post.name}</font></td>
                 <td align="right" width={'10%'}>&nbsp;</td>
                 <td align="left" width={'10%'}><font size="3">Подпись:</font></td>
-                <td align="right" width={'35%'}><font size="3">{post.manager}</font></td>
+                <td align="right" width={'35%'}><font size="3">{sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}</font></td>
             </tr>
             <tr>
                 <td align="left" colSpan={2}><div className="create-line"></div></td>

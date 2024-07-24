@@ -47,6 +47,10 @@ function AuthPage() {
     await axiosCall('POST', 'http://localhost:5000/auth/authemailcode', {authcode: password, email: email})
     .then((res) => {
       console.log(res)
+      console.log(res.data.name)
+      if(res.data.name !== 'noname'){
+        sessionData(`write`, 'currentUserName', res.data.name)
+      }
       sessionData(`write`, 'currentUser', res.data.email)
       sessionData(`write`, 'token', res.data.token)
       sessionData(`write`, 'activUsers', res.data.email)

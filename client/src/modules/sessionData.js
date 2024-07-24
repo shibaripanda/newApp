@@ -1,7 +1,7 @@
 export const sessionData = (forward, item, data) => {
 
     if(forward === 'write'){
-        if(item === 'currentUser'){
+        if(item === 'currentUser' || item === 'currentUserName'){
             sessionStorage.setItem(item, data)
         }
         else if(item === 'token' || item === 'campId'){
@@ -19,7 +19,7 @@ export const sessionData = (forward, item, data) => {
         }
     }
     else if(forward === 'read'){
-        if(item === 'currentUser' || item === 'activUsers'){
+        if(item === 'currentUser' || item === 'activUsers' || item === 'currentUserName'){
             return sessionStorage.getItem(item)
         }
         else if(item === 'token' || item === 'campId'){
@@ -28,6 +28,7 @@ export const sessionData = (forward, item, data) => {
     }
     else if(forward === 'close'){
         sessionStorage.removeItem('currentUser')
+        sessionStorage.removeItem('currentUserName')
     }
     else if(forward === 'exit'){
         console.log(sessionStorage.getItem('activUsers'))
@@ -36,6 +37,7 @@ export const sessionData = (forward, item, data) => {
         sessionStorage.removeItem(`token ${sessionStorage.getItem('currentUser')}`)
         sessionStorage.removeItem(`campId ${sessionStorage.getItem('currentUser')}`)
         sessionStorage.removeItem(`currentUser`)
+        sessionStorage.removeItem(`currentUserName`)
     }
     else if(forward === 'off'){
         sessionStorage.clear()

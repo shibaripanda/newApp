@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react"
-import { axiosCall } from "../../modules/axiosCall"
+import React, { useState } from "react"
 import { LoaderItem } from "../../components/Loader/LoaderItem.tsx"
-import { TextInput, Container, Button, Textarea } from '@mantine/core';
+import { Container, Button, Textarea } from '@mantine/core';
 import { updatecampsettings } from "../../fix/fixServiceSettings.js";
 
 export const CampSettings = (props) => {
 
     const [data, setData] = useState(props.serviceSettings.campSettings)
     const activOrDis = (a, b) => {
-        if(a == b) return true
+        if(a === b) return true
         return false
     }
 
@@ -38,18 +37,6 @@ export const CampSettings = (props) => {
              <div>
                 <Container size={800} my={15}>
                     {res}
-                    {/* <TextInput label={`Имя Фамилия`} placeholder={'name'} required onChange={event => {}}/>
-                    <Button mt="sm" onClick={async () =>  {
-                        await updatecampsettings({item: 'namecomp', newData: 'hjhjjhjh'})
-                        }}>
-                        Обновить
-                    </Button>
-                    <Textarea label={`Имя Фамилия`} placeholder={'name'} required onChange={event => {}}/>
-                    <Button mt="sm" onClick={async () =>  {
-                        await updatecampsettings({item: 'namecomp', newData: 'hjhjjhjh'})
-                        }}>
-                        Обновить
-                    </Button> */}
                 </Container>
              </div>
          ) 

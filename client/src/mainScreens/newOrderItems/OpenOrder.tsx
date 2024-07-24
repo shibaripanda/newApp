@@ -8,6 +8,8 @@ import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.
 
 export function OpenOrder(props: any) {
 
+  console.log(props.data)
+
     const printBut = (but, index) => {
       if(but.print){
           if(!but.disabled){
@@ -25,10 +27,18 @@ export function OpenOrder(props: any) {
     }
     const historyUpdate = async (text, status) => {
       if(!status){
-        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {historylist: {date: Date.now(), text: text, name: sessionData('read', 'currentUser')}}})
+        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
+          historylist: {date: Date.now(),
+             text: text,
+              name: sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}
+            }})
       }
       else{
-        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {status: status, $addToSet: {historylist: {date: Date.now(), text: text, name: sessionData('read', 'currentUser')}}})
+        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {status: status, $addToSet: {
+          historylist: {date: Date.now(), 
+            text: text, 
+            name: sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}
+          }})
       }
       props.getOrders()
     }
