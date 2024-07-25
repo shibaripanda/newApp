@@ -8,7 +8,7 @@ import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.
 
 export function OpenOrder(props: any) {
 
-  console.log(props.data)
+  // console.log(props.data)
 
     const printBut = (but, index) => {
       if(but.print){
@@ -30,14 +30,14 @@ export function OpenOrder(props: any) {
         await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
           historylist: {date: Date.now(),
              text: text,
-              name: sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}
+              name: sessionData('read', 'name')}
             }})
       }
       else{
         await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {status: status, $addToSet: {
           historylist: {date: Date.now(), 
             text: text, 
-            name: sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}
+            name: sessionData('read', 'name')}
           }})
       }
       props.getOrders()
@@ -164,7 +164,7 @@ export function OpenOrder(props: any) {
       return (
         props.data.historylist.sort((a, b) => b.date - a.date).map((item, index) => 
         <Container key={index}>
-          <Text fw={700}>{dateToLokalFormatFull(item.date)} {`(`}{item.name}{`)`} {item.text}</Text>
+          <Text fw={700}>{dateToLokalFormatFull(item.date).substring(0,17)} {`(`}{item.name}{`)`} {item.text}</Text>
           {/* <Text>{item.text}</Text> */}
           <hr></hr>
         </Container>

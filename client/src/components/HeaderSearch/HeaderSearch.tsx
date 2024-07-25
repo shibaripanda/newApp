@@ -36,7 +36,7 @@ export function HeaderSearch(props) {
         <div className={classes.inner}>
           <Group>
             <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-            {sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}
+            {sessionData('read', 'name')}
           </Group>
 
           <Group>

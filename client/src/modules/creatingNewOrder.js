@@ -7,17 +7,15 @@ export const createNewOrder = async (order) => {
     const letter = () => rendomLetteOrder()
     const date = Date.now()
 
-    console.log(sessionData('read', 'currentUserName'))
-    console.log(sessionData('read', 'currentUser'))
-    console.log(sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser'))
+    console.log(sessionData('read', 'name'))
     
         return {
             ...order,
             date: date,
             order: number() + '_' + letter() + letter() + letter(),
             campId: sessionData('read', 'campId'),
-            historylist: [{date: Date.now(), text: 'Greated', name: sessionData('read', 'currentUser')}],
+            historylist: [{date: Date.now(), text: 'Greated', name: sessionData('read', 'name')}],
             status: 'new',
-            manager: 'hjhjhj' + sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')
+            manager: sessionData('read', 'name')
             }
 }

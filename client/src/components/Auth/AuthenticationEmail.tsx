@@ -30,7 +30,7 @@ import { sessionData } from '../../modules/sessionData';
 
     const fastBottons = () => {
       if(sessionData('read', 'activUsers')){
-        const res = sessionData('read', 'activUsers')?.split(' ').map((item, index) => 
+        const res = sessionData('read', 'activUsers').map((item, index) => 
         <Button 
         key={index} 
         fullWidth 
@@ -42,7 +42,7 @@ import { sessionData } from '../../modules/sessionData';
           }
         }
         >
-          {item}
+          {item.split('#')[1]}
         </Button>)
 
         return (

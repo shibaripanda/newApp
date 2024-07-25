@@ -102,7 +102,7 @@ export const PrintVar = React.forwardRef((props, ref) => {
                 <td align="center">&nbsp;{post.order}</td>
                 <td colSpan='2' align="center">&nbsp;{new Date(post.date).toLocaleString()}</td>
                 <td align="center">&nbsp;Сотрудник СЦ:</td>
-                <td colSpan='2' align="center">&nbsp;{sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}</td>
+                <td colSpan='2' align="center">&nbsp;{sessionData('read', 'name')}</td>
             </tr>
             <tr>
                 <td colSpan="2">&nbsp;Заказчик:</td>
@@ -184,7 +184,7 @@ export const PrintVar = React.forwardRef((props, ref) => {
                 <td align="right" width={'35%'}><font size="3">{post.name}</font></td>
                 <td align="right" width={'10%'}>&nbsp;</td>
                 <td align="left" width={'10%'}><font size="3">Подпись:</font></td>
-                <td align="right" width={'35%'}><font size="3">{sessionData('read', 'currentUserName') ? sessionData('read', 'currentUserName') : sessionData('read', 'currentUser')}</font></td>
+                <td align="right" width={'35%'}><font size="3">{sessionData('read', 'name')}</font></td>
             </tr>
             <tr>
                 <td align="center" colSpan={2}><div className="create-line"></div></td>
