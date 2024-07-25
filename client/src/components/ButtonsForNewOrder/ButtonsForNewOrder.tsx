@@ -26,16 +26,16 @@ export const ButtonsForNewOrder = (props) => {
             print: false,
             func: () => props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields)),
         },
-        // {
-        //     title: 'Сохранить',
-        //     disabled: checkDisabledSave(),
-        //     print: false,
-        //     func: async () => {
-        //         const newOr = await createNewOrder(props.value)
-        //         myEmitter.emit('createNewOrder', {newOrder: newOr, orders: props.orders})
-        //         props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
-        //     }, 
-        // },
+        {
+            title: 'Сохранить',
+            disabled: checkDisabledSave(),
+            print: false,
+            func: async () => {
+                const newOr = await createNewOrder(props.value)
+                myEmitter.emit('createNewOrder', {newOrder: newOr, orders: props.orders})
+                props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
+            }, 
+        },
         // {
         //     title: 'Сохр. и открыть',
         //     disabled: checkDisabledSave(),
@@ -52,7 +52,7 @@ export const ButtonsForNewOrder = (props) => {
                 const newOr = await createNewOrder(props.value)
                 console.log(newOr)
                 myEmitter.emit('createNewOrderAndPrint', {newOrder: newOr, orders: props.orders})
-                props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
+                // props.setValue(props.defaultValue(props.serviceSettings.listOrdersFields))
                 return newOr
             },
         }

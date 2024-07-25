@@ -46,7 +46,7 @@ function MainPage() {
     await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
     .then(async (res) => {
       setOrders([{...res.data}, ...data.orders])
-      setTimeout(() => setActive(0), 0)
+      setTimeout(() => setActive(0), 500)
     })
   })
 
