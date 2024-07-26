@@ -1,5 +1,5 @@
-import { Button, Container, SimpleGrid, Text } from '@mantine/core'
-import React from 'react'
+import { Button, Container, SimpleGrid, Text, TextInput } from '@mantine/core'
+import React, { useState } from 'react'
 import { dateToLokalFormatFull } from '../../modules/dateToLocalFormat.js'
 import { axiosCall } from '../../modules/axiosCall.js'
 import { sessionData } from '../../modules/sessionData.js'
@@ -7,6 +7,8 @@ import { TableOpenOrder } from '../../components/TableOpenOrder/TableOpenOrder.t
 import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.tsx'
 
 export function OpenOrder(props: any) {
+
+  const [newInfo, setNewInfo] = useState('')
 
   // console.log(props.data)
 
@@ -171,6 +173,10 @@ export function OpenOrder(props: any) {
         )
       )
     }
+    const addBut = (text) => {
+      if(text === '') return true
+      return false
+    }
 
     return (
         <Container>
@@ -179,6 +185,15 @@ export function OpenOrder(props: any) {
           {bottomButtonsLine()}
           <div style={{ marginTop: '2vmax', marginBottom: '2vmax'}}>
           {dataForShow()}
+          </div>
+          <div style={{ marginBottom: '2vmax'}}>
+          <TextInput label="Добавить новое действие" value={newInfo} placeholder="печатай сюда" onChange={event => setNewInfo(event.currentTarget.value)}/>
+          <Button mt="sm" disabled={addBut(newInfo)} onClick={() => {
+            historyUpdate(newInfo, false)
+            setNewInfo('')
+            }}>
+          Добавить
+          </Button>
           </div>
           {/* <hr style={{ marginTop: '1vmax', marginBottom: '1vmax'}}></hr>
           <hr style={{ marginTop: '1vmax', marginBottom: '1vmax'}}></hr> */}
