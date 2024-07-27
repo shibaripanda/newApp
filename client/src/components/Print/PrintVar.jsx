@@ -2,7 +2,7 @@ import React from "react"
 import { sessionData } from "../../modules/sessionData"
 import { ServiceTableDocument } from "../ServiceTable/ServiceTableDocument.tsx"
 // import rubles from '('rubles').rubles'
-var rubles = require('rubles').rubles
+// var rubles = require('rubles').rubles
 
 
 export const PrintVar = React.forwardRef((props, ref) => {

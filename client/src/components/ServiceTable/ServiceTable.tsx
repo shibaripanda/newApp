@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, SimpleGrid } from '@mantine/core'
+import { Table, Button } from '@mantine/core'
 
 
 export function ServiceTable(props) {

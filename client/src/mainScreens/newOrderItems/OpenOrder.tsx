@@ -135,7 +135,7 @@ export function OpenOrder(props: any) {
 
       const arrayButtons = [
           {title: 'Удалить',
-            disabled: disabledModeButtons(),
+            disabled: disabledModeButtons('index'),
             print: false,
             color: 'red',
             func: async () =>  {
@@ -146,7 +146,7 @@ export function OpenOrder(props: any) {
             }
           },
           {title: 'Закрыть окно',
-            disabled: disabledModeButtons(),
+            disabled: disabledModeButtons('index'),
             print: false,
             func: async () => {
               props.close()
@@ -208,7 +208,7 @@ export function OpenOrder(props: any) {
           print: false,
           func: async () => {
             if(i.index !== 'new'){
-              await historyUpdate(`Установлен статус: ` + `"${i.label}"`, i.index)
+              await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
             }
           }
         })
