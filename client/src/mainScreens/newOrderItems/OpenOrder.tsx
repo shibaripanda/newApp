@@ -1,4 +1,4 @@
-import { Button, Container, Grid, SimpleGrid, Text, TextInput } from '@mantine/core'
+import { Button, Container, SimpleGrid, Text, TextInput } from '@mantine/core'
 import React, { useState } from 'react'
 import { dateToLokalFormatFull } from '../../modules/dateToLocalFormat.js'
 import { axiosCall } from '../../modules/axiosCall.js'
@@ -12,7 +12,6 @@ export function OpenOrder(props: any) {
   const [newInfo, setNewInfo] = useState('')
   const [service, setService] = useState({service: '', price: 0, master: '', varant: 0})
 
-
   // console.log(props.data)
 
     const printBut = (but, index) => {
@@ -23,11 +22,22 @@ export function OpenOrder(props: any) {
       }
       return <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>
     }
-    const disabledModeButtons = () => {
-      const status = props.data.historylist.find(item => item.text === 'block' || 'open')
-      if(status.text === 'open' && status.name !== sessionData('read', 'currentUser')){
+    const disabledModeButtons = (status) => {
+      
+      if(['close', 'cancel'].includes(status)){
+        console.log(status)
+        console.log(props.data.soglas)
+          if(status === 'close' && !props.data.soglas){
           return true
+        }
+        else if(status === 'cancel' && props.data.soglas){
+          return true
+        }
       }
+      if(['close', 'cancel'].includes(props.data.status)){
+        if(['new', 'process','wait', 'ready','close', 'cancel'].includes(status))
+          return true
+        }
       return false
     }
     const historyUpdate = async (text, status) => {
@@ -39,11 +49,20 @@ export function OpenOrder(props: any) {
             }})
       }
       else{
-        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {status: status, $addToSet: {
+        if(props.data.status === 'warranty'){
+          await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {soglas: false, status: status, $addToSet: {
+            historylist: {date: Date.now(), 
+              text: text, 
+              name: sessionData('read', 'name')}
+            }})
+        }
+        else{
+          await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {status: status, $addToSet: {
           historylist: {date: Date.now(), 
             text: text, 
             name: sessionData('read', 'name')}
           }})
+        }
       }
       props.getOrders()
     }
@@ -86,7 +105,7 @@ export function OpenOrder(props: any) {
 
       }
     props.getOrders()
-  }
+    }
     const serviceDelete = async (service) => {
       await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
           historylist: {
@@ -102,6 +121,14 @@ export function OpenOrder(props: any) {
     }
     const colorButton = (index) => {
       if(index === props.data.status) return 'red'
+    }
+    const disabledIfService = () => {
+      if(props.data.service.length && props.data.status === 'close') return false
+      return true
+    }
+    const disabledIfServiceCancel = () => {
+      if(props.data.status === 'cancel') return false
+      return true
     }
 
     const topButtonsLine = () => {
@@ -136,7 +163,8 @@ export function OpenOrder(props: any) {
           },
           },
           {title: '🖨 Гарантия',
-          disabled: false, //checkDisabledSave(),
+          // disabled: false, //checkDisabledSave(),
+          disabled: disabledIfService(), //checkDisabledSave(),
           color: 'green',
           print: true,
           format: 'var',
@@ -145,7 +173,7 @@ export function OpenOrder(props: any) {
           },
           },
           {title: '🖨 Без ремонта',
-          disabled: false, //checkDisabledSave(),
+          disabled: disabledIfServiceCancel(), //checkDisabledSave(),
           color: 'green',
           print: true,
           format: 'var',
@@ -176,9 +204,13 @@ export function OpenOrder(props: any) {
         arrayButtons.push({
           title: i.label,
           color: colorButton(i.index),
-          disabled: disabledModeButtons(),
+          disabled: disabledModeButtons(i.index),
           print: false,
-          func: async () => await historyUpdate('Установлен статус: ' + `"${i.label}"`, i.index)
+          func: async () => {
+            if(i.index !== 'new'){
+              await historyUpdate(`Установлен статус: ` + `"${i.label}"`, i.index)
+            }
+          }
         })
       }
 
@@ -241,42 +273,91 @@ export function OpenOrder(props: any) {
       const soglasCheck = () => {
         if(props.data.soglas) return '✅'
       }
-      if(props.data.service.length) return (
-        <>
-        <SimpleGrid cols={6} style={{marginBottom: '0.5vmax', alignItems: 'center'}}>
+      const statusShowSoglas = () => {
+        if(['ready', 'close', 'cancel', 'warranty'].includes(props.data.status)){
+          return (
+            <div style={{marginTop: '1vmax'}}>
+            <SimpleGrid cols={6} style={{marginBottom: '0.5vmax', alignItems: 'center'}}>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div style={{textAlign: 'right'}}>{soglasCheck()} <b>Сумма {props.data.service.reduce((a, b) => a + b.price, 0)} р</b></div>
+            </SimpleGrid>
+            </div>
+          )
+        }
+        return (
+          <SimpleGrid cols={6} style={{marginBottom: '0.5vmax', alignItems: 'center'}}>
           <div></div>
           <div></div>
           <div></div>
-          <div style={{textAlign: 'right'}}>{soglasCheck()} <b>Сумма {props.data.service.reduce((a, b) => a + b.price, 0)} руб.</b></div>
+          <div style={{textAlign: 'right'}}>{soglasCheck()} <b>Сумма {props.data.service.reduce((a, b) => a + b.price, 0)} р</b></div>
           <Button disabled={props.data.soglas} onClick={() => {serviceUpdateSoglas(true)}}>Согласовано</Button>
           <Button disabled={!props.data.soglas} onClick={() => {serviceUpdateSoglas(false)}}>Отказ</Button>
         </SimpleGrid>
-        <ServiceTable data={props.data.service} delete={serviceDelete}/>
+        )
+      }
+      
+      if(props.data.service.length) return (
+        <>
+        {statusShowSoglas()}
+        <ServiceTable data={props.data.service} status={props.data.status} delete={serviceDelete}/>
         </>
       )
     }
-
-    return (
-        <Container>
-          {topButtonsLine()}
-          <hr style={{ marginTop: '0.75vmax', marginBottom: '0.75vmax'}}></hr>
-          {bottomButtonsLine()}
-          
-          <div style={{ marginBottom: '1vmax', marginTop: '1.5vmax'}}>
-            <TextInput label="Информация" value={newInfo} placeholder="Добавить новое действие" onChange={event => setNewInfo(event.currentTarget.value)}/>
+    const showItemsNewOrder = () => {
+      if(props.data.status !== 'new'){
+        const ifReadyOrder = () => {
+          if(['process', 'wait'].includes(props.data.status)){
+            return (
+              <div>
+                <div style={{ marginBottom: '1vmax', marginTop: '1.5vmax'}}>
+            <TextInput 
+            label="Информация" 
+            value={newInfo} 
+            placeholder="Добавить новое действие" 
+            onChange={event => {
+              setNewInfo(event.currentTarget.value)
+            }}
+            />
             <Button mt="sm" disabled={addBut(newInfo)} onClick={() => {
                 historyUpdate(newInfo, false)
                 setNewInfo('')
                 }}>
               Добавить информацию
             </Button>
-          </div>
-          <div style={{ marginBottom: '1.5vmax', marginTop: '1vmax'}}>
+            </div>
+            <div style={{ marginBottom: '1.5vmax', marginTop: '1vmax'}}>
               <TextInput width={'5vmax'} label="Услуга" value={service.service} placeholder="Услуга" onChange={event => setService({...service, service: event.currentTarget.value})}/>
             <SimpleGrid cols={3}>
-              <TextInput label="Стоимость" value={service.price} placeholder="печатай сюда" onChange={event => setService({...service, price: Number(event.currentTarget.value)})}/>
+              <TextInput 
+              label="Стоимость" 
+              value={service.price}
+              onChange={event => {
+                if(/^\d+$/.test(event.currentTarget.value)){
+                  setService({...service, price: Number(event.currentTarget.value)})
+                }
+                else{
+                  setService({...service, price: 0})
+                }
+              }}
+              />
               <TextInput label="Мастер" value={service.master} placeholder="печатай сюда" onChange={event => setService({...service, master: event.currentTarget.value})}/>
-              <TextInput label="Гарантия (дней)" value={service.varant} placeholder="печатай сюда" onChange={event => setService({...service, varant: Number(event.currentTarget.value)})}/>
+              <TextInput 
+              label="Гарантия (дней)" 
+              value={service.varant} 
+              placeholder="печатай сюда" 
+              onChange={event => {
+                if(/^\d+$/.test(event.currentTarget.value)){
+                  setService({...service, varant: Number(event.currentTarget.value)})
+                }
+                else{
+                  setService({...service, varant: 0})
+                }
+              }}
+              />
             </SimpleGrid>  
               <Button mt="sm" disabled={addButService(service)} onClick={() => {
                 serviceUpdate(service)
@@ -284,14 +365,35 @@ export function OpenOrder(props: any) {
                 }}>
               Добавить услугу
               </Button>
-          </div>
+            </div>
+              </div>
+            )
+          }
+        }
+        return (
+          <div>
+          {ifReadyOrder()}
           {serviceList()}
+          </div>
+        )
+      }
+      return (
+        <div style={{marginTop: '1vmax'}}>
+          <hr></hr>
+        </div>
+      ) 
+    }
+
+    return (
+        <Container>
+          {topButtonsLine()}
+          <hr style={{ marginTop: '0.75vmax', marginBottom: '0.75vmax'}}></hr>
+          {bottomButtonsLine()}
+          {showItemsNewOrder()}
           {historyList()}
           <div style={{ marginTop: '2vmax', marginBottom: '2vmax'}}>
           {dataForShow()}
           </div>
-          
-          
         </Container>
     )
 }

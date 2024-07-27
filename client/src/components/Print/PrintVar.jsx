@@ -67,7 +67,10 @@ export const PrintVar = React.forwardRef((props, ref) => {
             <tr>
                 <td colSpan="2">&nbsp;Серийный номер:</td>
                 <td colSpan="6">&nbsp;{post.sn}</td>
-            </tr>
+            </tr> 
+
+            
+
             {/* <tr>
                 <td colSpan="2">&nbsp;Внешний вид:</td>
                 <td colSpan="6">&nbsp;{post.view}</td>

@@ -446,6 +446,11 @@ export const getFixserviceSettings = () => {
                  cost: ['676767']
     }
     const listOfStatuses = [
+        {
+            index: 'warranty', 
+            label: 'Warranty',
+            freez: true 
+        },
     
         {
             index: 'new', 
@@ -454,7 +459,7 @@ export const getFixserviceSettings = () => {
         },
         {
             index: 'process', 
-            label: 'In the process',
+            label: 'Process',
             freez: true 
         },
         {
@@ -478,11 +483,7 @@ export const getFixserviceSettings = () => {
             label: 'Сancel',
             freez: true 
         },
-        {
-            index: 'warranty', 
-            label: 'Warranty',
-            freez: true 
-        }
+        
 
     ]
     const docprint = {
