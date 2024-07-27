@@ -45,6 +45,7 @@ export const OrderSchema = new mongoose.Schema({
   dateOut: {type: String}, //g
   info: {type: String}, //g
   firm: {type: String}, //g
+  soglas: {type: Boolean}, //g
 }, {timestamps: true})
 
 export interface Order {

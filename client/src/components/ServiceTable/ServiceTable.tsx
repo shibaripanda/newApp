@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button } from '@mantine/core'
+import { Table, Button, SimpleGrid } from '@mantine/core'
 
 
 export function ServiceTable(props) {
@@ -8,12 +8,16 @@ export function ServiceTable(props) {
 
     return (
       <Table.Tr key={row.service}>
-        <Table.Td>{index + 1}</Table.Td>
+        <Table.Td><div style={{textAlign: 'center'}}>{index + 1}</div></Table.Td>
         <Table.Td>{row.service}</Table.Td>
         <Table.Td>{row.master}</Table.Td>
-        <Table.Td>{row.varant}</Table.Td>
-        <Table.Td>{row.price}</Table.Td>
-        <Table.Td><Button color={'red'} onClick={() => {props.delete(row)}}>Удалить</Button></Table.Td>
+        <Table.Td><div style={{textAlign: 'right'}}>{row.varant}</div></Table.Td>
+        <Table.Td><div style={{textAlign: 'right'}}>{row.price}</div></Table.Td>
+        <Table.Td>
+          <div style={{textAlign: 'center'}}>
+              <Button color={'red'} onClick={() => {props.delete(row)}}>Удалить</Button>
+          </div>
+          </Table.Td>
       </Table.Tr>
     )
 
@@ -27,14 +31,14 @@ export function ServiceTable(props) {
             <Table.Th key={1}></Table.Th>
             <Table.Th key={2}>Услуга</Table.Th>
             <Table.Th key={3}>Мастер</Table.Th>
-            <Table.Th key={4}>Гарантия (дней)</Table.Th>
+            <Table.Th key={4}>Гарант(дней)</Table.Th>
             <Table.Th key={5}>Стоимость</Table.Th>
             <Table.Th key={6}>Состояние</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
             {rows}
-            <Table.Td colSpan={6}><b>Сумма {props.data.reduce((a, b) => a + b.price, 0)} руб.</b></Table.Td>
+            {/* <Table.Td colSpan={6}><b>Сумма {props.data.reduce((a, b) => a + b.price, 0)} руб.</b></Table.Td> */}
         </Table.Tbody>
       </Table>
     </Table.ScrollContainer>

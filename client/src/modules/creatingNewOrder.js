@@ -16,6 +16,7 @@ export const createNewOrder = async (order) => {
             campId: sessionData('read', 'campId'),
             historylist: [{date: Date.now(), text: 'Greated', name: sessionData('read', 'name')}],
             status: 'new',
-            manager: sessionData('read', 'name')
+            manager: sessionData('read', 'name'),
+            soglas: false
             }
 }

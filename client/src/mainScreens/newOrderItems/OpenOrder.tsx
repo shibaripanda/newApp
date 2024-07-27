@@ -55,11 +55,38 @@ export function OpenOrder(props: any) {
               name: sessionData('read', 'name')
             },
             service: service
-          }
+          },
+          soglas: false
         })
       
       props.getOrders()
     }
+    const serviceUpdateSoglas = async (status) => {
+      if(status){
+          await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
+            historylist: {
+              date: Date.now(),
+              text: 'Согласовано на: ' + props.data.service.reduce((a, b) => a + b.price, 0) + ' руб.',
+              name: sessionData('read', 'name')
+            }
+          },
+          soglas: status
+        })
+      }
+      else{
+        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
+          historylist: {
+            date: Date.now(),
+            text: 'Отказ: ' + props.data.service.reduce((a, b) => a + b.price, 0) + ' руб.',
+            name: sessionData('read', 'name')
+          }
+        },
+        soglas: status
+      })
+
+      }
+    props.getOrders()
+  }
     const serviceDelete = async (service) => {
       await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
           historylist: {
@@ -67,11 +94,12 @@ export function OpenOrder(props: any) {
             text: 'Удалена услуга: ' + service.service + ', ' + service.price + 'руб, ' + service.varant + 'дней, ' + service.master,
             name: sessionData('read', 'name')
           }
-        }, $pull: {service: service}
+        }, $pull: {service: service},
+        soglas: false
       })
     
     props.getOrders()
-  }
+    }
     const colorButton = (index) => {
       if(index === props.data.status) return 'red'
     }
@@ -210,7 +238,22 @@ export function OpenOrder(props: any) {
       return false
     }
     const serviceList = () => {
-      if(props.data.service.length) return <ServiceTable data={props.data.service} delete={serviceDelete}/>
+      const soglasCheck = () => {
+        if(props.data.soglas) return '✅'
+      }
+      if(props.data.service.length) return (
+        <>
+        <SimpleGrid cols={6} style={{marginBottom: '0.5vmax', alignItems: 'center'}}>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div style={{textAlign: 'right'}}>{soglasCheck()} <b>Сумма {props.data.service.reduce((a, b) => a + b.price, 0)} руб.</b></div>
+          <Button disabled={props.data.soglas} onClick={() => {serviceUpdateSoglas(true)}}>Согласовано</Button>
+          <Button disabled={!props.data.soglas} onClick={() => {serviceUpdateSoglas(false)}}>Отказ</Button>
+        </SimpleGrid>
+        <ServiceTable data={props.data.service} delete={serviceDelete}/>
+        </>
+      )
     }
 
     return (

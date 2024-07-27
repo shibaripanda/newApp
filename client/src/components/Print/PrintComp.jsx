@@ -103,7 +103,7 @@ export const PrintComp = React.forwardRef((props, ref) => {
             <tr>
                 <td className="border" colSpan={5}>
                 <font size="3">
-                <div className="perenos"><Text size="15px">{camp.docprint.maintext.text ? camp.docprint.maintext.text : 'не настроено'}</Text></div>
+                <div className="perenos"><Text size="14px">{camp.docprint.maintext.text ? camp.docprint.maintext.text : 'не настроено'}</Text></div>
                 </font>
                 </td>
             </tr>

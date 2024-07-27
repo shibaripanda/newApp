@@ -1,5 +1,6 @@
 import React from "react"
 import { sessionData } from "../../modules/sessionData"
+import { ServiceTableDocument } from "../ServiceTable/ServiceTableDocument.tsx"
 // import rubles from '('rubles').rubles'
 var rubles = require('rubles').rubles
 
@@ -10,69 +11,19 @@ export const PrintVar = React.forwardRef((props, ref) => {
     camp.docprint =  props.props.settings.campSettings
     const post = props.props.data
 
-    // const serviceList = () => {
+    console.log(post)
 
-    //     if(post.service.length){
-    //         const list = [
-    //             <tr key={0}>
-    //             <td width={'70%'} align="center">
-    //                 <b>{'Выполненная работа'}</b>
-    //             </td>
-    //             <td width={'15%'} align="center">
-    //                 <b>{'Гарантия'}</b>
-    //             </td>
-    //             <td width={'15%'} align="center">
-    //                 <b>{'Стоимость'}</b>
-    //             </td>
-    //             </tr>
-    //         ]
-    //         for(let i of post.service){
-    //             list.push(
-    //                     <tr key={post.service.indexOf(i) + 1}>
-    //                         <td align="left">
-    //                         &nbsp;&nbsp;{Number(post.service.indexOf(i) + 1) + '. ' + i.name}
-    //                         </td>
-    //                         <td align="center">
-    //                             {i.var + ' дней '}
-    //                         </td>
-    //                         <td align="center">
-    //                             {i.cost + ' бел.руб. '}
-    //                         </td>
-    //                     </tr>
-    //             )
-    //         }
-    //         const sumCost = post.service.reduce((sum, a) => sum + Number(a.cost), 0)
-    //         if(sumCost > 0){
-    //             list.push(
-    //                 <tr key={1000}>
-    //                     <td align="center">
-    //                     {rubles(post.service.reduce((sum, a) => sum + Number(a.cost), 0))[0].toUpperCase() + rubles(post.service.reduce((sum, a) => sum + Number(a.cost), 0)).substr(1)}
-    //                     </td>
-    //                     <td align="center">
-    //                     {' Итого: '}
-    //                     </td>
-    //                     <td align="center">
-    //                         {sumCost + ' бел.руб. '}
-    //                     </td>
-    //                 </tr>
-    //             )
-    //         }
-    
-    //         return(
-    //             <div>
-    //                     <div align="center"><b><font size="4"> Акт выполненных работ</font></b></div>
-    //                     <div key={324}>
-    //                     <table border="1" cellSpacing="0" cellPadding="0" width='775px' className='tableAct'>
-    //                         <tbody>
-    //                             {list}
-    //                         </tbody>
-    //                     </table>
-    //                 </div>
-    //             </div>
-    //         )
-    //     }
-        
-    // }
+    const serviceList = () => {
+        if(post.service.length) return (
+                <div style={{width: '775px', marginTop: '1vmax'}}><ServiceTableDocument data={post.service}/></div>
+            )
+    }
+
+    const fontSizeSet = (len) => {
+       if(len && len < 4) return 2
+       else return 1
+    }
+
 
     return (
         <div ref={ref} className="App">
@@ -117,16 +68,16 @@ export const PrintVar = React.forwardRef((props, ref) => {
                 <td colSpan="2">&nbsp;Серийный номер:</td>
                 <td colSpan="6">&nbsp;{post.sn}</td>
             </tr>
-            <tr>
+            {/* <tr>
                 <td colSpan="2">&nbsp;Внешний вид:</td>
                 <td colSpan="6">&nbsp;{post.view}</td>
-            </tr>
+            </tr> */}
             <tr>
                 <td colSpan="2">&nbsp;Комплектация:</td>
                 <td colSpan="6">&nbsp;{post.complect}</td>
             </tr>
             <tr>
-                <td colSpan="2">&nbsp;Неисправность со слов заказчика:</td>
+                <td colSpan="2">&nbsp;Первоначальная неисправность:</td>
                 <td colSpan="6">&nbsp;{post.problem}</td>
             </tr>
             <tr>
@@ -144,9 +95,8 @@ export const PrintVar = React.forwardRef((props, ref) => {
             </tr>
             </tbody>
         </table>
-        
-        {/* {serviceList()} */}
-        <div>&nbsp;</div>
+
+        {serviceList()}
 
         <table border="0" cellSpacing="0" cellPadding="0" width='775px' className="table">
             <tbody>
@@ -155,7 +105,7 @@ export const PrintVar = React.forwardRef((props, ref) => {
             </tr>
             <tr>
                 <td className="border" colSpan={5}>
-                <font size="2">
+                <font size={fontSizeSet(post.service.length)}>
                 <div className="perenos">{camp.docprint.varanttext.text}</div>
                 </font>
                 </td>
@@ -163,15 +113,15 @@ export const PrintVar = React.forwardRef((props, ref) => {
             <tr>
                 <td colSpan={5}>&nbsp;</td>
             </tr>
-            <tr>
-                <td colSpan={5}><font size="4"><b>&nbsp;{camp.docprint.oznak.text}</b></font></td>
-            </tr>
-            <tr>
+            {/* <tr>
+                <td colSpan={5}><font size="3"><b>&nbsp;{camp.docprint.oznak.text}</b></font></td>
+            </tr> */}
+            {/* <tr>
                 <td colSpan={5}>&nbsp;</td>
-            </tr>
+            </tr> */}
             <tr>
                 <td align="left" colSpan={2} width={'50%'}><font size="3">Заказчик:</font></td>
-                <td align="right">&nbsp;</td>
+                {/* <td align="right">&nbsp;</td> */}
                 <td align="left" colSpan={2} width={'50%'}><font size="3">Сотрудник СЦ:</font></td>
             </tr>
             <tr>
