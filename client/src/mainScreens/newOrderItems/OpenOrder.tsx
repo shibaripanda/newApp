@@ -1,14 +1,17 @@
-import { Button, Container, SimpleGrid, Text, TextInput } from '@mantine/core'
+import { Button, Container, Grid, SimpleGrid, Text, TextInput } from '@mantine/core'
 import React, { useState } from 'react'
 import { dateToLokalFormatFull } from '../../modules/dateToLocalFormat.js'
 import { axiosCall } from '../../modules/axiosCall.js'
 import { sessionData } from '../../modules/sessionData.js'
 import { TableOpenOrder } from '../../components/TableOpenOrder/TableOpenOrder.tsx'
 import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.tsx'
+import { ServiceTable } from '../../components/ServiceTable/ServiceTable.tsx'
 
 export function OpenOrder(props: any) {
 
   const [newInfo, setNewInfo] = useState('')
+  const [service, setService] = useState({service: '', price: 0, master: '', varant: 0})
+
 
   // console.log(props.data)
 
@@ -44,6 +47,31 @@ export function OpenOrder(props: any) {
       }
       props.getOrders()
     }
+    const serviceUpdate = async (service) => {
+        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
+            historylist: {
+              date: Date.now(),
+              text: 'Добавлена услуга: ' + service.service + ', ' + service.price + 'руб, ' + service.varant + 'дней, ' + service.master,
+              name: sessionData('read', 'name')
+            },
+            service: service
+          }
+        })
+      
+      props.getOrders()
+    }
+    const serviceDelete = async (service) => {
+      await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
+          historylist: {
+            date: Date.now(),
+            text: 'Удалена услуга: ' + service.service + ', ' + service.price + 'руб, ' + service.varant + 'дней, ' + service.master,
+            name: sessionData('read', 'name')
+          }
+        }, $pull: {service: service}
+      })
+    
+    props.getOrders()
+  }
     const colorButton = (index) => {
       if(index === props.data.status) return 'red'
     }
@@ -177,27 +205,50 @@ export function OpenOrder(props: any) {
       if(text === '') return true
       return false
     }
+    const addButService = (text) => {
+      if(text.service === '' || text.master === '') return true
+      return false
+    }
+    const serviceList = () => {
+      if(props.data.service.length) return <ServiceTable data={props.data.service} delete={serviceDelete}/>
+    }
 
     return (
         <Container>
           {topButtonsLine()}
           <hr style={{ marginTop: '0.75vmax', marginBottom: '0.75vmax'}}></hr>
           {bottomButtonsLine()}
+          
+          <div style={{ marginBottom: '1vmax', marginTop: '1.5vmax'}}>
+            <TextInput label="Информация" value={newInfo} placeholder="Добавить новое действие" onChange={event => setNewInfo(event.currentTarget.value)}/>
+            <Button mt="sm" disabled={addBut(newInfo)} onClick={() => {
+                historyUpdate(newInfo, false)
+                setNewInfo('')
+                }}>
+              Добавить информацию
+            </Button>
+          </div>
+          <div style={{ marginBottom: '1.5vmax', marginTop: '1vmax'}}>
+              <TextInput width={'5vmax'} label="Услуга" value={service.service} placeholder="Услуга" onChange={event => setService({...service, service: event.currentTarget.value})}/>
+            <SimpleGrid cols={3}>
+              <TextInput label="Стоимость" value={service.price} placeholder="печатай сюда" onChange={event => setService({...service, price: Number(event.currentTarget.value)})}/>
+              <TextInput label="Мастер" value={service.master} placeholder="печатай сюда" onChange={event => setService({...service, master: event.currentTarget.value})}/>
+              <TextInput label="Гарантия (дней)" value={service.varant} placeholder="печатай сюда" onChange={event => setService({...service, varant: Number(event.currentTarget.value)})}/>
+            </SimpleGrid>  
+              <Button mt="sm" disabled={addButService(service)} onClick={() => {
+                serviceUpdate(service)
+                setService({service: '', price: 0, master: '', varant: 0})
+                }}>
+              Добавить услугу
+              </Button>
+          </div>
+          {serviceList()}
+          {historyList()}
           <div style={{ marginTop: '2vmax', marginBottom: '2vmax'}}>
           {dataForShow()}
           </div>
-          <div style={{ marginBottom: '2vmax'}}>
-          <TextInput label="Добавить новое действие" value={newInfo} placeholder="печатай сюда" onChange={event => setNewInfo(event.currentTarget.value)}/>
-          <Button mt="sm" disabled={addBut(newInfo)} onClick={() => {
-            historyUpdate(newInfo, false)
-            setNewInfo('')
-            }}>
-          Добавить
-          </Button>
-          </div>
-          {/* <hr style={{ marginTop: '1vmax', marginBottom: '1vmax'}}></hr>
-          <hr style={{ marginTop: '1vmax', marginBottom: '1vmax'}}></hr> */}
-          {historyList()}
+          
+          
         </Container>
     )
 }
