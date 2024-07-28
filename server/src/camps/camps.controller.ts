@@ -26,14 +26,14 @@ export class CampsController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Put('/updatesettingscamp/:campId')
-    updateSettingsCamp(@Param('campId') campId: string, @Body() obj: object, @Request() req: any){
-        return this.campsService.updateSettingsCamp(campId, obj, req.user._id)
+    @Put('/updateusersettings/:campId')
+    updateUserSettings(@Param('campId') campId: string, @Body() obj: object, @Request() req: any){
+        return this.campsService.updateUserSettings(campId, obj, req.user._id)
     }
 
     @UseGuards(JwtAuthGuard)
-    @Put('/updatecampsettings/:campId')
-    updateCampSettings(@Param('campId') campId: string, @Body() obj: object){
-        return this.campsService.updateCampSettings(campId, obj)
+    @Put('/updatedocumentsettings/:campId')
+    updateDocumentSettings(@Param('campId') campId: string, @Body() obj: object){
+        return this.campsService.updateDocumentSettings(campId, obj)
     }
 }

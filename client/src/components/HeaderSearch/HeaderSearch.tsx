@@ -17,7 +17,7 @@ export function HeaderSearch(props) {
     return 'link'
   }
 
-  const items = props.serviceSettings.listFastDevice.map((link) => (
+  const items = props.serviceSettings.userFastDevices.map((link) => (
       
     <div
       key={link.link}

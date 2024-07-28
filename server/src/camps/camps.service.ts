@@ -30,21 +30,28 @@ export class CampsService {
     }
 
     async getSettingsCamp(campId: string, userId: string){
-        const settings = await this.campModel.findOne({_id: campId}, {_id: 0, settings: 1, campSettings: 1})
-        // console.log(settings)
-        settings.settings[userId].campSettings = settings.campSettings
-        // console.log(settings.settings[userId])
-        return settings.settings[userId]
+        const settings = await this.campModel.findOne({_id: campId}, {_id: 0, userSettings: 1, documentSettings: 1, generalSettings: 1})
+        return {...settings.userSettings[userId], ...settings.documentSettings,  ...settings.generalSettings}
     }
 
-    async updateSettingsCamp(campId: string, obj: object, userId: string){
-        const link = 'settings.' + userId
+    async updateUserSettings(campId: string, obj: object, userId: string){
+        const link = 'userSettings.' + userId
         await this.campModel.updateOne({_id: campId}, {$set: {[link]: obj}})
     }
 
-    async updateCampSettings(campId: string, obj: object){
-        const link = 'campSettings.' + obj['item'] + '.text'
+    async updateGeneralSettings(campId: string, obj: object){
+        const link = 'generalSettings.'
+        await this.campModel.updateOne({_id: campId}, {$set: {[link]: obj}})
+    }
+
+    async updateDocumentSettings(campId: string, obj: object){
+        const link = 'documentSettings.' + obj['item'] + '.text'
         await this.campModel.updateOne({_id: campId}, {$set: {[link]: obj['newData']}})
+    }
+
+    async updateSettingsCamp(campId: string, obj: object, userId: string){
+        const link = 'userSettings.' + userId
+        await this.campModel.updateOne({_id: campId}, {[link]: obj})
     }
 
     // async updateSettings(campId: string, obj: object){

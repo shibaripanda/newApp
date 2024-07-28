@@ -36,8 +36,8 @@ export class AuthService {
                 const code = rendomNumberOrder()
                 const hashPassword = await bcrypt.hash('password', 7)
                 const newUs = await this.usersService.createUser({...userDto, password: hashPassword, emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: false}})
-                for(let i of newUsers){
-                    this.campService.updateSettingsCamp(String(i._id), getFixserviceSettings(), newUs._id)
+                for(const i of newUsers){
+                    this.campService.updateSettingsCamp(String(i._id), getFixserviceSettings().userSettings, newUs._id)
                 }
             }
             else{
@@ -68,9 +68,10 @@ export class AuthService {
                 await this.campService.createCamp({
                     name: user.emailAuthCode['name'], 
                     owner: user.email, 
-                    users: [{email: user.email, role: 'owner'}], 
-                    settings: {[user._id]: settings.user},
-                    campSettings: settings.camp.campSettings
+                    users: [{email: user.email, role: 'owner'}],
+                    userSettings: {[user._id]: settings.userSettings},
+                    documentSettings: settings.documentSettings,
+                    generalSettings: settings.generalSettings
                 })
             }
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: user.emailAuthCode['code'], time: Date.now(), step: 1, name: false}})

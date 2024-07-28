@@ -7,7 +7,7 @@ import { DndList } from '../DndList/DndList.tsx';
 
 export function TableReviews(props) {
   
-  const activTableCols = props.serviceSettings.listOrdersFields.filter(item => item.maintable === true)
+  const activTableCols = props.serviceSettings.generalOrderList.filter(item => item.maintable === true)
   const activTableColsHeader = activTableCols.map(item => item.index)
 
   const makeRows = (row) => {

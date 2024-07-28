@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import { LoaderItem } from "../../components/Loader/LoaderItem.tsx"
 import { Container, Button, Textarea } from '@mantine/core';
-import { updatecampsettings } from "../../fix/fixServiceSettings.js";
+import { updateDocumentSettings } from "../../fix/fixServiceSettings.js";
 
 export const CampSettings = (props) => {
 
-    const [data, setData] = useState(props.serviceSettings.campSettings)
+    const [data, setData] = useState(props.serviceSettings.documents)
     const activOrDis = (a, b) => {
         if(a === b) return true
         return false
@@ -18,11 +18,11 @@ export const CampSettings = (props) => {
             <div key={i}>
             <Textarea resize="vertical" label={data[i].label} placeholder={data[i].text} value={data[i].text} required onChange={event => {data[i].text = setData({...data, [i]:{...data[i], text: event.currentTarget.value}})}}/>
                     <Button 
-                    disabled={activOrDis(data[i].text, props.serviceSettings.campSettings[i].text)} 
+                    disabled={activOrDis(data[i].text, props.serviceSettings.documents[i].text)} 
                     mt="sm" 
                     onClick={async () =>  {
-                        props.setServiceSettings({...props.serviceSettings, campSettings: data})
-                        await updatecampsettings({item: i, newData: data[i].text})
+                        props.setServiceSettings({...props.serviceSettings, documents: data})
+                        await updateDocumentSettings({item: i, newData: data[i].text})
                         }}>
                         Обновить
                     </Button>

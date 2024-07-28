@@ -215,7 +215,7 @@ export class FixService {
             
     
         ]
-        const listOfDataForFastInput = {
+        const generalDataList = {
                    client: ['dfdfdf'],
                   contact: ['dfdf'],
             clientAdress : ['rtrtrt'],
@@ -274,7 +274,7 @@ export class FixService {
             {
                 listFastDevice: listFastDevice,
                 listOrdersFields: listOrdersFields,
-                listOfDataForFastInput: listOfDataForFastInput,
+                generalDataList: generalDataList,
                 listOfStatuses: listOfStatuses
             }
         )

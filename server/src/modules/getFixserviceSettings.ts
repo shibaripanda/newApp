@@ -228,7 +228,8 @@ export const getFixserviceSettings = () => {
             maintable: true,
             neworder: true,
             card: true,
-            block: false  
+            block: false,
+            place: 1  
         },
         {
             index: 'clientTel', 
@@ -237,7 +238,8 @@ export const getFixserviceSettings = () => {
             maintable: true,
             neworder: true,
             card: true,
-            block: false  
+            block: false,
+            place: 2    
         },
         {
             index: 'addres', 
@@ -246,7 +248,8 @@ export const getFixserviceSettings = () => {
             maintable: true,
             neworder: true,
             card: true,
-            block: false
+            block: false,
+            place: 3  
         },
         {
             index: 'title' , 
@@ -255,7 +258,8 @@ export const getFixserviceSettings = () => {
             maintable: true,
             neworder: true,
             card: true,
-            block: false 
+            block: false,
+            place: 4   
         },
         {
             index: 'firm', 
@@ -264,7 +268,8 @@ export const getFixserviceSettings = () => {
             maintable: true,
             neworder: true,
             card: true,
-            block: false  
+            block: false,
+            place: 5    
         },
         {
             index: 'problem', 
@@ -273,7 +278,8 @@ export const getFixserviceSettings = () => {
             maintable: true,
             neworder: true,
             card: true,
-            block: false  
+            block: false,
+            place: 8    
         },
         {
             index: 'model', 
@@ -282,7 +288,8 @@ export const getFixserviceSettings = () => {
             maintable: true,
             neworder: true,
             card: true,
-            block: false  
+            block: false,
+            place: 6    
         },
         {
             index: 'sn' , 
@@ -291,7 +298,8 @@ export const getFixserviceSettings = () => {
             maintable: false,
             neworder: true,
             card: true,
-            block: false 
+            block: false,
+            place: 7   
         },
         {
             index: 'view', 
@@ -300,7 +308,8 @@ export const getFixserviceSettings = () => {
             maintable: false,
             neworder: true,
             card: true,
-            block: false   
+            block: false,
+            place: 9     
         },
         {
             index: 'speed', 
@@ -309,7 +318,8 @@ export const getFixserviceSettings = () => {
             maintable: false,
             neworder: true,
             card: true,
-            block: false   
+            block: false,
+            place: 10     
         },
         {
             index: 'info', 
@@ -318,7 +328,8 @@ export const getFixserviceSettings = () => {
             maintable: false,
             neworder: true,
             card: true,
-            block: false  
+            block: false,
+            place: 12   
         },
         {
             index: 'cost', 
@@ -327,7 +338,8 @@ export const getFixserviceSettings = () => {
             maintable: false,
             neworder: true,
             card: true,
-            block: false   
+            block: false,
+            place: 11     
         },
         {
             index: 'order', 
@@ -432,18 +444,18 @@ export const getFixserviceSettings = () => {
 
     ]
     const listOfDataForFastInput = {
-               name: ['dfdfdf'],
+                    name: ['dfdfdf'],
                clientTel: ['dfdf'],
-               addres: ['rtrtrt'],
-                title: ['bnbnbn'],
-                firm: ['cvcvcbc'],
-              problem: ['qw'],
-                model: ['ete'],
-                   sn: ['fg'],
-                   view: ['rtyrtrtrt'],
-                speed: ['uiuiui'],
-                 info: ['565656'],
-                 cost: ['676767']
+                  addres: ['rtrtrt'],
+                   title: ['bnbnbn'],
+                    firm: ['cvcvcbc'],
+                 problem: ['qw'],
+                   model: ['ete'],
+                      sn: ['fg'],
+                    view: ['rtyrtrtrt'],
+                   speed: ['uiuiui'],
+                    info: ['565656'],
+                    cost: ['676767']
     }
     const listOfStatuses = [
         {
@@ -491,29 +503,35 @@ export const getFixserviceSettings = () => {
         namecomp: {label: 'Название сервисного центра', 
         text: 'XF Service'},
 
-        name: {label: 'Название главного документа', 
+        name: {label: 'Название главного документа о приемке в ремонт', 
         text: 'Заказ на оказание услуг'},
 
-        time: {label: 'Время работы', 
+        time: {label: 'Время работы исполнителя', 
         text:  'пн-пт: 11:00 - 20:00, сб-вскр: 11:00 - 18:00'},
 
         varantname: {label: 'Название гарантийного документа', 
         text:  'Акт приёмки-передачи оборудования и выполненных работ'},
 
+        cancelname: {label: 'Название документа о выдаче без ремонта', 
+        text:  'Акт приёмки-передачи оборудования'},
+
         recviz: {label: 'Реквизиты компании (Исполнитель)', 
-        text: 'ЧСУП "Компьютер и Принтер" , РБ, Минск, ул. Лобанка, д. 94, павильон 10'},
+        text: 'ЧСУП "Компьютер и Принтер", Минск, Лобанка 94, павильон 10'},
 
         oznak: {label: 'Подтверждение ознакомления', 
         text: 'Заказчик ознакомлен с данным заказ-нарядом и принимает все условия.'},
 
+        canceloznak: {label: 'Согласие о получении без ремонта', 
+        text: 'Заказчик не имеет претензий по качеству и срокам оказанных услуг.'},
+
         soglas: {label: 'Информация о согласовании', 
-        text: 'Точная стоимость согласовывается в течении 10 дней, ОПЛАТА ПРОИЗВОДИТСЯ ТОЛЬКО ПОСЛЕ ОКОНЧАНИЯ РЕМОНТА'},
+        text: 'Стоимость согласовывается в течении 10 дней, ОПЛАТА ПРОИЗВОДИТСЯ ТОЛЬКО ПОСЛЕ ОКОНЧАНИЯ РЕМОНТА'},
 
         filial: {label: 'Название филиала', 
         text: 'Сухарево'},
 
         telefonnumber: {label: 'Телефоны компании', 
-        text: '+375 44 7310419 A1'},
+        text: '+375 44 7310419 A1 +375 33 6351401 МТС'},
 
         varanttext: {label: 'Текст гарантии', 
         text: `- Исполнитель берет на себя обязанность на безвозмездное устранение неисправностей связанных с выполнением выше указанных работ в течении гарантийного срока.
@@ -535,7 +553,7 @@ export const getFixserviceSettings = () => {
         
         Заказчик не имеет претензий по сроку и качеству оказанных услуг.`},
 
-        maintext: {label: 'Главный текст', 
+        maintext: {label: 'Главный текст приемки оборудования в ремонт', 
         text: `1. Предварительный срок диагностики и ремонта до 15 рабочих дней (без учета суббот, воскресений и праздников), за исключением п.2 и п.3. В момент сдачи оборудования в ремонт приемщик оговаривает ОРИЕНТИРОВОЧНЫЕ СРОКИ, которые могут измениться ввиду отсутствия или пересортицы з/ч, загруженности мастера и иных обстоятельств, но без согласования с заказчиком не может превышать срока установленного в данном пункте.
         2. При отсутствии деталей, диагностика и (или) ремонт может продлеваться на срок до их получения по согласованию с заказчиком.
         3. При периодически появляющейся неисправности ремонт может продлеваться на неопределенный срок, до полного устранения дефектов по согласованию с заказчиком.
@@ -554,16 +572,20 @@ export const getFixserviceSettings = () => {
         16. Согласование с заказчиком может осуществляться любым доступным способом (звонок, переписка в мессенджерах, устное согласование, письменное согласование).`},
     }
     
+    
     return (
         {
-            user: {
-                listFastDevice: listFastDevice,
-                listOrdersFields: listOrdersFields,
-                listOfDataForFastInput: listOfDataForFastInput,
-                listOfStatuses: listOfStatuses
+            userSettings: {
+                userFastDevices: listFastDevice,
+                userStatusFilter: listOfStatuses.map(item => item.index)
+            } ,
+            documentSettings: {
+                documents: docprint
             },
-            camp: {
-                campSettings: docprint
+            generalSettings: {
+                generalOrderList: listOrdersFields,
+                generalDataList: listOfDataForFastInput,
+                generalStatusList: listOfStatuses
             }
         }
     )

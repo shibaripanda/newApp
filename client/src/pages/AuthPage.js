@@ -45,10 +45,10 @@ function AuthPage() {
   }
   const startPasswordRequest = async () => {
     await axiosCall('POST', 'http://localhost:5000/auth/authemailcode', {authcode: password, email: email})
-    .then((res) => {
+    .then(async (res) => {
       sessionData(`write`, 'currentUser', res.data.email + '#' + res.data.name + '#' + res.data.token)
       sessionData(`write`, 'activUsers', res.data.email + '#' + res.data.name + '#' + res.data.token)
-      getMyCamps()
+      await getMyCamps()
     })
     .catch((error) => {
       setServerError(error.response.data.message)

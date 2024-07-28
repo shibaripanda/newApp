@@ -6,7 +6,7 @@ import { sessionData } from "../../modules/sessionData";
 export const PrintComp = React.forwardRef((props, ref) => {
 
     const camp = {}
-    camp.docprint =  props.props.settings.campSettings
+    camp.docprint =  props.props.settings.documents
     const post = props.props.data
     
     const textSet = (index) => {
@@ -53,13 +53,14 @@ export const PrintComp = React.forwardRef((props, ref) => {
             </tr>    
             <tr>
                 <td colSpan="2"><b>&nbsp;Оборудование:</b></td>
-                <td colSpan="3">&nbsp;{post.title}</td>
-                <td colSpan="3">&nbsp;{post.model}</td>
+                <td colSpan="2">&nbsp;{post.title}</td>
+                <td colSpan="2">&nbsp;{post.model}</td>
+                <td colSpan="2">&nbsp;s/n: {post.sn}</td>
             </tr>
-            <tr>
+            {/* <tr>
                 <td colSpan="2"><b>&nbsp;Серийный номер:</b></td>
                 <td colSpan="6">&nbsp;{post.sn}</td>
-            </tr>
+            </tr> */}
             <tr>
                 <td colSpan="2"><b>&nbsp;Внешний вид:</b></td>
                 <td colSpan="6">&nbsp;{post.view}</td>
@@ -79,18 +80,18 @@ export const PrintComp = React.forwardRef((props, ref) => {
             <tr>
                 <td colSpan="8"><b>&nbsp;{camp.docprint.soglas.text ? camp.docprint.soglas.text : 'не настроено'}</b></td>
             </tr>
-            <tr>
+            {/* <tr>
                 <td colSpan={2}><b>&nbsp;Телефоны для справок:</b></td>
                 <td colSpan={6}>&nbsp;{camp.docprint.telefonnumber.text ? camp.docprint.telefonnumber.text : 'не настроено'}</td>
                 
-            </tr>
+            </tr> */}
             <tr>
                 <td colSpan={2}><b>&nbsp;Исполнитель:</b></td>
                 <td colSpan={6}>&nbsp;{camp.docprint.recviz.text}</td>
             </tr>
             <tr>
-                <td colSpan={2}><b>&nbsp;Время работы исполнителя:</b></td>
-                <td colSpan={6}>&nbsp;{camp.docprint.time.text ? camp.docprint.time.text : 'не настроено'}</td>
+                <td colSpan={2}><b>&nbsp;Время работы и контакты:</b></td>
+                <td colSpan={6}>&nbsp;{camp.docprint.time.text ? camp.docprint.time.text : 'не настроено'},&nbsp;{camp.docprint.telefonnumber.text ? camp.docprint.telefonnumber.text : 'не настроено'}</td>
             </tr>
             </tbody>
         </table>
@@ -128,7 +129,7 @@ export const PrintComp = React.forwardRef((props, ref) => {
                 <td align="right" width={'35%'}><font size="3">{post.name}</font></td>
                 <td align="right" width={'10%'}>&nbsp;</td>
                 <td align="left" width={'10%'}><font size="3">Подпись:</font></td>
-                <td align="right" width={'35%'}><font size="3">{sessionData('read', 'ame')}</font></td>
+                <td align="right" width={'35%'}><font size="3">{sessionData('read', 'name')}</font></td>
             </tr>
             <tr>
                 <td align="left" colSpan={2}><div className="create-line"></div></td>

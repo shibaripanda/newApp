@@ -3,15 +3,17 @@ import * as mongoose from 'mongoose';
 export const CampSchema = new mongoose.Schema({
   name: {type: String},
   owner: {type: String},
-  settings: {type: Object},
-  campSettings: {type: Object},
+  userSettings: {type: Object},
+  documentSettings: {type: Object},
+  generalSettings: {type: Object},
   users: {type: []},
 }, {timestamps: true})
 
 export interface Camp {
   name: string,
   owner: string,
-  settings: object,
+  userSettings: object,
   users: [],
-  campSettings: object,
+  documentSettings: object,
+  generalSettings: object,
 }

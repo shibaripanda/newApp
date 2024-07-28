@@ -176,7 +176,7 @@ export function OpenOrder(props: any) {
           disabled: disabledIfServiceCancel(), //checkDisabledSave(),
           color: 'green',
           print: true,
-          format: 'var',
+          format: 'cancel',
           func: async () => {
               return props.data
           },
@@ -200,7 +200,7 @@ export function OpenOrder(props: any) {
     }
     const bottomButtonsLine = () => {
       const arrayButtons: any = []
-      for(let i of props.serviceSettings.listOfStatuses){
+      for(let i of props.serviceSettings.generalStatusList){
         arrayButtons.push({
           title: i.label,
           color: colorButton(i.index),
@@ -232,7 +232,7 @@ export function OpenOrder(props: any) {
     const dataForShow = () => {
 
       const fieldsOfOrder = Object.keys(props.data).filter(item => item !== 'historylist')
-      const settingsField = props.serviceSettings.listOrdersFields.filter(item => item.card === true).map((item: any) => item.index)
+      const settingsField = props.serviceSettings.generalOrderList.filter(item => item.card === true).map((item: any) => item.index)
       const newAr : string[] = []
 
       const lookData = (i: string) => {
@@ -244,7 +244,7 @@ export function OpenOrder(props: any) {
 
       for(let i of settingsField){
         if(fieldsOfOrder.includes(i)){
-            const res: any = {title: (props.serviceSettings.listOrdersFields.find((item: any) => item.index === i)).label, text: lookData(i)}
+            const res: any = {title: (props.serviceSettings.generalOrderList.find((item: any) => item.index === i)).label, text: lookData(i)}
             newAr.push(res)
         }
       }

@@ -1,27 +1,33 @@
 import React from "react"
-import { sessionData } from "../../modules/sessionData"
+import { sessionData } from "../../modules/sessionData.js"
 import { ServiceTableDocument } from "../ServiceTable/ServiceTableDocument.tsx"
 // import rubles from '('rubles').rubles'
 // var rubles = require('rubles').rubles
 
 
-export const PrintVar = React.forwardRef((props, ref) => {
+export const PrintVarCancel = React.forwardRef((props, ref) => {
     
     const camp = {}
     camp.docprint =  props.props.settings.documents
     const post = props.props.data
 
-    console.log(post)
-
-    const serviceList = () => {
-        if(post.service.length) return (
-                <div style={{width: '775px', marginTop: '1vmax'}}><ServiceTableDocument data={post.service}/></div>
-            )
-    }
+    // const serviceList = () => {
+    //     if(post.service.length) return (
+    //             <div style={{width: '775px', marginTop: '1vmax'}}><ServiceTableDocument data={post.service}/></div>
+    //         )
+    // }
 
     const fontSizeSet = (len) => {
        if(len && len < 4) return 2
        else return 1
+    }
+
+    const textFromDB = (text) => {
+        if(typeof camp.docprint[text] !== 'undefined'){
+            return camp.docprint[text].text
+        }
+        return  <font color="red"> = !!! не настроено !!! = </font> 
+
     }
 
 
@@ -31,10 +37,10 @@ export const PrintVar = React.forwardRef((props, ref) => {
         <table border="0" cellSpacing="0" cellPadding="0" width='775px' className="table">
             <tbody>
                 <tr>
-                    <td align="left"><b><font size="2">{camp.docprint.namecomp.text}</font></b></td>  
+                    <td align="left"><b><font size="2">{textFromDB('namecomp')}</font></b></td>  
                 </tr>
                 <tr>
-                    <td align="center"><b><font size="3">{camp.docprint.varantname.text} № V{post.order} от {new Date(Date.now()).toLocaleString().split(',')[0]}</font></b></td>
+                    <td align="center"><b><font size="3">{textFromDB('cancelname')} № V{post.order} от {new Date(Date.now()).toLocaleString().split(',')[0]}</font></b></td>
                 </tr>
             </tbody>
         </table>
@@ -69,10 +75,10 @@ export const PrintVar = React.forwardRef((props, ref) => {
                 <td colSpan="2">&nbsp;Серийный номер:</td>
                 <td colSpan="6">&nbsp;{post.sn}</td>
             </tr>  */}
-            {/* <tr>
+            <tr>
                 <td colSpan="2">&nbsp;Внешний вид:</td>
                 <td colSpan="6">&nbsp;{post.view}</td>
-            </tr> */}
+            </tr>
             <tr>
                 <td colSpan="2">&nbsp;Комплектация:</td>
                 <td colSpan="6">&nbsp;{post.complect}</td>
@@ -88,35 +94,35 @@ export const PrintVar = React.forwardRef((props, ref) => {
             </tr> */}
             <tr>
                 <td colSpan={2}>&nbsp;Исполнитель:</td>
-                <td colSpan={6}>&nbsp;{camp.docprint.recviz.text}</td>
+                <td colSpan={6}>&nbsp;{textFromDB('recviz')}</td>
             </tr>
             <tr>
                 <td colSpan={2}>&nbsp;Время работы и контакты:</td>
-                <td colSpan={6}>&nbsp;{camp.docprint.time.text ? camp.docprint.time.text : 'не настроено'},&nbsp;{camp.docprint.telefonnumber.text}</td>
+                <td colSpan={6}>&nbsp;{textFromDB('time')},&nbsp;{textFromDB('telefonnumber')}</td>
             </tr>
             </tbody>
         </table>
 
-        {serviceList()}
+        {/* {serviceList()} */}
 
         <table border="0" cellSpacing="0" cellPadding="0" width='775px' className="table">
             <tbody>
-            <tr>
+            {/* <tr>
                 <td align="center" colSpan={5}><b><font size="3">Правила и условия гарантийного обслуживания</font></b></td>
             </tr>
             <tr>
                 <td className="border" colSpan={5}>
                 <font size={fontSizeSet(post.service.length)}>
-                <div className="perenos">{camp.docprint.varanttext.text}</div>
+                <div className="perenos">{textFromDB('varanttext')}</div>
                 </font>
                 </td>
-            </tr>
+            </tr> */}
             <tr>
                 <td colSpan={5}>&nbsp;</td>
             </tr>
-            {/* <tr>
-                <td colSpan={5}><font size="3"><b>&nbsp;{camp.docprint.oznak.text}</b></font></td>
-            </tr> */}
+            <tr>
+                <td colSpan={5}><font size="3"><b>&nbsp;{textFromDB('canceloznak')}</b></font></td>
+            </tr>
             {/* <tr>
                 <td colSpan={5}>&nbsp;</td>
             </tr> */}

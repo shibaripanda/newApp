@@ -15,7 +15,7 @@ export function FeaturesGrid(props) {
                     key={index} 
                     label={field.label} 
                     placeholder={field.label} 
-                    data={props.serviceSettings.listOfDataForFastInput[field.index]}
+                    data={props.serviceSettings.generalDataList[field.index]}
                 />
             }
             return <TextInput  
@@ -27,7 +27,7 @@ export function FeaturesGrid(props) {
             />
     }
 
-    const features = props.serviceSettings.listOrdersFields.filter(item => item.neworder === true).map((field, index) => makeFields(field, index));
+    const features = props.serviceSettings.generalOrderList.filter(item => item.neworder === true).sort((a, b) => a.place - b.place).map((field, index) => makeFields(field, index));
 
     return (
         <Container style={{marginTop: '50px'}}>

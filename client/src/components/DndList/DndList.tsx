@@ -4,12 +4,12 @@ import classes from './DndList.module.css';
 import React, { useState } from 'react';
 import { GridForItems } from '../GridForItems/GridForItems.tsx';
 import { CheckBox1 } from '../CheckBox1/CheckBox1.tsx';
-import { updateServiceSettings } from '../../fix/fixServiceSettings.js';
+import { updateGeneralSettings } from '../../fix/fixServiceSettings.js';
 
 export function DndList(props) {
   
   const [state, setState] = useState(props.data)
-  const [dataChecks, setDataChecks] = useState(props.serviceSettings.listOrdersFields.filter(item => item.block === false).sort((a,b) => a.index - b.index))
+  const [dataChecks, setDataChecks] = useState(props.serviceSettings.generalOrderList.filter(item => item.block === false).sort((a,b) => a.index - b.index))
 
   async function swap(arr, a, b) {
       console.log(arr)
@@ -40,10 +40,10 @@ export function DndList(props) {
         <DragDropContext
           onDragEnd={async ({ destination, source }) => {
             await swap(state, source.index, destination?.index || 0)
-            const res = state.concat(props.serviceSettings.listOrdersFields.filter(item => item.maintable === false))
-            props.serviceSettings.listOrdersFields = res
+            const res = state.concat(props.serviceSettings.generalOrderList.filter(item => item.maintable === false))
+            props.serviceSettings.generalOrderList = res
             props.setServiceSettings(props.serviceSettings)
-            updateServiceSettings(props.serviceSettings)
+            updateGeneralSettings(props.serviceSettings)
             setState([...state])
           }}
         >

@@ -83,7 +83,8 @@ function MainPage() {
   }
   const getFixServiceSettings = async () => {
     const res = await fixServiceSettings()
-    const res1 = defaultValue(res.listOrdersFields)
+    console.log(res)
+    const res1 = defaultValue(res.generalOrderList)
     setValue(res1)
     setServiceSettings(res)
   }

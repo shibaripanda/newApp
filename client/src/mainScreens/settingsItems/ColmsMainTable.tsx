@@ -3,7 +3,7 @@ import { DndList } from "../../components/DndList/DndList.tsx"
 
 export const ColmsMainTable = (props: any) => {
 
-    const dateTableHeaders = props.serviceSettings.listOrdersFields.filter((item: any) => item.maintable === true)
+    const dateTableHeaders = props.serviceSettings.generalOrderList.filter((item: any) => item.maintable === true)
 
     return (
             <div>

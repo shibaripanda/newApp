@@ -7,14 +7,20 @@ export const fixServiceSettings = async () => {
 
 }
 
-export const updateServiceSettings = async (obj) => {
+export const updateUserSettings = async (obj) => {
 
-    await axiosCall('PUT', `http://localhost:5000/api/updatesettingscamp/${sessionData('read', 'campId')}`, obj)
+    await axiosCall('PUT', `http://localhost:5000/api/updateusersettings/${sessionData('read', 'campId')}`, obj)
+
+}
+
+export const updateDocumentSettings = async (obj) => {
+console.log(obj)
+    await axiosCall('PUT', `http://localhost:5000/api/updatedocumentsettings/${sessionData('read', 'campId')}`, obj)
 
 }
 
-export const updatecampsettings = async (obj) => {
-
-    await axiosCall('PUT', `http://localhost:5000/api/updatecampsettings/${sessionData('read', 'campId')}`, obj)
-
-}
+export const updateGeneralSettings = async (obj) => {
+    console.log(obj)
+        await axiosCall('PUT', `http://localhost:5000/api/updategeneralsettings/${sessionData('read', 'campId')}`, obj)
+    
+    }

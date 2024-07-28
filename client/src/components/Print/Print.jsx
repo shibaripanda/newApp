@@ -3,6 +3,7 @@ import { PrintComp } from './PrintComp';
 import { PrintVar } from './PrintVar';
 import ReactToPrint, { PrintContextConsumer } from 'react-to-print';
 import { Button } from '@mantine/core';
+import { PrintVarCancel } from './PrintVarCancel';
 
 export class Print extends React.PureComponent {
     constructor(props){
@@ -20,6 +21,9 @@ export class Print extends React.PureComponent {
       }
       else if(this.props.format === 'var'){
         return <PrintVar props={this.props} ref={el => (this.componentRef = el)}/>
+      }
+      else if(this.props.format === 'cancel'){
+        return <PrintVarCancel props={this.props} ref={el => (this.componentRef = el)}/>
       }
     }
 
