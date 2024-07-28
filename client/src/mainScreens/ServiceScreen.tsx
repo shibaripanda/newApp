@@ -5,16 +5,7 @@ import { LoaderItem } from "../components/Loader/LoaderItem.tsx";
 export const ServiceScreen = (props) => {
   
   const filteringOrders = useMemo(() => {
-    
-    console.log(props.filter)
-
-    let res = props.orders
-    res = res.filter(order => ['new', 'ready'].includes(order.status))
-    res = res.filter(order => Object.values(order).join().toLowerCase().includes(props.filter.toLowerCase()))
-
-    return (
-      res
-    )
+    return props.orders.filter(order => Object.values(order).join().toLowerCase().includes(props.filter.toLowerCase()))
     }, [props.filter, props.orders]
   )
 

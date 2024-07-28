@@ -8,19 +8,19 @@ export const fixServiceSettings = async () => {
 }
 
 export const updateUserSettings = async (obj) => {
-
+    console.log('updateUserSettings', obj)
     await axiosCall('PUT', `http://localhost:5000/api/updateusersettings/${sessionData('read', 'campId')}`, obj)
 
 }
 
 export const updateDocumentSettings = async (obj) => {
-console.log(obj)
+    console.log('updateDocumentSettings', obj)
     await axiosCall('PUT', `http://localhost:5000/api/updatedocumentsettings/${sessionData('read', 'campId')}`, obj)
 
 }
 
 export const updateGeneralSettings = async (obj) => {
-    console.log(obj)
-        await axiosCall('PUT', `http://localhost:5000/api/updategeneralsettings/${sessionData('read', 'campId')}`, obj)
-    
-    }
+    console.log('updateGeneralSettings', obj)
+    await axiosCall('PUT', `http://localhost:5000/api/updategeneralsettings/${sessionData('read', 'campId')}`, obj)
+
+}

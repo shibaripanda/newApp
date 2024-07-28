@@ -34,6 +34,14 @@ export class CampsController {
     @UseGuards(JwtAuthGuard)
     @Put('/updatedocumentsettings/:campId')
     updateDocumentSettings(@Param('campId') campId: string, @Body() obj: object){
+        console.log('updatedocumentsettings', obj)
         return this.campsService.updateDocumentSettings(campId, obj)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('/updategeneralsettings/:campId')
+    updateGeneralSettings(@Param('campId') campId: string, @Body() obj: object){
+        console.log('updategeneralsettings', obj)
+        return this.campsService.updateGeneralSettings(campId, obj)
     }
 }

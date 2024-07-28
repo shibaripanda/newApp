@@ -1,6 +1,6 @@
 'use client'
-import { Autocomplete, Burger, Group } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import { Autocomplete, Group } from '@mantine/core'
+// import { useDisclosure } from '@mantine/hooks'
 import { IconSearch } from '@tabler/icons-react'
 import classes from './HeaderSearch.module.css'
 import React from 'react'
@@ -8,7 +8,7 @@ import { sessionData } from '../../modules/sessionData'
 
 export function HeaderSearch(props) {
 
-  const [opened, { toggle }] = useDisclosure(false);
+  // const [opened, { toggle }] = useDisclosure(false);
 
   const changeColor = (request, status) => {
     if(request === status){
@@ -35,7 +35,6 @@ export function HeaderSearch(props) {
       <div>
         <div className={classes.inner}>
           <Group>
-            <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
             {sessionData('read', 'name')}
           </Group>
 

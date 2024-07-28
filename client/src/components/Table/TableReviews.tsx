@@ -1,13 +1,18 @@
-import { Table } from '@mantine/core';
-// import classes from './TableReviews.module.css';
+import { Table } from '@mantine/core'
 import React from 'react';
 import { ModalWindow } from '../ModalWindow/ModalWindow.tsx';
-import { dateToLokalFormatForMainTable } from '../../modules/dateToLocalFormat.js';
-import { DndList } from '../DndList/DndList.tsx';
+import { dateToLokalFormatForMainTable } from '../../modules/dateToLocalFormat.js'
 
 export function TableReviews(props) {
   
-  const activTableCols = props.serviceSettings.generalOrderList.filter(item => item.maintable === true)
+  const getTable = () => {
+    const res: any = []
+    for(const i of props.serviceSettings.userMainTable){
+      res.push(props.serviceSettings.generalOrderList.find((item: any) => item.index === i))
+    }
+    return res
+  }
+  const activTableCols = getTable()
   const activTableColsHeader = activTableCols.map(item => item.index)
 
   const makeRows = (row) => {

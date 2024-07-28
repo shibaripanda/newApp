@@ -17,7 +17,7 @@ import { SettingsScreen } from '../mainScreens/SettingsScreen.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom'
 import { sessionData } from '../modules/sessionData.js';
-import { ModalWindowPrint } from '../components/ModalWindow/ModalWindowPrint.tsx';
+// import { ModalWindowPrint } from '../components/ModalWindow/ModalWindowPrint.tsx';
 import { AdminScreen } from '../mainScreens/AdminScreen.tsx';
 import { GroupUsersScreen } from '../mainScreens/GroupUsersScreen.tsx';
 
@@ -133,7 +133,8 @@ function MainPage() {
           <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
         </div>
         <div className={'NavBarTop'}>
-          <HeaderSearch filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/> 
+          <HeaderSearch filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>
+          {/* <HeaderSearch filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>   */}
         </div>
       </div>
   )

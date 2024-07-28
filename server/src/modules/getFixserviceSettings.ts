@@ -295,7 +295,7 @@ export const getFixserviceSettings = () => {
             index: 'sn' , 
             label: 'Серийный номер',  
             variants: false,
-            maintable: false,
+            maintable: true,
             neworder: true,
             card: true,
             block: false,
@@ -305,7 +305,7 @@ export const getFixserviceSettings = () => {
             index: 'view', 
             label: 'Внешний вид',     
             variants: true,
-            maintable: false,
+            maintable: true,
             neworder: true,
             card: true,
             block: false,
@@ -315,7 +315,7 @@ export const getFixserviceSettings = () => {
             index: 'speed', 
             label: 'Срочность',       
             variants: true,
-            maintable: false,
+            maintable: true,
             neworder: true,
             card: true,
             block: false,
@@ -325,7 +325,7 @@ export const getFixserviceSettings = () => {
             index: 'info', 
             label: 'Заметки',         
             variants: true,
-            maintable: false,
+            maintable: true,
             neworder: true,
             card: true,
             block: false,
@@ -335,7 +335,7 @@ export const getFixserviceSettings = () => {
             index: 'cost', 
             label: 'Стоимость',      
             variants: false,
-            maintable: false,
+            maintable: true,
             neworder: true,
             card: true,
             block: false,
@@ -363,7 +363,7 @@ export const getFixserviceSettings = () => {
             index: 'dateOut', 
             label: 'Дата Выдачи',      
             variants: false,
-            maintable: false,
+            maintable: true,
             neworder: false,
             card: true,
             block: false 
@@ -372,7 +372,7 @@ export const getFixserviceSettings = () => {
             index: 'status', 
             label: 'Статус',      
             variants: false,
-            maintable: false,
+            maintable: true,
             neworder: false,
             card: true,
             block: false 
@@ -381,7 +381,7 @@ export const getFixserviceSettings = () => {
             index: 'manager', 
             label: 'Мененджер',      
             variants: false,
-            maintable: false,
+            maintable: true,
             neworder: false,
             card: true,
             block: false 
@@ -390,7 +390,7 @@ export const getFixserviceSettings = () => {
             index: 'masters', 
             label: 'Мастер',      
             variants: false,
-            maintable: false,
+            maintable: true,
             neworder: false,
             card: true,
             block: false 
@@ -399,7 +399,7 @@ export const getFixserviceSettings = () => {
             index: 'createdAt', 
             label: 'createdAt',      
             variants: false,
-            maintable: false,
+            maintable: true,
             neworder: false,
             card: false,
             block: true 
@@ -577,7 +577,8 @@ export const getFixserviceSettings = () => {
         {
             userSettings: {
                 userFastDevices: listFastDevice,
-                userStatusFilter: listOfStatuses.map(item => item.index)
+                userStatusFilter: listOfStatuses.map(item => item.index),
+                userMainTable: listOrdersFields.filter(item => item.block === false).map(item => item.index)
             } ,
             documentSettings: {
                 documents: docprint

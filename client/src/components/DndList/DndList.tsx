@@ -4,19 +4,28 @@ import classes from './DndList.module.css';
 import React, { useState } from 'react';
 import { GridForItems } from '../GridForItems/GridForItems.tsx';
 import { CheckBox1 } from '../CheckBox1/CheckBox1.tsx';
-import { updateGeneralSettings } from '../../fix/fixServiceSettings.js';
+import { updateUserSettings } from '../../fix/fixServiceSettings.js';
 
 export function DndList(props) {
-  
-  const [state, setState] = useState(props.data)
-  const [dataChecks, setDataChecks] = useState(props.serviceSettings.generalOrderList.filter(item => item.block === false).sort((a,b) => a.index - b.index))
+
+  const getTable = async () => {
+    const res: any = []
+    for(const i of props.serviceSettings.userMainTable){
+        res.push(props.serviceSettings.generalOrderList.find((item: any) => item.index === i))
+    }
+    // console.log(res)
+    return res
+  } 
+
+  const [state, setState] = useState(getTable())
+  const [dataChecks] = useState(props.data.sort((a,b) => a.index - b.index))
 
   async function swap(arr, a, b) {
       console.log(arr)
       arr[a] = arr.splice(b, 1, arr[a])[0]
       console.log(arr)
   }
-
+  console.log(state)
   const items = state.map((item: any, index: number) => (
     <Draggable key={item.index} index={index} draggableId={item.label}>
       {(provided, snapshot) => (
@@ -40,10 +49,10 @@ export function DndList(props) {
         <DragDropContext
           onDragEnd={async ({ destination, source }) => {
             await swap(state, source.index, destination?.index || 0)
-            const res = state.concat(props.serviceSettings.generalOrderList.filter(item => item.maintable === false))
-            props.serviceSettings.generalOrderList = res
+            props.serviceSettings.userMainTable = state.map(item => item.index)
+            console.log(state.map(item => item.index))
             props.setServiceSettings(props.serviceSettings)
-            updateGeneralSettings(props.serviceSettings)
+            updateUserSettings({item: 'userMainTable', newData: props.serviceSettings.userMainTable})
             setState([...state])
           }}
         >

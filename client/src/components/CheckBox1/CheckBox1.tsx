@@ -4,13 +4,20 @@ import React from 'react';
 import { updateUserSettings } from '../../fix/fixServiceSettings';
 
 export function CheckBox1(props: any) {
-  const [checked, setChecked] = useState(props.item.maintable)
+
+  const [checked, setChecked] = useState(props.serviceSettings.userMainTable.includes(props.item.index))
 
   const checkVisible = (data: boolean) => {
-    props.serviceSettings.generalOrderList.find((item: any) => item.index === props.item.index).maintable = data
+
+    if(checked){
+      props.serviceSettings.userMainTable = props.serviceSettings.userMainTable.filter(item => item !== props.item.index)
+    }
+    else{
+      props.serviceSettings.userMainTable.push(props.item.index)
+    }
     props.setServiceSettings(props.serviceSettings)
-    props.setState(props.serviceSettings.generalOrderList.filter((item: any) => item.maintable === true))
-    updateUserSettings(props.serviceSettings)
+    props.setState(props.serviceSettings.generalOrderList.filter((item: any) => props.serviceSettings.userMainTable.includes(item.index)))
+    updateUserSettings({item: 'userMainTable', newData: props.serviceSettings.userMainTable})
     setChecked(data)
   }
 
