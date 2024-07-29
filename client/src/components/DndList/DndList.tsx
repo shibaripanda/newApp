@@ -16,16 +16,12 @@ export function DndList(props) {
     // console.log(res)
     return res
   } 
-
-  const [state, setState] = useState(getTable())
+  
+  // const [state, setState] = useState(getTable())
+  const [state, setState] = useState(props.data.filter(item => props.serviceSettings.userMainTable.includes(item.index)))
+  // const [state, setState] = useState(props.serviceSettings.userMainTable.forEach(item => item = props.serviceSettings.generalOrderList.find((item: any) => item.index === item)))
   const [dataChecks] = useState(props.data.sort((a,b) => a.index - b.index))
 
-  async function swap(arr, a, b) {
-      console.log(arr)
-      arr[a] = arr.splice(b, 1, arr[a])[0]
-      console.log(arr)
-  }
-  console.log(state)
   const items = state.map((item: any, index: number) => (
     <Draggable key={item.index} index={index} draggableId={item.label}>
       {(provided, snapshot) => (
@@ -41,7 +37,13 @@ export function DndList(props) {
         </div>
       )}
     </Draggable>
-  ));
+  ))
+
+  async function swap(arr, a, b) {
+    console.log(arr)
+    arr[a] = arr.splice(b, 1, arr[a])[0]
+    console.log(arr)
+  }
 
   return (
     <div>
@@ -72,5 +74,5 @@ export function DndList(props) {
         } count={4}/>
       </div>
     </div>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { DndList } from "../../components/DndList/DndList.tsx"
 
 export const ColmsMainTable = (props: any) => {
 
-    useEffect(() => {
-    }, [])
+    // useEffect(() => {
+    // }, [])
 
     // const getTable = async () => {
     //     const res: any = []
@@ -16,13 +16,13 @@ export const ColmsMainTable = (props: any) => {
     // }
     
     
-    const dateTableHeaders = props.serviceSettings.generalOrderList.filter((item: any) => item.maintable === true)
+    const data = props.serviceSettings.generalOrderList.filter((item: any) => item.maintable === true)
 
     
   
     return (
         <div>
-            <DndList data={dateTableHeaders} serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>
+            <DndList data={data} serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>
         </div>
     )
     

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function NavbarMinimalColored(props) {
   const navigate = useNavigate()
-  console.log(props.active)
+  // console.log(props.active)
 
   function NavbarLink({ icon: Icon, label, active, onClick }: any) {
     return (

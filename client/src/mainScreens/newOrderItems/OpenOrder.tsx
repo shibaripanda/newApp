@@ -25,8 +25,8 @@ export function OpenOrder(props: any) {
     const disabledModeButtons = (status) => {
       
       if(['close', 'cancel'].includes(status)){
-        console.log(status)
-        console.log(props.data.soglas)
+        // console.log(status)
+        // console.log(props.data.soglas)
           if(status === 'close' && !props.data.soglas){
           return true
         }

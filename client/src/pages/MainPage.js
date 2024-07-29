@@ -41,7 +41,6 @@ function MainPage() {
     }
     return obj
   }
-  
   createLisener('createNewOrder', async (data) => {
     await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
     .then(async (res) => {
@@ -49,12 +48,10 @@ function MainPage() {
       setTimeout(() => setActive(0), 500)
     })
   })
-
   createLisener('createNewOrderAndPrint', async (data) => {
     await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
     .then(async (res) => {setOrders([{...res.data}, ...data.orders])})
   })
-
   useEffect(() => {
     const navi = () => {
       sessionData('read', 'currentUser')
