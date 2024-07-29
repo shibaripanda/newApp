@@ -1,6 +1,6 @@
 .header {
     height: 3.5vmax;
-    width: 99vw;
+    width: calc(99vw - 5vmax);
     background-color: var(--mantine-color-body);
     border-bottom: 0.0625vmax solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
     padding-left: var(--mantine-spacing-md);
@@ -21,13 +21,13 @@
     padding: 0.5vmax 0.75vmax;
     border-radius: var(--mantine-radius-sm);
     text-decoration: none;
-    color: rgb(194, 194, 194);
+    color: rgb(0, 0, 0);
     font-size: var(--mantine-font-size-sm);
-    font-weight: 900;
+    font-weight: 500;
 
     &:hover {
       color: rgb(10, 113, 231);
-      font-weight: 900;
+      font-weight: 500;
     }
   }
 
@@ -38,13 +38,13 @@
     padding: 0.5vmax 0.75vmax;
     border-radius: var(--mantine-radius-sm);
     text-decoration: none;
-    color: rgb(0, 0, 0); 
+    color: rgb(10, 113, 231);
     font-size: var(--mantine-font-size-sm);
-    font-weight: 900;
-    /* text-decoration: underline; */
+    font-weight: 500;
+    text-decoration: underline;
 
     &:hover {
       color: rgb(10, 113, 231);
-      font-weight: 900;
+      font-weight: 500;
     }
   }

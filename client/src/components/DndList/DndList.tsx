@@ -8,18 +8,7 @@ import { updateUserSettings } from '../../fix/fixServiceSettings.js';
 
 export function DndList(props) {
 
-  const getTable = async () => {
-    const res: any = []
-    for(const i of props.serviceSettings.userMainTable){
-        res.push(props.serviceSettings.generalOrderList.find((item: any) => item.index === i))
-    }
-    // console.log(res)
-    return res
-  } 
-  
-  // const [state, setState] = useState(getTable())
-  const [state, setState] = useState(props.data.filter(item => props.serviceSettings.userMainTable.includes(item.index)))
-  // const [state, setState] = useState(props.serviceSettings.userMainTable.forEach(item => item = props.serviceSettings.generalOrderList.find((item: any) => item.index === item)))
+  const [state, setState] = useState(props.serviceSettings.userMainTable)
   const [dataChecks] = useState(props.data.sort((a,b) => a.index - b.index))
 
   const items = state.map((item: any, index: number) => (
@@ -51,7 +40,7 @@ export function DndList(props) {
         <DragDropContext
           onDragEnd={async ({ destination, source }) => {
             await swap(state, source.index, destination?.index || 0)
-            props.serviceSettings.userMainTable = state.map(item => item.index)
+            props.serviceSettings.userMainTable = state
             console.log(state.map(item => item.index))
             props.setServiceSettings(props.serviceSettings)
             updateUserSettings({item: 'userMainTable', newData: props.serviceSettings.userMainTable})

@@ -1,7 +1,7 @@
 import { NavbarMinimalColored } from '../components/NavBar/NavbarMinimalColored.tsx';
 import '@mantine/core/styles.css';
 import { fixNavBarItems } from '../fix/fixNavBarItems.js';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { fixColorApp } from '../fix/fixColorApp.js';
 import { fixText } from '../fix/fixText.js';
 import { ServiceScreen } from '../mainScreens/ServiceScreen.tsx';
@@ -9,6 +9,7 @@ import { NewOrderScreen } from '../mainScreens/NewOrderScreen.tsx';
 // import { Affix } from '@mantine/core';
 import '../App.css';
 import { HeaderSearch } from '../components/HeaderSearch/HeaderSearch.tsx';
+import { HeaderSearch2 } from '../components/HeaderSearch/HeaderSearch2.tsx';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { fixServiceSettings } from '../fix/fixServiceSettings.js';
 import { fixOrders } from '../fix/fixOrders.js';
@@ -17,7 +18,6 @@ import { SettingsScreen } from '../mainScreens/SettingsScreen.tsx';
 import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom'
 import { sessionData } from '../modules/sessionData.js';
-// import { ModalWindowPrint } from '../components/ModalWindow/ModalWindowPrint.tsx';
 import { AdminScreen } from '../mainScreens/AdminScreen.tsx';
 import { GroupUsersScreen } from '../mainScreens/GroupUsersScreen.tsx';
 
@@ -29,6 +29,8 @@ function MainPage() {
   const [text, setText] = useState(false)
   const [filter, setFilter] = useState('')
   const [serviceSettings, setServiceSettings] = useState(false)
+  const [newSet, setNewSet] = useState(false)
+  const [textFilter, setTextFilter] = useState(false)
   const [value, setValue] = useState('');
   const [orders, setOrders] = useState([])
 
@@ -84,7 +86,9 @@ function MainPage() {
     const res1 = defaultValue(res.generalOrderList)
     setValue(res1)
     setServiceSettings(res)
+    setNewSet(res.userStatusFilter)
   }
+
   const getNavBar = async () => {
     const res = await fixNavBarItems()
     setNavBar(res)
@@ -94,12 +98,12 @@ function MainPage() {
     setAppColor(res)
   }
   
-  if(navBar && appColor && text && serviceSettings && orders){
+  if(navBar && appColor && text && serviceSettings && orders && newSet){
 
     const screen = () => {
       
       const listScreens = [
-        <ServiceScreen getOrders={getOrders} text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings}/>,
+        <ServiceScreen getOrders={getOrders} text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings} newSet={newSet} textFilter={textFilter}/>,
         <NewOrderScreen getOrders={getOrders} orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
         <SettingsScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
         <GroupUsersScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
@@ -130,8 +134,10 @@ function MainPage() {
           <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
         </div>
         <div className={'NavBarTop'}>
-          <HeaderSearch filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>
-          {/* <HeaderSearch filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>   */}
+          <HeaderSearch serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
+          <div className={'NavBarTop2'}>
+            <HeaderSearch2 textFilter={textFilter} setTextFilter={setTextFilter} filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>  
+          </div>
         </div>
       </div>
   )

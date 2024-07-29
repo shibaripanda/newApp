@@ -5,14 +5,7 @@ import { dateToLokalFormatForMainTable } from '../../modules/dateToLocalFormat.j
 
 export function TableReviews(props) {
   
-  const getTable = () => {
-    const res: any = []
-    for(const i of props.serviceSettings.userMainTable){
-      res.push(props.serviceSettings.generalOrderList.find((item: any) => item.index === i))
-    }
-    return res
-  }
-  const activTableCols = getTable()
+  const activTableCols = props.serviceSettings.userMainTable
   const activTableColsHeader = activTableCols.map(item => item.index)
 
   const makeRows = (row) => {

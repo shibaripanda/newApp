@@ -1,29 +1,40 @@
 'use client'
-import { Autocomplete, Group } from '@mantine/core'
-// import { useDisclosure } from '@mantine/hooks'
-import { IconSearch } from '@tabler/icons-react'
+import { Group } from '@mantine/core'
 import classes from './HeaderSearch.module.css'
 import React from 'react'
 import { sessionData } from '../../modules/sessionData'
+import { updateUserSettings } from '../../fix/fixServiceSettings'
+import { IconUserSquareRounded } from '@tabler/icons-react'
 
 export function HeaderSearch(props) {
 
-  // const [opened, { toggle }] = useDisclosure(false);
-
-  const changeColor = (request, status) => {
-    if(request === status){
+  console.log('update')
+  const changeColor = (index) => {
+    if(props.newSet.includes(index)){
       return 'activlink'
     }
     return 'link'
   }
 
-  const items = props.serviceSettings.userFastDevices.map((link) => (
+  const items = props.serviceSettings.generalStatusList.map((link, index) => (
       
     <div
-      key={link.link}
-      className={classes[changeColor(link.request, props.filter)]}
+      key={index}
+      className={classes[changeColor(link.index)]}
       // onClick={(event) => event.preventDefault()}
-      onClick={() => props.setFilter(link.request)}
+      onClick={ async () => {
+        let newfilter = [...props.newSet]
+        const res = props.newSet.findIndex(item => item === link.index)
+        if(res > -1){
+          console.log('delete')
+          newfilter = newfilter.filter(item => item !== link.index)
+        }
+        else{
+          newfilter = [...newfilter, link.index]
+        }
+        updateUserSettings({item: 'userStatusFilter', newData: newfilter})
+        props.setNewSet(newfilter)
+      }}
     >
       {link.label}
     </div>
@@ -35,21 +46,13 @@ export function HeaderSearch(props) {
       <div>
         <div className={classes.inner}>
           <Group>
-            {sessionData('read', 'name')}
+          <IconUserSquareRounded/> {sessionData('read', 'name')}
           </Group>
 
           <Group>
             <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
-              {items}
+              Status filtres: {items}
             </Group>
-            <Autocomplete
-              className={classes.search}
-              placeholder="Search"
-              leftSection={<IconSearch style={{ width: '1vmax', height: '1vmax' }} stroke={1.5} />}
-              data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-              visibleFrom="xs"
-              onChange={props.setFilter}
-            />
           </Group>
         </div>
       </div>

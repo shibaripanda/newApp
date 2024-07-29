@@ -5,8 +5,11 @@ import { LoaderItem } from "../components/Loader/LoaderItem.tsx";
 export const ServiceScreen = (props) => {
   
   const filteringOrders = useMemo(() => {
-    return props.orders.filter(order => Object.values(order).join().toLowerCase().includes(props.filter.toLowerCase()))
-    }, [props.filter, props.orders]
+    if(props.textFilter){
+      return (props.orders).filter(order => Object.values(order).join().toLowerCase().includes(props.textFilter.toLowerCase()))
+    }
+    return (props.orders.filter(item => props.newSet.includes(item.status))).filter(order => Object.values(order).join().toLowerCase().includes(props.filter.toLowerCase()))
+    }, [props]
   )
 
   if(props.orders.length){

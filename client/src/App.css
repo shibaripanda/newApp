@@ -20,10 +20,15 @@
   position: fixed;
 }
 
+.NavBarTop2 {
+  margin-left: 5vmax;
+}
+
 .WorkScreen {
   width: calc(99vw - 5vmax);
   position: absolute;
-  margin-top: 3.5vmax;
+  margin-top: 7vmax;
+  /* margin-top: 3.5vmax; */
   margin-left: 5vmax;
 }
 
