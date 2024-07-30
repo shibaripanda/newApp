@@ -8,7 +8,7 @@ export const ServiceScreen = (props) => {
     if(props.textFilter){
       return (props.orders).filter(order => Object.values(order).join().toLowerCase().includes(props.textFilter.toLowerCase()))
     }
-    return (props.orders.filter(item => props.newSet.includes(item.status))).filter(order => Object.values(order).join().toLowerCase().includes(props.filter.toLowerCase()))
+    return (props.orders.filter(item => props.newSet.includes(item.status) && props.filter.includes(item.title)))
     }, [props]
   )
 

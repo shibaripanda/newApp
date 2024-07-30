@@ -1,12 +1,12 @@
 import { NavbarMinimalColored } from '../components/NavBar/NavbarMinimalColored.tsx';
 import '@mantine/core/styles.css';
 import { fixNavBarItems } from '../fix/fixNavBarItems.js';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fixColorApp } from '../fix/fixColorApp.js';
 import { fixText } from '../fix/fixText.js';
 import { ServiceScreen } from '../mainScreens/ServiceScreen.tsx';
 import { NewOrderScreen } from '../mainScreens/NewOrderScreen.tsx';
-// import { Affix } from '@mantine/core';
+import { Affix } from '@mantine/core';
 import '../App.css';
 import { HeaderSearch } from '../components/HeaderSearch/HeaderSearch.tsx';
 import { HeaderSearch2 } from '../components/HeaderSearch/HeaderSearch2.tsx';
@@ -27,7 +27,7 @@ function MainPage() {
   const [navBar, setNavBar] = useState(false)
   const [appColor, setAppColor] = useState(false)
   const [text, setText] = useState(false)
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState(false)
   const [serviceSettings, setServiceSettings] = useState(false)
   const [newSet, setNewSet] = useState(false)
   const [textFilter, setTextFilter] = useState(false)
@@ -75,6 +75,18 @@ function MainPage() {
   const getOrders = async () => {
     const res = await fixOrders()
     setOrders(res.sort((a, b) => b.date - a.date))
+    setInterval(async () => {
+      console.log(navBar)
+      console.log(active)
+      if(sessionData('read', 'currentUser')){
+        const res = await fixOrders()
+        setOrders(res.sort((a, b) => b.date - a.date))
+        console.log('up orders')
+      }
+      else{
+        console.log('pause update orders')
+      }
+    }, 5000)
   }
   const getText = async () => {
     const res = await fixText()
@@ -87,6 +99,7 @@ function MainPage() {
     setValue(res1)
     setServiceSettings(res)
     setNewSet(res.userStatusFilter)
+    setFilter(res.userDeviceFilter)
   }
 
   const getNavBar = async () => {
@@ -98,7 +111,7 @@ function MainPage() {
     setAppColor(res)
   }
   
-  if(navBar && appColor && text && serviceSettings && orders && newSet){
+  if(navBar && appColor && text && serviceSettings && orders && newSet && filter){
 
     const screen = () => {
       
@@ -115,6 +128,7 @@ function MainPage() {
       }
 
       if(listScreens[active]){
+        console.log(active)
         return (
           listScreens[active]
         )
@@ -134,9 +148,10 @@ function MainPage() {
           <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
         </div>
         <div className={'NavBarTop'}>
-          <HeaderSearch serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
+          <HeaderSearch textFilter={textFilter} setTextFilter={setTextFilter}  serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
           <div className={'NavBarTop2'}>
-            <HeaderSearch2 textFilter={textFilter} setTextFilter={setTextFilter} filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>  
+            <HeaderSearch2 filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>
+            {/* <Affix>ssdd</Affix>   */}
           </div>
         </div>
       </div>

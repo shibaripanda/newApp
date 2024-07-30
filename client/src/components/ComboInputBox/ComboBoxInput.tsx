@@ -1,4 +1,4 @@
-import { Combobox, TextInput, useCombobox } from '@mantine/core';
+import { Combobox, ScrollArea, TextInput, useCombobox } from '@mantine/core';
 import React from 'react';
 
 export function ComboBoxInput(props) {
@@ -8,24 +8,13 @@ export function ComboBoxInput(props) {
     ? props.data.filter((item) => item.toLowerCase().includes(props.value[props.index].toLowerCase().trim()))
     : props.data;
 
-  const options = filteredOptions.map((item) => (
-    <Combobox.Option value={item} key={item}>
+  const options = filteredOptions.map((item, index) => (
+    <Combobox.Option value={item} key={index}>
       {item}
     </Combobox.Option>
-  ));
+  ))
 
-  const list = (options) => {
-    if(options.length){
-        return (
-        <Combobox.Dropdown>
-            <Combobox.Options>
-                {options}
-            </Combobox.Options>
-        </Combobox.Dropdown>
-        )
-    }
-  }
-
+  
   return (
     <Combobox
       onOptionSubmit={(optionValue) => {
@@ -36,6 +25,8 @@ export function ComboBoxInput(props) {
     >
       <Combobox.Target>
         <TextInput
+          rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
           label={props.label}
           placeholder={props.placeholder}
           value={props.value[props.index]}
@@ -45,11 +36,17 @@ export function ComboBoxInput(props) {
             combobox.updateSelectedOptionIndex();
           }}
           onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          // onFocus={() => combobox.openDropdown()}
+          // onBlur={() => combobox.closeDropdown()}
         />
       </Combobox.Target>
-      {list(options)}
+      <Combobox.Dropdown>
+        <Combobox.Options>
+          <ScrollArea.Autosize type="scroll" mah={350}>
+          {options}
+          </ScrollArea.Autosize>
+        </Combobox.Options>
+      </Combobox.Dropdown>
     </Combobox>
   );
 }

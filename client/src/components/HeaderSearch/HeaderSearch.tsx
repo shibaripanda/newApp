@@ -1,10 +1,10 @@
 'use client'
-import { Group } from '@mantine/core'
+import { Autocomplete, Group } from '@mantine/core'
 import classes from './HeaderSearch.module.css'
 import React from 'react'
 import { sessionData } from '../../modules/sessionData'
 import { updateUserSettings } from '../../fix/fixServiceSettings'
-import { IconUserSquareRounded } from '@tabler/icons-react'
+import { IconSearch, IconUserSquareRounded } from '@tabler/icons-react'
 
 export function HeaderSearch(props) {
 
@@ -47,12 +47,18 @@ export function HeaderSearch(props) {
         <div className={classes.inner}>
           <Group>
           <IconUserSquareRounded/> {sessionData('read', 'name')}
+          <Autocomplete
+              // className={classes.search}
+              style={{width: '35vmax', marginLeft: '2vmax'}}
+              placeholder="Search"
+              leftSection={<IconSearch style={{ width: '1vmax', height: '1vmax' }} stroke={1.5} />}
+              data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
+              visibleFrom="xs"
+              onChange={props.setTextFilter}
+            />
           </Group>
-
-          <Group>
-            <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
-              Status filtres: {items}
-            </Group>
+          <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
+              Status filter: {items}
           </Group>
         </div>
       </div>
