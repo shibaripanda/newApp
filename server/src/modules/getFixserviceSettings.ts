@@ -185,15 +185,6 @@ export const getFixserviceSettings = () => {
             ]
         }
     }
-    // const listFastDevice = [
-    //     {label: 'Ноутбуки', link: 'device1', request: 'Ноутбук'},
-    //     {label: 'Телефоны', link: 'device2', request: 'Телефон'},
-    //     {label: 'Планшеты', link: 'device3', request: 'Планшет'},
-    //     {label: 'Картриджи', link: 'device4', request: 'Картридж'},
-    //     {label: 'ПК', link: 'device5', request: 'ПК'},
-    //     {label: 'Колонки', link: 'device6', request: 'Колонка'},
-    //     // {label: 'Reset', link: 'device0', request: ''}
-    // ]
     const listFastDevice = [
         {label: 'Ноутбуки', request: 'Ноутбук'},
         {label: 'Телефоны', request: 'Телефон'},
@@ -649,7 +640,7 @@ export const getFixserviceSettings = () => {
                 generalDataList: listOfDataForFastInput,
                 generalStatusList: listOfStatuses,
                 generalDeviceList: listFastDevice,
-                generalRoleList: ['user', 'manager', 'supermanager']
+                generalRoleList: ['user', 'master', 'manager', 'supermanager']
             }
         }
     )

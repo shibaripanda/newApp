@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { axiosCall } from "../../modules/axiosCall"
 import { LoaderItem } from "../../components/Loader/LoaderItem.tsx"
-import { TextInput, Container, Button, List, SimpleGrid, InputBase, Select } from '@mantine/core';
+import { TextInput, Container, Button, SimpleGrid, Select, Card } from '@mantine/core';
 import { addNewUserToCamp, deleteUserFromCamp, editUserRole, getUsersOfCamp } from "../../fix/fixServiceSettings.js";
 import { validateEmail } from "../../modules/validateEmail.js";
 
@@ -17,7 +16,6 @@ export const WorkersSettings = (props) => {
     
     const getUsers = async () => {
         const res = await getUsersOfCamp()
-        console.log(res)
         setUsers(res.data.reverse())
     }
     const activBut = () => {
@@ -28,20 +26,22 @@ export const WorkersSettings = (props) => {
         if(role === 'owner') return true
         return false
     }
-   const updateUserRole = async (value, email) => {
-        console.log(value)
+    const updateUserRole = async (value, email) => {
         await editUserRole({email: email, role: value})
+        getUsers()
     }
-
     const showRoleEdit = (user) => {
         if(user.role !== 'owner'){
             return (
                     <Select
                         style={{marginTop: '1vmax'}} 
-                        defaultValue={user['role']}
+                        // defaultValue={user['role']}
                         label="Change role"
+                        clearable
                         data={props.serviceSettings.generalRoleList}
-                        onChange={(value) => updateUserRole(value, user.email)}
+                        onChange={(value) => {
+                            if(value && user.role !== value) updateUserRole(value, user.email)}
+                        }
                     />
             )
         }
@@ -49,51 +49,58 @@ export const WorkersSettings = (props) => {
 
     if(users.length){
         return (
-             <div>
-                <Container size={400} my={15}>
-                    <div style={{marginBottom: '7vmax'}}>
-                    <TextInput 
-                        style={{marginTop: '3vmax'}} 
-                        label={`Email`} 
-                        placeholder={'email'} 
-                        required 
-                        onChange={event => setEmail(event.currentTarget.value)}
-                    />
-                    <Select
-                        label="Role"
-                        placeholder="Role"
-                        value={role}
-                        clearable
-                        required 
-                        data={props.serviceSettings.generalRoleList}
-                        onChange={(value) => setRole(value ? value : '')}
-                    />
-                    <Button fullWidth mt="sm" disabled={activBut()} onClick={async () => {
-                        await addNewUserToCamp({email: email, role: role})
-                        getUsers()
-                        }}>
-                        Добавить
-                    </Button>
-                    </div>
-
-                    {users.map((item, index) =>
-                    <div style={{marginTop: '2vmax', marginBottom: '1vmax'}}>
-                        <div>
-                            {index + 1}. {item['email']} {`(${item['role']})`}
-                        </div>
-                    {showRoleEdit(item)}
-                    <Button fullWidth mt="sm" disabled={stopDeleteOwner(item['role'])} onClick={async () => {
-                            await deleteUserFromCamp(item)
-                            getUsers()
-                            }}>
-                            Удалить
-                        </Button>
-                    <hr style={{marginTop: '1vmax', marginBottom: '1vmax'}}></hr>
-                    </div>
-                    )}
-                    
+            <Container size={'70vmax'} my={15}>
+                <Container size={'30vmax'} my={15}>
+                <TextInput
+                    style={{marginTop: '3vmax'}} 
+                    label={`Email`} 
+                    placeholder={'email'} 
+                    required 
+                    onChange={event => setEmail(event.currentTarget.value)}
+                />
+                <Select
+                    label="Role"
+                    placeholder="Role"
+                    value={role}
+                    clearable
+                    required 
+                    data={props.serviceSettings.generalRoleList}
+                    onChange={(value) => setRole(value ? value : '')}
+                />
+                <Button fullWidth mt="sm" disabled={activBut()} onClick={async () => {
+                    await addNewUserToCamp({email: email, role: role})
+                    getUsers()
+                    }}>
+                    Добавить
+                </Button>
                 </Container>
-             </div>
+
+                <SimpleGrid cols={3} style={{marginTop: '3.5vmax'}}>
+                {users.map((item, index) =>
+                    <Card key={index} withBorder p="md" radius="md" style={{marginTop: '0.2vmax', marginBottom: '0.2vmax'}}>
+                        <div>
+                            {index + 1}. {item['email']} 
+                        </div>
+                        <div>
+                            {`(${item['role']})`}
+                        </div>
+                            {`${item['name']}`}
+                        {showRoleEdit(item)}
+                        <Button 
+                            fullWidth 
+                            mt="sm" 
+                            disabled={stopDeleteOwner(item['role'])} 
+                            onClick={async () => {
+                                console.log(delete item['name'])
+                                await deleteUserFromCamp(item)
+                                getUsers()
+                                }}>
+                                Удалить
+                        </Button>
+                    </Card>
+                )}
+                </SimpleGrid>
+            </Container>
          ) 
     }
     else{

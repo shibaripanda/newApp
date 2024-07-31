@@ -29,4 +29,8 @@ export class UsersService {
         await this.userModelNestreact.updateOne({_id: id}, dto)
     }
 
+    async findUsersName(arr: []){
+        return await this.userModelNestreact.find({email: arr}, {_id: 0, email: 1, name: 1})
+    }
+
 }
