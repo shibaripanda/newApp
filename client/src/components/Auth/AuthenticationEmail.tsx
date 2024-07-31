@@ -29,8 +29,9 @@ import { sessionData } from '../../modules/sessionData';
     }
 
     const fastBottons = () => {
-      if(sessionData('read', 'activUsers')){
-        const res = sessionData('read', 'activUsers').map((item, index) => 
+      let res: any = sessionData('read', 'activUsers')
+      if(res){
+        res = res.map((item, index) => 
         <Button 
         key={index} 
         fullWidth 
@@ -48,6 +49,9 @@ import { sessionData } from '../../modules/sessionData';
         return (
           res
         )
+      }
+      else{
+        return []
       }
     }
     

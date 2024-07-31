@@ -648,7 +648,8 @@ export const getFixserviceSettings = () => {
                 generalOrderList: listOrdersFields,
                 generalDataList: listOfDataForFastInput,
                 generalStatusList: listOfStatuses,
-                generalDeviceList: listFastDevice
+                generalDeviceList: listFastDevice,
+                generalRoleList: ['user', 'manager', 'supermanager']
             }
         }
     )

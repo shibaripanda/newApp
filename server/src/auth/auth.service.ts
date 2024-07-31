@@ -82,9 +82,9 @@ export class AuthService {
     }
 
     private async generateToken(user: User){
-        const ownerCamps = await this.campService.getCampsByOwnerEmail({users: {$elemMatch: {email: user.email}}}) //{owner: user.email}
-        console.log( ownerCamps)
-
+        // const ownerCamps = await this.campService.getCampsByOwnerEmail({users: {$elemMatch: {email: user.email}}}) //{owner: user.email}
+        const ownerCamps = await this.campService.getCampsByOwnerEmail(user) //{owner: user.email}
+        console.log(ownerCamps)
         const payload = {email: user.email, _id: user._id, campId: ownerCamps}
         return {
             token: this.jwtService.sign(payload), email: user.email, name: user.name ? user.name : 'noname'

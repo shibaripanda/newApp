@@ -7,6 +7,9 @@ export const sessionData = (forward, item, data) => {
         else if(item === 'campId'){
             sessionStorage.setItem(item, data)
         }
+        else if(item === 'role'){
+            sessionStorage.setItem(item, data)
+        }
         else if(item === 'activUsers'){
             if(sessionStorage.getItem(item)){
                 const res = (sessionStorage.getItem(item).split('%')).findIndex(item => item.split('#')[0] === data.split('#')[0])
@@ -42,16 +45,19 @@ export const sessionData = (forward, item, data) => {
         else if(item === 'campId'){
             return sessionStorage.getItem('campId')
         }
+        else if(item === 'role'){
+            return sessionStorage.getItem('role')
+        }
     }
     else if(forward === 'close'){
         sessionStorage.removeItem('currentUser')
         sessionStorage.removeItem('campId')
+        sessionStorage.removeItem('role')
     }
     else if(forward === 'exit'){
-        console.log(sessionStorage.getItem('activUsers'))
         sessionStorage.setItem('activUsers', sessionStorage.getItem('activUsers').split('%').filter(item => item !== sessionStorage.getItem(`currentUser`)).join('%'))
-        console.log(sessionStorage.getItem('activUsers'))
         sessionStorage.removeItem(`campId`)
+        sessionStorage.removeItem('role')
         sessionStorage.removeItem(`currentUser`)
     }
     else if(forward === 'off'){

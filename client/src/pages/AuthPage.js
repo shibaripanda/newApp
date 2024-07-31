@@ -10,6 +10,7 @@ import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom';
 import { CampSelect } from '../components/Auth/CampSelect.tsx';
 import { sessionData } from '../modules/sessionData.js';
+import { getRole } from '../modules/getRole.js';
 
 function AuthPage() {
   const navigate = useNavigate()
@@ -132,6 +133,7 @@ function AuthPage() {
   const getMyCamps = async () => {
     await axiosCall('GET', 'http://localhost:5000/api/getmycamps', {})
     .then((res) => {
+      console.log(res.data)
       setCamps(res.data)
       if(res.data.length) setStep(4)
       else setStep(3)
@@ -140,8 +142,10 @@ function AuthPage() {
         console.log(error.response.data.message)
     })
   }
-  const selectCamp = (camp) => {
+  const selectCamp = (camp, role) => {
+    console.log(camp, role)
     sessionData(`write`, 'campId', camp)
+    sessionData('write', 'role', role)
     navigate('/main')
   }
 

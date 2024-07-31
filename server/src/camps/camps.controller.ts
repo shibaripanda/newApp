@@ -44,4 +44,32 @@ export class CampsController {
         console.log('updategeneralsettings', obj)
         return this.campsService.updateGeneralSettings(campId, obj)
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('/addnewusertocamp/:campId')
+    addNewUserToCamp(@Param('campId') campId: string, @Body() obj: object){
+        console.log('addnewusertocamp', obj)
+        return this.campsService.addNewUserToCamp(campId, obj)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('/getusersofcamp/:campId')
+    getUsersOfCamp(@Param('campId') campId: string){
+        console.log('getusersofcamp')
+        return this.campsService.getUsersOfCamp(campId)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('/deleteuserfromcamp/:campId')
+    deleteUserFromCamp(@Param('campId') campId: string, @Body() obj: object){
+        console.log('deleteuserfromcamp')
+        return this.campsService.deleteUserFromCamp(campId, obj)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('/edituserrole/:campId')
+    editUserRole(@Param('campId') campId: string, @Body() obj: object){
+        console.log('edituserrole')
+        return this.campsService.editUserRole(campId, obj)
+    }
 }

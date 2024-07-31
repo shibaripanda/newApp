@@ -12,7 +12,7 @@ export const GroupUsersScreen = (props: any) => {
        return (
             <div>
                 {/* <SettingsItem title={props.text.settingsMainTable} body={<ColmsMainTable serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>}/> */}
-                <SettingsItem title={props.text.workers} body={<WorkersSettings/>}/>
+                <SettingsItem title={props.text.workers} body={<WorkersSettings serviceSettings={props.serviceSettings}/>}/>
                 {/* <SettingsItem title={props.text.UserSettings} body={<UserSettings/>}/> */}
                 {/* <SettingsItem title={props.text.CampSettings} body={<CampSettings serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>}/> */}
             </div>

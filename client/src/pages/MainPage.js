@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom'
 import { sessionData } from '../modules/sessionData.js';
 import { AdminScreen } from '../mainScreens/AdminScreen.tsx';
 import { GroupUsersScreen } from '../mainScreens/GroupUsersScreen.tsx';
+import { OwnerScreen } from '../mainScreens/OwnerScreen.tsx';
 
 function MainPage() {
   const navigate = useNavigate()
@@ -57,7 +58,7 @@ function MainPage() {
   useEffect(() => {
     const navi = () => {
       sessionData('read', 'currentUser')
-      if(!sessionData('read', 'currentUser') || !sessionData('read', 'campId')){
+      if(!sessionData('read', 'currentUser') || !sessionData('read', 'campId') || !sessionData('read', 'role')){
         navigate('/')
       }
       else{
@@ -86,7 +87,7 @@ function MainPage() {
       else{
         console.log('pause update orders')
       }
-    }, 5000)
+    }, 500000)
   }
   const getText = async () => {
     const res = await fixText()
@@ -121,6 +122,7 @@ function MainPage() {
         <SettingsScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
         <GroupUsersScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
         <AdminScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
+        <OwnerScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
       ]
       
       if(listScreens.length !== navBar.top.length){
@@ -145,10 +147,15 @@ function MainPage() {
           {screen()}
         </div>
         <div className={'NavBar'}>
-          <NavbarMinimalColored active={active} setActive={setActive} navBar={navBar} appColor={appColor}/>
+          <NavbarMinimalColored 
+          active={active} 
+          setActive={setActive} 
+          navBar={{...navBar, top: navBar.top.filter(item => item.role.includes(sessionData('read', 'role')))}} 
+          appColor={appColor}
+          />
         </div>
         <div className={'NavBarTop'}>
-          <HeaderSearch textFilter={textFilter} setTextFilter={setTextFilter}  serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
+          <HeaderSearch textFilter={textFilter} setTextFilter={setTextFilter} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
           <div className={'NavBarTop2'}>
             <HeaderSearch2 filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>
             {/* <Affix>ssdd</Affix>   */}
