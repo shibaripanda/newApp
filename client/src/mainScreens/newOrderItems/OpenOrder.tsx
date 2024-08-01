@@ -1,18 +1,14 @@
 import { Button, Container, SimpleGrid, Text, TextInput } from '@mantine/core'
 import React, { useState } from 'react'
 import { dateToLokalFormatFull } from '../../modules/dateToLocalFormat.js'
-import { axiosCall } from '../../modules/axiosCall.js'
-import { sessionData } from '../../modules/sessionData.js'
 import { TableOpenOrder } from '../../components/TableOpenOrder/TableOpenOrder.tsx'
 import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.tsx'
 import { ServiceTable } from '../../components/ServiceTable/ServiceTable.tsx'
 
 export function OpenOrder(props: any) {
 
-  const [newInfo, setNewInfo] = useState('')
-  const [service, setService] = useState({service: '', price: 0, master: '', varant: 0})
-
-  // console.log(props.data)
+    const [newInfo, setNewInfo] = useState('')
+    const [service, setService] = useState({service: '', price: 0, master: '', varant: 0})
 
     const printBut = (but, index) => {
       if(but.print){
@@ -23,10 +19,7 @@ export function OpenOrder(props: any) {
       return <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>
     }
     const disabledModeButtons = (status) => {
-      
       if(['close', 'cancel'].includes(status)){
-        // console.log(status)
-        // console.log(props.data.soglas)
           if(status === 'close' && !props.data.soglas){
           return true
         }
@@ -41,83 +34,20 @@ export function OpenOrder(props: any) {
       return false
     }
     const historyUpdate = async (text, status) => {
-      if(!status){
-        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
-          historylist: {date: Date.now(),
-             text: text,
-              name: sessionData('read', 'name')}
-            }})
-      }
-      else{
-        if(props.data.status === 'warranty'){
-          await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {soglas: false, status: status, $addToSet: {
-            historylist: {date: Date.now(), 
-              text: text, 
-              name: sessionData('read', 'name')}
-            }})
-        }
-        else{
-          await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {status: status, $addToSet: {
-          historylist: {date: Date.now(), 
-            text: text, 
-            name: sessionData('read', 'name')}
-          }})
-        }
-      }
-      props.getOrders()
+      await props.data.updateHistory(text, status)
+      await props.getOrders()
     }
     const serviceUpdate = async (service) => {
-        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
-            historylist: {
-              date: Date.now(),
-              text: 'Добавлена услуга: ' + service.service + ', ' + service.price + 'руб, ' + service.varant + 'дней, ' + service.master,
-              name: sessionData('read', 'name')
-            },
-            service: service
-          },
-          soglas: false
-        })
-      
-      props.getOrders()
+      await props.data.addNewService(service)
+      await props.getOrders()
     }
     const serviceUpdateSoglas = async (status) => {
-      if(status){
-          await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
-            historylist: {
-              date: Date.now(),
-              text: 'Согласовано на: ' + props.data.service.reduce((a, b) => a + b.price, 0) + ' руб.',
-              name: sessionData('read', 'name')
-            }
-          },
-          soglas: status
-        })
-      }
-      else{
-        await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
-          historylist: {
-            date: Date.now(),
-            text: 'Отказ: ' + props.data.service.reduce((a, b) => a + b.price, 0) + ' руб.',
-            name: sessionData('read', 'name')
-          }
-        },
-        soglas: status
-      })
-
-      }
-    props.getOrders()
+      await props.data.updateServiceSoglas(status)
+      await props.getOrders()
     }
     const serviceDelete = async (service) => {
-      await axiosCall('PUT', `http://localhost:5000/api/orders/${props.data._id}`, {$addToSet: {
-          historylist: {
-            date: Date.now(),
-            text: 'Удалена услуга: ' + service.service + ', ' + service.price + 'руб, ' + service.varant + 'дней, ' + service.master,
-            name: sessionData('read', 'name')
-          }
-        }, $pull: {service: service},
-        soglas: false
-      })
-    
-    props.getOrders()
+      await props.data.deleteService(service)
+      await props.getOrders()
     }
     const colorButton = (index) => {
       if(index === props.data.status) return 'red'
@@ -130,7 +60,6 @@ export function OpenOrder(props: any) {
       if(props.data.status === 'cancel') return false
       return true
     }
-
     const topButtonsLine = () => {
 
       const arrayButtons = [
@@ -139,9 +68,8 @@ export function OpenOrder(props: any) {
             print: false,
             color: 'red',
             func: async () =>  {
-              await axiosCall('DELETE', `http://localhost:5000/api/orders/${props.data._id}`, {})
+              await props.data.deleteOrder()
               props.close()
-              clearTimeout(props.timerBlock)
               props.getOrders()
             }
           },
@@ -150,11 +78,10 @@ export function OpenOrder(props: any) {
             print: false,
             func: async () => {
               props.close()
-              clearTimeout(props.timerBlock)
               }, 
           },
           {title: '🖨 Заказ',
-          disabled: false, //checkDisabledSave(),
+          disabled: false,
           color: 'green',
           print: true,
           format: 'order',
@@ -163,8 +90,7 @@ export function OpenOrder(props: any) {
           },
           },
           {title: '🖨 Гарантия',
-          // disabled: false, //checkDisabledSave(),
-          disabled: disabledIfService(), //checkDisabledSave(),
+          disabled: disabledIfService(),
           color: 'green',
           print: true,
           format: 'var',
@@ -173,7 +99,7 @@ export function OpenOrder(props: any) {
           },
           },
           {title: '🖨 Без ремонта',
-          disabled: disabledIfServiceCancel(), //checkDisabledSave(),
+          disabled: disabledIfServiceCancel(),
           color: 'green',
           print: true,
           format: 'cancel',
@@ -238,6 +164,13 @@ export function OpenOrder(props: any) {
       const lookData = (i: string) => {
         if(i === 'date'){
           return dateToLokalFormatFull(props.data[i])
+        }
+        else if(i === 'dateOut'){
+          if(props.data[i] !== 0){
+            return dateToLokalFormatFull(props.data[i])
+          }
+          return ''
+          
         }
         return props.data[i]
       }

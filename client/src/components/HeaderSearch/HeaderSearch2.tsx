@@ -2,7 +2,6 @@
 import { Group } from '@mantine/core'
 import classes from './HeaderSearch2.module.css'
 import React from 'react'
-import { updateUserSettings } from '../../fix/fixServiceSettings'
 
 export function HeaderSearch2(props) {
 
@@ -29,7 +28,7 @@ export function HeaderSearch2(props) {
         else{
           newfilter = [...newfilter, link.request]
         }
-        updateUserSettings({item: 'userDeviceFilter', newData: newfilter})
+        await props.app.updateUserSettings({item: 'userDeviceFilter', newData: newfilter})
         props.setFilter(newfilter)
       }}
     >

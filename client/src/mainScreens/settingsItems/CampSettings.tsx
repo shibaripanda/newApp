@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { LoaderItem } from "../../components/Loader/LoaderItem.tsx"
-import { Container, Button, Textarea } from '@mantine/core';
-import { updateDocumentSettings } from "../../fix/fixServiceSettings.js";
+import { Container, Button, Textarea } from '@mantine/core'
 
 export const CampSettings = (props) => {
 
@@ -22,7 +21,7 @@ export const CampSettings = (props) => {
                     mt="sm" 
                     onClick={async () =>  {
                         props.setServiceSettings({...props.serviceSettings, documents: data})
-                        await updateDocumentSettings({item: i, newData: data[i].text})
+                        await props.app.updateDocumentSettings({item: i, newData: data[i].text})
                         }}>
                         Обновить
                     </Button>

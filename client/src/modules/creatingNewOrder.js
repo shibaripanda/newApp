@@ -17,6 +17,7 @@ export const createNewOrder = async (order) => {
             historylist: [{date: Date.now(), text: 'Greated', name: sessionData('read', 'name')}],
             status: 'new',
             manager: sessionData('read', 'name'),
-            soglas: false
+            soglas: false,
+            dateOut: 0
             }
 }

@@ -3,7 +3,6 @@ import { Autocomplete, Group, SimpleGrid } from '@mantine/core'
 import classes from './HeaderSearch.module.css'
 import React from 'react'
 import { sessionData } from '../../modules/sessionData'
-import { updateUserSettings } from '../../fix/fixServiceSettings'
 import { IconSearch, IconUserSquareRounded } from '@tabler/icons-react'
 
 export function HeaderSearch(props) {
@@ -31,7 +30,7 @@ export function HeaderSearch(props) {
         else{
           newfilter = [...newfilter, link.index]
         }
-        updateUserSettings({item: 'userStatusFilter', newData: newfilter})
+        await props.app.updateUserSettings({item: 'userStatusFilter', newData: newfilter})
         props.setNewSet(newfilter)
       }}
     >

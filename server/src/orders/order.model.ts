@@ -42,7 +42,7 @@ export const OrderSchema = new mongoose.Schema({
   service: {type: Array}, //g
   status: {type: String},
   masters: {type: String, default: '--'}, //g
-  dateOut: {type: String}, //g
+  dateOut: {type: Number}, //g
   info: {type: String}, //g
   firm: {type: String}, //g
   soglas: {type: Boolean}, //g

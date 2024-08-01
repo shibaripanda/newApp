@@ -12,13 +12,15 @@ import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { createLisener } from '../modules/createLisener.js';
 import { SettingsScreen } from '../mainScreens/SettingsScreen.tsx';
 import { useNavigate } from 'react-router-dom'
-import { sessionData } from '../modules/sessionData.js';
 import { AdminScreen } from '../mainScreens/AdminScreen.tsx';
 import { GroupUsersScreen } from '../mainScreens/GroupUsersScreen.tsx';
 import { OwnerScreen } from '../mainScreens/OwnerScreen.tsx';
 import { AppClass } from '../Clasess/AppClass.js';
+import { OrderClass } from '../Clasess/OrderClass.js';
+import { sessionData } from '../modules/sessionData.js';
 
 function MainPage() {
+
   const navigate = useNavigate()
   const [active, setActive] = useState(0);
   const [navBar, setNavBar] = useState(false)
@@ -45,18 +47,17 @@ function MainPage() {
   createLisener('createNewOrder', async (data) => {
     await app.greateOrder({...data.newOrder})
     .then(async (res) => {
-      setOrders([{...res.data}, ...data.orders])
+      setOrders([new OrderClass(res.data), ...data.orders])
       setTimeout(() => setActive(0), 500)
     })
   })
   createLisener('createNewOrderAndPrint', async (data) => {
     await app.greateOrder({...data.newOrder})
-    .then(async (res) => {setOrders([{...res.data}, ...data.orders])})
+    .then(async (res) => {setOrders([new OrderClass(res.data), ...data.orders])})
   })
   useEffect(() => {
-    const navi = () => {
-      // sessionData('read', 'currentUser')
-      if(!app.getCurrentUser() || !app.getCampId() || !sessionData('read', 'role')){
+    const navi = async () => {
+      if(!await app.getCurrentUser() || !await app.getCampId() || !await app.getRole()){
         navigate('/')
       }
       else{
@@ -113,10 +114,10 @@ function MainPage() {
       const listScreens = [
         <ServiceScreen getOrders={getOrders} text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings} newSet={newSet} textFilter={textFilter}/>,
         <NewOrderScreen getOrders={getOrders} orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
-        <SettingsScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
-        <GroupUsersScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
-        <AdminScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
-        <OwnerScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
+        <SettingsScreen app={app} text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
+        <GroupUsersScreen app={app} text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
+        <AdminScreen app={app} text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
+        <OwnerScreen app={app} text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
       ]
       if(listScreens.length !== navBar.top.length){
         console.log('Какойто пиздец, Навбаров не столько сколько скринов!!!')
@@ -141,14 +142,14 @@ function MainPage() {
           <NavbarMinimalColored 
           active={active} 
           setActive={setActive} 
-          navBar={{...navBar, top: navBar.top.filter(item => item.role.includes(sessionData('read', 'role')))}} 
+          navBar={{...navBar, top: navBar.top.filter(async item => item.role.includes(await app.getRole()))}} 
           appColor={appColor}
           />
         </div>
         <div className={'NavBarTop'}>
-          <HeaderSearch textFilter={textFilter} setTextFilter={setTextFilter} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
+          <HeaderSearch app={app} textFilter={textFilter} setTextFilter={setTextFilter} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
           <div className={'NavBarTop2'}>
-            <HeaderSearch2 filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>
+            <HeaderSearch2 app={app} filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>
             {/* <Affix>ssdd</Affix>   */}
           </div>
         </div>

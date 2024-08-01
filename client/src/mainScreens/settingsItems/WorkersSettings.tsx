@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { LoaderItem } from "../../components/Loader/LoaderItem.tsx"
-import { TextInput, Container, Button, SimpleGrid, Select, Card } from '@mantine/core';
-import { addNewUserToCamp, deleteUserFromCamp, editUserRole, getUsersOfCamp } from "../../fix/fixServiceSettings.js";
-import { validateEmail } from "../../modules/validateEmail.js";
+import { TextInput, Container, Button, SimpleGrid, Select, Card } from '@mantine/core'
+import { validateEmail } from "../../modules/validateEmail.js"
 
 export const WorkersSettings = (props) => {
 
@@ -10,13 +9,14 @@ export const WorkersSettings = (props) => {
     const [role, setRole] = useState('')
     const [email, setEmail] = useState('')
 
+    
     useEffect(() => {
         getUsers()
     },[])
     
     const getUsers = async () => {
-        const res = await getUsersOfCamp()
-        setUsers(res.data.reverse())
+        const res = await props.app.getUsersOfCamp()
+        setUsers(res.reverse())
     }
     const activBut = () => {
         if(!validateEmail(email) || role === '') return true
@@ -27,8 +27,8 @@ export const WorkersSettings = (props) => {
         return false
     }
     const updateUserRole = async (value, email) => {
-        await editUserRole({email: email, role: value})
-        getUsers()
+        await props.app.editUserRole({email: email, role: value})
+        await getUsers()
     }
     const showRoleEdit = (user) => {
         if(user.role !== 'owner'){
@@ -39,8 +39,8 @@ export const WorkersSettings = (props) => {
                         label="Change role"
                         clearable
                         data={props.serviceSettings.generalRoleList}
-                        onChange={(value) => {
-                            if(value && user.role !== value) updateUserRole(value, user.email)}
+                        onChange={async (value) => {
+                            if(value && user.role !== value) await updateUserRole(value, user.email)}
                         }
                     />
             )
@@ -68,8 +68,8 @@ export const WorkersSettings = (props) => {
                     onChange={(value) => setRole(value ? value : '')}
                 />
                 <Button fullWidth mt="sm" disabled={activBut()} onClick={async () => {
-                    await addNewUserToCamp({email: email, role: role})
-                    getUsers()
+                    await props.app.addNewUserToCamp({email: email, role: role})
+                    await getUsers()
                     }}>
                     Добавить
                 </Button>
@@ -92,7 +92,7 @@ export const WorkersSettings = (props) => {
                             disabled={stopDeleteOwner(item['role'])} 
                             onClick={async () => {
                                 console.log(delete item['name'])
-                                await deleteUserFromCamp(item)
+                                await props.app.deleteUserFromCamp(item)
                                 getUsers()
                                 }}>
                                 Удалить

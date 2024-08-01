@@ -1,3 +1,6 @@
+import { axiosCall } from "../modules/axiosCall"
+import { sessionData } from "../modules/sessionData"
+
 export class OrderClass {
 
     constructor(order){
@@ -25,5 +28,88 @@ export class OrderClass {
         this.firm = order.firm
         this.soglas = order.soglas
         this._id = order._id
+        this.link = 'http://localhost:5000'
+    }
+
+    async deleteOrder(){
+        await axiosCall('DELETE', `${this.link}/api/orders/${this._id}`, {})
+    }
+    async updateHistory(text, status){
+        if(!status){
+            await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {$addToSet: {
+              historylist: {date: Date.now(),
+                 text: text,
+                  name: sessionData('read', 'name')}
+                }})
+          }
+          else{
+            if(this.status === 'warranty'){
+              await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {dateOut: 0, soglas: false, status: status, $addToSet: {
+                historylist: {date: Date.now(), 
+                  text: text, 
+                  name: sessionData('read', 'name')}
+                }})
+            }
+            else{
+              await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {status: status, $addToSet: {
+              historylist: {date: Date.now(), 
+                text: text, 
+                name: sessionData('read', 'name')}
+              }})
+            }
+
+            if(['cancel', 'close'].includes(status)){
+              const time = Date.now()
+              this.dateOut = time
+              await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {dateOut: time})
+            }
+          }
+    }
+    async addNewService(service){
+        await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {$addToSet: {
+            historylist: {
+              date: Date.now(),
+              text: 'Добавлена услуга: ' + service.service + ', ' + service.price + 'руб, ' + service.varant + 'дней, ' + service.master,
+              name: sessionData('read', 'name')
+            },
+            service: service
+          },
+          soglas: false
+        })
+    }
+    async updateServiceSoglas(status){
+        if(status){
+            await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {$addToSet: {
+              historylist: {
+                date: Date.now(),
+                text: 'Согласовано на: ' + this.service.reduce((a, b) => a + b.price, 0) + ' руб.',
+                name: sessionData('read', 'name')
+              }
+            },
+            soglas: status
+          })
+        }
+        else{
+            await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {$addToSet: {
+                historylist: {
+                date: Date.now(),
+                text: 'Отказ: ' + this.service.reduce((a, b) => a + b.price, 0) + ' руб.',
+                name: sessionData('read', 'name')
+                }
+            },
+             soglas: status
+            })
+        }
+    }
+    async deleteService(service){
+        await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {$addToSet: {
+            historylist: {
+              date: Date.now(),
+              text: 'Удалена услуга: ' + service.service + ', ' + service.price + 'руб, ' + service.varant + 'дней, ' + service.master,
+              name: sessionData('read', 'name')
+            }
+          }, $pull: {service: service},
+          soglas: false
+        })
     }
 }

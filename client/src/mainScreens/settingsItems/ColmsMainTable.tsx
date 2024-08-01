@@ -7,7 +7,7 @@ export const ColmsMainTable = (props: any) => {
 
     return (
         <div>
-            <DndList data={data} serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>
+            <DndList app={props.app} data={data} serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>
         </div>
     )
     

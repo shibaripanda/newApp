@@ -3,8 +3,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import classes from './DndList.module.css';
 import React, { useState } from 'react';
 import { GridForItems } from '../GridForItems/GridForItems.tsx';
-import { CheckBox1 } from '../CheckBox1/CheckBox1.tsx';
-import { updateUserSettings } from '../../fix/fixServiceSettings.js';
+import { CheckBox1 } from '../CheckBox1/CheckBox1.tsx'
 
 export function DndList(props) {
 
@@ -43,7 +42,7 @@ export function DndList(props) {
             props.serviceSettings.userMainTable = state
             console.log(state.map(item => item.index))
             props.setServiceSettings(props.serviceSettings)
-            updateUserSettings({item: 'userMainTable', newData: props.serviceSettings.userMainTable})
+            props.app.updateUserSettings({item: 'userMainTable', newData: props.serviceSettings.userMainTable})
             setState([...state])
           }}
         >
@@ -59,7 +58,7 @@ export function DndList(props) {
       </div>
       <div className={classes.check}>
       <GridForItems data={
-        dataChecks.map((item, index) => <CheckBox1 setState={setState} key={index} item={item} serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>)
+        dataChecks.map((item, index) => <CheckBox1 app={props.app} setState={setState} key={index} item={item} serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>)
         } count={4}/>
       </div>
     </div>
