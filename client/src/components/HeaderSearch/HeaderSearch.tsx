@@ -1,5 +1,5 @@
 'use client'
-import { Autocomplete, Group } from '@mantine/core'
+import { Autocomplete, Group, SimpleGrid } from '@mantine/core'
 import classes from './HeaderSearch.module.css'
 import React from 'react'
 import { sessionData } from '../../modules/sessionData'
@@ -8,7 +8,6 @@ import { IconSearch, IconUserSquareRounded } from '@tabler/icons-react'
 
 export function HeaderSearch(props) {
 
-  console.log('update')
   const changeColor = (index) => {
     if(props.newSet.includes(index)){
       return 'activlink'
@@ -43,13 +42,15 @@ export function HeaderSearch(props) {
 
   return (
     <header className={classes.header}>
-      <div>
         <div className={classes.inner}>
           <Group>
-          <IconUserSquareRounded/> {sessionData('read', 'name')}
+            {/* <div> */}
+              <IconUserSquareRounded/>  {sessionData('read', 'name')}
+            {/* </div> */}
+           
           <Autocomplete
               // className={classes.search}
-              style={{width: '35vmax', marginLeft: '2vmax'}}
+              style={{width: '30vmax', marginLeft: '2vmax'}}
               placeholder="Search"
               leftSection={<IconSearch style={{ width: '1vmax', height: '1vmax' }} stroke={1.5} />}
               data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
@@ -61,7 +62,6 @@ export function HeaderSearch(props) {
               Status filter: {items}
           </Group>
         </div>
-      </div>
     </header>
   );
 }

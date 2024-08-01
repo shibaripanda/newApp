@@ -2,25 +2,21 @@ import { NavbarMinimalColored } from '../components/NavBar/NavbarMinimalColored.
 import '@mantine/core/styles.css';
 import { fixNavBarItems } from '../fix/fixNavBarItems.js';
 import { useEffect, useState } from 'react';
-import { fixColorApp } from '../fix/fixColorApp.js';
-import { fixText } from '../fix/fixText.js';
 import { ServiceScreen } from '../mainScreens/ServiceScreen.tsx';
 import { NewOrderScreen } from '../mainScreens/NewOrderScreen.tsx';
-import { Affix } from '@mantine/core';
+// import { Affix } from '@mantine/core';
 import '../App.css';
 import { HeaderSearch } from '../components/HeaderSearch/HeaderSearch.tsx';
 import { HeaderSearch2 } from '../components/HeaderSearch/HeaderSearch2.tsx';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
-import { fixServiceSettings } from '../fix/fixServiceSettings.js';
-import { fixOrders } from '../fix/fixOrders.js';
 import { createLisener } from '../modules/createLisener.js';
 import { SettingsScreen } from '../mainScreens/SettingsScreen.tsx';
-import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom'
 import { sessionData } from '../modules/sessionData.js';
 import { AdminScreen } from '../mainScreens/AdminScreen.tsx';
 import { GroupUsersScreen } from '../mainScreens/GroupUsersScreen.tsx';
 import { OwnerScreen } from '../mainScreens/OwnerScreen.tsx';
+import { AppClass } from '../Clasess/AppClass.js';
 
 function MainPage() {
   const navigate = useNavigate()
@@ -35,6 +31,8 @@ function MainPage() {
   const [value, setValue] = useState('');
   const [orders, setOrders] = useState([])
 
+  const app = new AppClass()
+
   const defaultValue = (r) => {
     const obj = {}
     for(let i of r){
@@ -45,20 +43,20 @@ function MainPage() {
     return obj
   }
   createLisener('createNewOrder', async (data) => {
-    await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
+    await app.greateOrder({...data.newOrder})
     .then(async (res) => {
       setOrders([{...res.data}, ...data.orders])
       setTimeout(() => setActive(0), 500)
     })
   })
   createLisener('createNewOrderAndPrint', async (data) => {
-    await axiosCall('POST', 'http://localhost:5000/api/orders', {...data.newOrder})
+    await app.greateOrder({...data.newOrder})
     .then(async (res) => {setOrders([{...res.data}, ...data.orders])})
   })
   useEffect(() => {
     const navi = () => {
-      sessionData('read', 'currentUser')
-      if(!sessionData('read', 'currentUser') || !sessionData('read', 'campId') || !sessionData('read', 'role')){
+      // sessionData('read', 'currentUser')
+      if(!app.getCurrentUser() || !app.getCampId() || !sessionData('read', 'role')){
         navigate('/')
       }
       else{
@@ -74,27 +72,24 @@ function MainPage() {
   }, [])
 
   const getOrders = async () => {
-    const res = await fixOrders()
+    const res = await app.getOrders()
     setOrders(res.sort((a, b) => b.date - a.date))
     setInterval(async () => {
-      console.log(navBar)
-      console.log(active)
       if(sessionData('read', 'currentUser')){
-        const res = await fixOrders()
+        const res = await app.getOrders()
         setOrders(res.sort((a, b) => b.date - a.date))
-        console.log('up orders')
       }
       else{
         console.log('pause update orders')
       }
-    }, 500000)
+    }, await app.timeUpdate())
   }
   const getText = async () => {
-    const res = await fixText()
+    const res = await app.getAppText()
     setText(res)
   }
   const getFixServiceSettings = async () => {
-    const res = await fixServiceSettings()
+    const res = await app.fixServiceSettings()
     console.log(res)
     const res1 = defaultValue(res.generalOrderList)
     setValue(res1)
@@ -102,13 +97,12 @@ function MainPage() {
     setNewSet(res.userStatusFilter)
     setFilter(res.userDeviceFilter)
   }
-
   const getNavBar = async () => {
     const res = await fixNavBarItems()
     setNavBar(res)
   }
   const getAppColor = async () => {
-    const res = await fixColorApp()
+    const res = await app.getColorApp()
     setAppColor(res)
   }
   
@@ -124,13 +118,10 @@ function MainPage() {
         <AdminScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
         <OwnerScreen text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
       ]
-      
       if(listScreens.length !== navBar.top.length){
         console.log('Какойто пиздец, Навбаров не столько сколько скринов!!!')
       }
-
       if(listScreens[active]){
-        console.log(active)
         return (
           listScreens[active]
         )

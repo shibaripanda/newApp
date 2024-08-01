@@ -3,14 +3,13 @@ import { useEffect, useState } from 'react';
 import { AuthenticationPassword } from '../components/Auth/AuthenticationPassword.tsx';
 import { AuthenticationEmail } from '../components/Auth/AuthenticationEmail.tsx';
 import { validateEmail } from '../modules/validateEmail.js';
-import { fixText } from '../fix/fixText.js';
 import { AuthenticationNew } from '../components/Auth/AuthenticationNew.tsx';
 import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
-import { axiosCall } from '../modules/axiosCall.js';
 import { useNavigate } from 'react-router-dom';
 import { CampSelect } from '../components/Auth/CampSelect.tsx';
 import { sessionData } from '../modules/sessionData.js';
-import { getRole } from '../modules/getRole.js';
+import { AuthClass } from '../Clasess/AuthClass.js';
+import { AppClass } from '../Clasess/AppClass.js';
 
 function AuthPage() {
   const navigate = useNavigate()
@@ -25,19 +24,20 @@ function AuthPage() {
   const [activBotton, setActivBotton] = useState(false)
   const [activBottonName, setActivBottonName] = useState(false)
   const [serverError, setServerError] = useState('')
+  
+  const auth = new AuthClass()
+  const app = new AppClass()
 
   useEffect(() => {
-    
     getText()
   }, [])
 
   const getText = async () => {
-    const res = await fixText()
-    setText(res)
+    setText(await app.getAppText())
   }
   const startRequest = async () => {
-    await axiosCall('POST', 'http://localhost:5000/auth/login', {email: email})
-    .then((res) => {
+    await auth.startRequest({email: email})
+    .then(() => {
       setStep(2)
     })
     .catch((error) => {
@@ -45,7 +45,7 @@ function AuthPage() {
     })
   }
   const startPasswordRequest = async () => {
-    await axiosCall('POST', 'http://localhost:5000/auth/authemailcode', {authcode: password, email: email})
+    await auth.startPasswordRequest({authcode: password, email: email})
     .then(async (res) => {
       sessionData(`write`, 'currentUser', res.data.email + '#' + res.data.name + '#' + res.data.token)
       sessionData(`write`, 'activUsers', res.data.email + '#' + res.data.name + '#' + res.data.token)
@@ -56,8 +56,8 @@ function AuthPage() {
     })
   }
   const createNewCamp = async () => {
-    await axiosCall('POST', 'http://localhost:5000/auth/registration', {newServiceName: newServiceName, email: email, password: 'password'})
-    .then((res) => {
+    await auth.createNewCamp({newServiceName: newServiceName, email: email, password: 'password'})
+    .then(() => {
       setStep(2)
     })
     .catch((error) => {
@@ -114,7 +114,6 @@ function AuthPage() {
     setErrorInputName('')
     setActivBottonName(false)
     const res = /^[A-z\d]+$/.test(name)
-    console.log(res)
     if(res){
       setNewServiceName(name)
       setErrorInputName('')
@@ -129,9 +128,8 @@ function AuthPage() {
       setErrorInputName(text.badServiceName)
     }
   }
-
   const getMyCamps = async () => {
-    await axiosCall('GET', 'http://localhost:5000/api/getmycamps', {})
+    await app.getMyCamp()
     .then((res) => {
       console.log(res.data)
       setCamps(res.data)
@@ -143,12 +141,10 @@ function AuthPage() {
     })
   }
   const selectCamp = (camp, role) => {
-    console.log(camp, role)
     sessionData(`write`, 'campId', camp)
     sessionData('write', 'role', role)
     navigate('/main')
   }
-
   if(step === 1){
       return (
             <div>

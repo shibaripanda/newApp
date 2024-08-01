@@ -6,7 +6,6 @@ import { updateUserSettings } from '../../fix/fixServiceSettings'
 
 export function HeaderSearch2(props) {
 
-  console.log('update')
   const changeColor = (index) => {
     if(props.filter.includes(index)){
       return 'activlink'

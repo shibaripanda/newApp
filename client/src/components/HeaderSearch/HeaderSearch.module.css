@@ -1,6 +1,6 @@
 .header {
     height: 3.5vmax;
-    width: 99vw;
+    width: var(99vw);
     background-color: var(--mantine-color-body);
     border-bottom: 0.0625vmax solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
     padding-left: var(--mantine-spacing-md);
