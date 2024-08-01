@@ -1,3 +1,4 @@
+import { getLink } from "../fix/getLink.js"
 import { axiosCall } from "../modules/axiosCall"
 import { sessionData } from "../modules/sessionData"
 import { OrderClass } from "./OrderClass.js"
@@ -6,7 +7,7 @@ export class AppClass {
 
     constructor(){
         this.time = 50000
-        this.link = 'http://localhost:5000'
+        this.link = getLink()
         this.campId = sessionData('read', 'campId')
     }
 

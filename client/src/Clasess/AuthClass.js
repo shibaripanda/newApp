@@ -1,9 +1,10 @@
+import { getLink } from "../fix/getLink";
 import { axiosCall } from "../modules/axiosCall";
 
 export class AuthClass {
 
     constructor(){
-        this.link = 'http://localhost:5000'
+        this.link = getLink()
     }
 
     async startRequest(obj){

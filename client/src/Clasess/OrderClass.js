@@ -1,3 +1,4 @@
+import { getLink } from "../fix/getLink"
 import { axiosCall } from "../modules/axiosCall"
 import { sessionData } from "../modules/sessionData"
 
@@ -28,7 +29,7 @@ export class OrderClass {
         this.firm = order.firm
         this.soglas = order.soglas
         this._id = order._id
-        this.link = 'http://localhost:5000'
+        this.link = getLink()
     }
 
     async deleteOrder(){
