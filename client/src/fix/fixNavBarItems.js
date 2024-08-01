@@ -1,10 +1,6 @@
 import {
     IconHome,
     IconCirclePlus,
-    // IconDeviceDesktopAnalytics,
-    // IconFingerprint,
-    // IconCalendarStats,
-    // IconUser,
     IconUsersGroup,
     IconUser,
     IconPower,
