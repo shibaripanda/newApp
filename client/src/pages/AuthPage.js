@@ -131,7 +131,6 @@ function AuthPage() {
   const getMyCamps = async () => {
     await app.getMyCamp()
     .then((res) => {
-      console.log(res.data)
       setCamps(res.data)
       if(res.data.length) setStep(4)
       else setStep(3)
