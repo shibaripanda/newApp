@@ -1,4 +1,4 @@
-import { getLink } from "../fix/getLink.js"
+import { getLink } from "../modules/getLink.js"
 import { axiosCall } from "../modules/axiosCall"
 import { sessionData } from "../modules/sessionData"
 import { OrderClass } from "./OrderClass.js"

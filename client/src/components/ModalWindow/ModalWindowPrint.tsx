@@ -9,7 +9,7 @@ export function ModalWindowPrint(props) {
   const [opened, { open, close }] = useDisclosure(false)
   const [order, setOrder] = useState(false)
 
-  const openOrder = async () => {
+  const openOrderModal = async () => {
     const order = await props.handler()
     setTimeout(() => setOrder(order), 500)
     
@@ -37,7 +37,7 @@ export function ModalWindowPrint(props) {
               {loadPrint()}
               {/* <Print close={close} format={props.format} data={props.data}/> */}
             </Modal>
-            <Button disabled={props.disabled} color={props.color} style={{cursor: 'pointer'}} onClick={() => openOrder()}>
+            <Button disabled={props.disabled} color={props.color} style={{cursor: 'pointer'}} onClick={() => openOrderModal()}>
             {props.label}
             </Button>
         </>

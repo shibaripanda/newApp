@@ -1,6 +1,6 @@
 import { NavbarMinimalColored } from '../components/NavBar/NavbarMinimalColored.tsx';
 import '@mantine/core/styles.css';
-import { fixNavBarItems } from '../fix/fixNavBarItems.js';
+import { fixNavBarItems } from '../modules/fixNavBarItems.js';
 import { useEffect, useState } from 'react';
 import { ServiceScreen } from '../mainScreens/ServiceScreen.tsx';
 import { NewOrderScreen } from '../mainScreens/NewOrderScreen.tsx';

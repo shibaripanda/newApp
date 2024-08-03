@@ -1,7 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Table, Text } from '@mantine/core';
 import React from 'react';
-import { OpenOrder } from '../../mainScreens/newOrderItems/OpenOrder.tsx'
+import { OpenOrder } from '../../mainScreens/settingsItems/OpenOrder.tsx'
 import { dateToLokalFormat } from '../../modules/dateToLocalFormat.js'
 
 export function ModalWindow(props) {

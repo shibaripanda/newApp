@@ -1,4 +1,4 @@
-import { getLink } from "../fix/getLink";
+import { getLink } from "../modules/getLink";
 import { axiosCall } from "../modules/axiosCall";
 
 export class AuthClass {
