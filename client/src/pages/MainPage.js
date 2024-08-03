@@ -15,8 +15,8 @@ import { useNavigate } from 'react-router-dom'
 import { AdminScreen } from '../mainScreens/AdminScreen.tsx';
 import { GroupUsersScreen } from '../mainScreens/GroupUsersScreen.tsx';
 import { OwnerScreen } from '../mainScreens/OwnerScreen.tsx';
-import { AppClass } from '../Clasess/AppClass.js';
-import { OrderClass } from '../Clasess/OrderClass.js';
+import { AppClass } from '../clasess/AppClass.js';
+import { OrderClass } from '../clasess/OrderClass.js';
 import { sessionData } from '../modules/sessionData.js';
 
 function MainPage() {
@@ -112,7 +112,7 @@ function MainPage() {
     const screen = () => {
       
       const listScreens = [
-        <ServiceScreen getOrders={getOrders} text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings} newSet={newSet} textFilter={textFilter}/>,
+        <ServiceScreen app={app} getOrders={getOrders} text={text} orders={orders} setOrders={setOrders} filter={filter} serviceSettings={serviceSettings} newSet={newSet} textFilter={textFilter}/>,
         <NewOrderScreen getOrders={getOrders} orders={orders} defaultValue={defaultValue} value={value} setValue={setValue} serviceSettings={serviceSettings}/>,
         <SettingsScreen app={app} text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,
         <GroupUsersScreen app={app} text={text} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings}/>,

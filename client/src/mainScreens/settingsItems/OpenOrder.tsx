@@ -1,5 +1,5 @@
-import { Button, Container, SimpleGrid, Text, TextInput } from '@mantine/core'
-import React, { useState } from 'react'
+import { Button, Container, Select, SimpleGrid, Text, TextInput } from '@mantine/core'
+import React, { useEffect, useState } from 'react'
 import { dateToLokalFormatFull } from '../../modules/dateToLocalFormat.js'
 import { TableOpenOrder } from '../../components/TableOpenOrder/TableOpenOrder.tsx'
 import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.tsx'
@@ -8,8 +8,17 @@ import { ServiceTable } from '../../components/ServiceTable/ServiceTable.tsx'
 export function OpenOrder(props: any) {
 
     const [newInfo, setNewInfo] = useState('')
-    const [service, setService] = useState({service: '', price: 0, master: '', varant: 0})
+    const [service, setService] = useState({service: '', price: 0, master: '', varant: 0, sebes: 0})
+    const [campUsers, setCamUsers] = useState([])
 
+    useEffect(() => {
+      getUsers()
+    },[])
+
+    const getUsers = async () => {
+      const res = await props.app.getUsersOfCamp()
+      setCamUsers(res.map(item => `${item.name} (${item.email})`))
+    }
     const printBut = (but, index) => {
       if(but.print){
           if(!but.disabled){
@@ -264,37 +273,55 @@ export function OpenOrder(props: any) {
             </div>
             <div style={{ marginBottom: '1.5vmax', marginTop: '1vmax'}}>
               <TextInput width={'5vmax'} label="Услуга" value={service.service} placeholder="Услуга" onChange={event => setService({...service, service: event.currentTarget.value})}/>
-            <SimpleGrid cols={3}>
+            <SimpleGrid cols={4}>
               <TextInput 
-              label="Стоимость" 
-              value={service.price}
-              onChange={event => {
-                if(/^\d+$/.test(event.currentTarget.value)){
-                  setService({...service, price: Number(event.currentTarget.value)})
-                }
-                else{
-                  setService({...service, price: 0})
-                }
-              }}
+                label="Стоимость" 
+                value={service.price}
+                onChange={event => {
+                  if(/^\d+$/.test(event.currentTarget.value)){
+                    setService({...service, price: Number(event.currentTarget.value)})
+                  }
+                  else{
+                    setService({...service, price: 0})
+                  }
+                }}
               />
-              <TextInput label="Мастер" value={service.master} placeholder="печатай сюда" onChange={event => setService({...service, master: event.currentTarget.value})}/>
               <TextInput 
-              label="Гарантия (дней)" 
-              value={service.varant} 
-              placeholder="печатай сюда" 
-              onChange={event => {
-                if(/^\d+$/.test(event.currentTarget.value)){
-                  setService({...service, varant: Number(event.currentTarget.value)})
-                }
-                else{
-                  setService({...service, varant: 0})
-                }
-              }}
+                label="Расходы" 
+                value={service.sebes}
+                onChange={event => {
+                  if(/^\d+$/.test(event.currentTarget.value)){
+                    setService({...service, sebes: Number(event.currentTarget.value)})
+                  }
+                  else{
+                    setService({...service, sebes: 0})
+                  }
+                }}
               />
+              <TextInput 
+                label="Гарантия (дней)" 
+                value={service.varant} 
+                placeholder="печатай сюда" 
+                onChange={event => {
+                  if(/^\d+$/.test(event.currentTarget.value)){
+                    setService({...service, varant: Number(event.currentTarget.value)})
+                  }
+                  else{
+                    setService({...service, varant: 0})
+                  }
+                }}
+              />
+              <Select
+                    label="Мастер"
+                    value={service.master}
+                    clearable
+                    data={campUsers}
+                    onChange={(value) => setService({...service, master: value ? value : ''})}
+                />
             </SimpleGrid>  
               <Button mt="sm" disabled={addButService(service)} onClick={() => {
                 serviceUpdate(service)
-                setService({service: '', price: 0, master: '', varant: 0})
+                setService({service: '', price: 0, master: '', varant: 0, sebes: 0})
                 }}>
               Добавить услугу
               </Button>

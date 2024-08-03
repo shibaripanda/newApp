@@ -14,7 +14,7 @@ export const ServiceScreen = (props) => {
 
   if(props.orders.length){
     return (
-      <TableReviews setOrders={props.setOrders} getOrders={props.getOrders} filteringOrders={filteringOrders} serviceSettings={props.serviceSettings}/>
+      <TableReviews app={props.app} setOrders={props.setOrders} getOrders={props.getOrders} filteringOrders={filteringOrders} serviceSettings={props.serviceSettings}/>
     )
   }
   else if(props.orders.length === 0){

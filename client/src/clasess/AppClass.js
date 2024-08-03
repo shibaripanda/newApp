@@ -1,6 +1,6 @@
 import { getLink } from "../modules/getLink.js"
-import { axiosCall } from "../modules/axiosCall"
-import { sessionData } from "../modules/sessionData"
+import { axiosCall } from "../modules/axiosCall.js"
+import { sessionData } from "../modules/sessionData.js"
 import { OrderClass } from "./OrderClass.js"
 
 export class AppClass {

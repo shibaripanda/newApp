@@ -8,8 +8,8 @@ import { LoaderItem } from '../components/Loader/LoaderItem.tsx';
 import { useNavigate } from 'react-router-dom';
 import { CampSelect } from '../components/Auth/CampSelect.tsx';
 import { sessionData } from '../modules/sessionData.js';
-import { AuthClass } from '../Clasess/AuthClass.js';
-import { AppClass } from '../Clasess/AppClass.js';
+import { AuthClass } from '../clasess/AuthClass.js';
+import { AppClass } from '../clasess/AppClass.js';
 
 function AuthPage() {
   const navigate = useNavigate()
