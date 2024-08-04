@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { LoaderItem } from "../../components/Loader/LoaderItem.tsx"
-import { TextInput, Container, Button } from '@mantine/core'
+import { TextInput, Container, Button, NavLink } from '@mantine/core'
 
 export const UserSettings = (props) => {
 
@@ -33,6 +33,14 @@ export const UserSettings = (props) => {
                         }}>
                         Обновить
                     </Button>
+                    {/* <link href={'https://google.com'}>Настройка входа с помощью Telegram App</link> */}
+                    {/* {user['telegramtoken']} */}
+                    <hr style={{marginTop: '1vmax', marginBottom: '1vmax'}}></hr>
+                    <NavLink
+                    href={`https://t.me/matexfbot?start=${user['telegramtoken']}`}
+                    label="Настройка входа с помощью Telegram App"
+                    target="_blank"
+                />
                 </Container>
              </div>
          ) 

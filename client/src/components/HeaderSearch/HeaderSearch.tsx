@@ -24,7 +24,6 @@ export function HeaderSearch(props) {
         let newfilter = [...props.newSet]
         const res = props.newSet.findIndex(item => item === link.index)
         if(res > -1){
-          console.log('delete')
           newfilter = newfilter.filter(item => item !== link.index)
         }
         else{

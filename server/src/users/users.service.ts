@@ -10,6 +10,15 @@ export class UsersService {
     constructor(
         @InjectModel('User') private userModelNestreact: Model<User>) {}
 
+    async updateTelegramId(id: any, telegramId: any){
+        await this.userModelNestreact.updateOne({_id: id}, {telegramId: telegramId})
+    }
+
+    async getUserByTelegramToken(token){
+        const res = await this.userModelNestreact.findOne({telegramtoken: token})
+        return res
+    }
+
     async createUser(dto: CreateUserDto){
         const user = await this.userModelNestreact.create(dto)
         return user
@@ -17,6 +26,7 @@ export class UsersService {
 
     async getUser(id){
         const user = await this.userModelNestreact.findOne({_id: id}, {password: 0, emailAuthCode: 0, createdAt: 0, updatedAt: 0, __v: 0, _id: 0})
+        console.log(user)
         return user
     }
 

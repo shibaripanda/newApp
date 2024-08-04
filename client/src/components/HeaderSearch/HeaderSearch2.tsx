@@ -22,7 +22,6 @@ export function HeaderSearch2(props) {
         let newfilter = [...props.filter]
         const res = props.filter.findIndex(item => item === link.request)
         if(res > -1){
-          console.log('delete')
           newfilter = newfilter.filter(item => item !== link.request)
         }
         else{

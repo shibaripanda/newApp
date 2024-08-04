@@ -4,6 +4,7 @@ export class CreateUserDto {
     readonly authcode: string
     readonly password: string
     readonly newServiceName: string
-    readonly emailAuthCode: object 
+    readonly emailAuthCode: object
+    readonly telegramtoken: string 
 
 }

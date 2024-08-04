@@ -11,6 +11,7 @@ import { User } from 'src/users/user.model';
 import * as bcrypt from 'bcryptjs'
 import { CampsService } from 'src/camps/camps.service';
 import { getFixserviceSettings } from 'src/modules/getFixserviceSettings';
+import { Base64 } from 'js-base64'
 
 @Injectable()
 export class AuthService {
@@ -35,7 +36,8 @@ export class AuthService {
             if(newUsers.length){
                 const code = rendomNumberOrder()
                 const hashPassword = await bcrypt.hash('password', 7)
-                const newUs = await this.usersService.createUser({...userDto, password: hashPassword, emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: false}})
+                const telegramToken = Base64.encodeURI(String(Date.now()))
+                const newUs = await this.usersService.createUser({...userDto, telegramtoken: telegramToken + String(Date.now()), password: hashPassword, emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: false}})
                 for(const i of newUsers){
                     this.campService.updateSettingsCamp(String(i._id), getFixserviceSettings().userSettings, newUs._id)
                 }
@@ -51,7 +53,8 @@ export class AuthService {
         let user = await this.usersService.getUserByEmail(userDto.email)
         if(!user){
             const hashPassword = await bcrypt.hash(userDto.password, 7)
-            user = await this.usersService.createUser({...userDto, password: hashPassword, emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: userDto.newServiceName}})
+            const telegramToken = Base64.encodeURI(String(Date.now()))
+            user = await this.usersService.createUser({...userDto, telegramtoken: telegramToken + String(Date.now()), password: hashPassword, emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: userDto.newServiceName}})
         }
         else{
             await this.usersService.updateUser({_id: user._id}, {emailAuthCode: {code: String(code), time: Date.now(), step: 1, name: userDto.newServiceName}})

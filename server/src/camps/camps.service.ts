@@ -11,6 +11,8 @@ export class CampsService {
         @InjectModel('Camp') private campModel: Model<Camp>,
         private usersService: UsersService) {}
 
+     
+
     async createCamp(dto: any){
         const order = await this.campModel.create(dto)
         return order

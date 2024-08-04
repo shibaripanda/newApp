@@ -12,6 +12,8 @@ async function bootstrap() {
     "preflightContinue": false,
     "optionsSuccessStatus": 204
   })
+
   await app.listen(PORT, () => {console.log(`Server started on port = ${PORT}`)})
+  
 }
 bootstrap();
