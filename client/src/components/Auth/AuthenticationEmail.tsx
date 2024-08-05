@@ -21,9 +21,9 @@ import { sessionData } from '../../modules/sessionData';
           <Button fullWidth mt="xl" onClick={() => props.clickOnBut()}>
             {props.text.GetPassword} на email
           </Button>
-          <Button fullWidth mt="xl" onClick={() => props.clickOnBut()}>
+          {/* <Button fullWidth mt="xl" onClick={() => props.clickOnBut()}>
           Вход с помощъю Telegram App
-        </Button>
+        </Button> */}
         </>
         )
       }

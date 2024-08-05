@@ -80,7 +80,7 @@ function AuthPage() {
     setActivBotton(false)
     const res = validateEmail(email)
     if(res){
-      setEmail(email)
+      setEmail(email.toLowerCase())
       setErrorInputData('')
       setActivBotton(true)
     }
