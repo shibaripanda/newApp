@@ -3,7 +3,6 @@ import { botStart } from 'src/telegram/triggers/botStart'
 
 export const telegramBot = async (data: any) => {
     try{
-        console.log(data)
         const option: any = {allowedUpdates: ['chat_member', 'callback_query', 'message', 'channel_post'], dropPendingUpdates: true}
         const bot = new Telegraf(process.env.BOT_TOKEN)
 

@@ -12,13 +12,19 @@ import {
 import { sessionData } from '../../modules/sessionData';
   
   export function AuthenticationEmail(props) {
+    console.log(props)
 
     const botton = () => {
       if(props.activBotton){
         return (
+          <>
           <Button fullWidth mt="xl" onClick={() => props.clickOnBut()}>
-            {props.text.GetPassword}
+            {props.text.GetPassword} на email
           </Button>
+          <Button fullWidth mt="xl" onClick={() => props.clickOnBut()}>
+          Вход с помощъю Telegram App
+        </Button>
+        </>
         )
       }
       return (

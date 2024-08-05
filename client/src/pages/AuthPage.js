@@ -37,7 +37,8 @@ function AuthPage() {
   }
   const startRequest = async () => {
     await auth.startRequest({email: email})
-    .then(() => {
+    .then((res) => {
+      console.log(res)
       setStep(2)
     })
     .catch((error) => {
