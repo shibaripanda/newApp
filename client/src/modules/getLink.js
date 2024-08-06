@@ -1,3 +1,3 @@
 export const getLink = () => {
-    return 'http://localhost:5001'
+   return 'http://app.xf10.by' //return 'http://localhost:5001'
 }
