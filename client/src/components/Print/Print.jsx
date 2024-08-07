@@ -16,13 +16,16 @@ export class Print extends React.PureComponent {
         this.props.close()
     }
     documentSheet(){
-      if(this.props.format === 'order'){
+      if(this.props.format === 'new'){
+      // if(this.props.format === 'order'){
         return <PrintComp props={this.props} ref={el => (this.componentRef = el)}/>
       }
-      else if(this.props.format === 'var'){
+      else if(this.props.format === 'close'){
+      // else if(this.props.format === 'var'){
         return <PrintVar props={this.props} ref={el => (this.componentRef = el)}/>
       }
       else if(this.props.format === 'cancel'){
+      // else if(this.props.format === 'cancel'){
         return <PrintVarCancel props={this.props} ref={el => (this.componentRef = el)}/>
       }
     }

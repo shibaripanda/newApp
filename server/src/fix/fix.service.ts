@@ -242,8 +242,8 @@ export class FixService {
                 freez: true 
             },
             {
-                index: 'wait', 
-                label: 'Waiting',
+                index: 'diagnostics', 
+                label: 'Diagnostics',
                 freez: true 
             },
             

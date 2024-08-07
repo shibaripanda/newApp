@@ -10,7 +10,7 @@ export function TableReviews(props) {
 
   const makeRows = (row) => {
     const lookData = (row, item) => {
-      if(item === 'date'){
+      if(item === 'date' || item ==='dateOut'){
         return dateToLokalFormatForMainTable(row[item])
       }
       return row[item]

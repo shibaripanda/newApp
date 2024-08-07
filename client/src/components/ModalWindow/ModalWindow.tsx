@@ -37,7 +37,7 @@ export function ModalWindow(props) {
     else if(props.data.status === 'cancel'){
       return 'grey'
     }
-    else if(props.data.status === 'wait'){
+    else if(props.data.status === 'diagnostics'){
       return 'purpure'
     }
     return 'black'

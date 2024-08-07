@@ -14,10 +14,10 @@ export class FixController {
     // }
 
     // @UseGuards(JwtAuthGuard)
-    @Get('/fixservicesettings')
-    getFixserviceSettings(){
-        return this.ordersService.getFixserviceSettings()
-    }
+    // @Get('/fixservicesettings')
+    // getFixserviceSettings(){
+    //     return this.ordersService.getFixserviceSettings()
+    // }
 
     @Get('/text')
     getText(){

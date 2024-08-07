@@ -192,6 +192,7 @@ export const getFixserviceSettings = () => {
         {label: 'Картриджи', request: 'Картридж'},
         {label: 'ПК', request: 'ПК'},
         {label: 'Колонки', request: 'Колонка'},
+        {label: 'ЗУ', request: 'ЗУ'},
         // {label: 'Reset', link: 'device0', request: ''}
     ]
     const listOrdersFields = [
@@ -516,20 +517,24 @@ export const getFixserviceSettings = () => {
             label: 'Warranty',
             freez: true 
         },
-    
         {
             index: 'new', 
             label: 'New',
             freez: true 
         },
         {
-            index: 'process', 
-            label: 'Process',
+            index: 'diagnostics', 
+            label: 'Diagnostics',
             freez: true 
         },
         {
-            index: 'wait', 
-            label: 'Waiting',
+            index: 'agreement', 
+            label: 'Agreement',
+            freez: true 
+        },
+        {
+            index: 'process', 
+            label: 'Process',
             freez: true 
         },
         
