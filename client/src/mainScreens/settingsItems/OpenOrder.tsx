@@ -39,14 +39,6 @@ export function OpenOrder(props: any) {
     const colorButton = (index) => {
       if(index === props.data.status) return 'red'
     }
-    const disabledIfService = () => {
-      if(props.data.service.length && props.data.status === 'close') return false
-      return true
-    }
-    const disabledIfServiceCancel = () => {
-      if(props.data.status === 'cancel') return false
-      return true
-    }
 
     const printBut = (but, index) => {
       if(but.print){
@@ -121,75 +113,39 @@ export function OpenOrder(props: any) {
         )
     }
     const disabledModeButtons = (status) => {
-      if(['close', 'cancel'].includes(status)){
-          if(status === 'close' && !props.data.soglas){
-          return true
-        }
-        else if(status === 'cancel' && props.data.soglas){
-          return true
-        }
+      if(['new', 'warranty'].includes(status) && !['cancel', 'close'].includes(props.data.status)){
+        return true
       }
-      if(['close', 'cancel'].includes(props.data.status)){
-        if(['process','diagnostics', 'agreement', 'ready','close', 'cancel'].includes(status))
-          return true
-        }
+      if(['cancel', 'close'].includes(status) && !['ready'].includes(props.data.status)){
+        return true
+      }
       return false
     }
-    // const bottomButtonsLine = () => {
-    //   const arrayButtons: any = []
-    //   for(let i of props.serviceSettings.generalStatusList){
-    //     if(i.index === 'warranty' &&  !['cancel', 'close'].includes(props.data.status)){
-
-    //     }
-    //     else{
-    //         arrayButtons.push({
-    //         title: i.label,
-    //         color: colorButton(i.index),
-    //         disabled: disabledModeButtons(i.index),
-    //         print: false,
-    //         func: async () => {
-    //           if(i.index !== 'new'){
-    //             await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
-    //           }
-    //           else if(['cancel', 'close'].includes(props.data.status) && i.index === 'new'){
-    //             await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
-    //           }
-    //         }
-    //       })
-    //     }
-    //   }
-
-    //   return (
-    //     <div>
-    //       <Container>
-    //         <SimpleGrid
-    //           mt={5}
-    //           cols={{ base: 1, sm: 2, md: arrayButtons.length }}
-    //           spacing={{ base: 'xl', md: 15 }}
-    //           verticalSpacing={{ base: 'md', md: 20 }}
-    //         >
-    //         {arrayButtons.map((but, index) => printBut(but, index))}
-    //         </SimpleGrid>
-    //       </Container>
-    //     </div>
-    //   )
-    // }
     const filterButtons = (data) => {
-      let ar
-      if(props.data.soglas){
-        ar = data.filter(item => item.index !== 'cancel')
+  
+      if(['close', 'cancel'].includes(props.data.status)){
+        data = data.filter(item => ['new', 'warranty'].includes(item.index))
       }
       else{
-        ar = data.filter(item => item.index !== 'close')
+        if(props.data.soglas){
+          data = data.filter(item => item.index !== 'cancel')
+        }
+        else{
+          data = data.filter(item => item.index !== 'close')
+        }
+        if(props.data.order[0] === 'V'){
+          data = data.filter(item => item.index !== 'new')
+        }
+        else{
+          data = data.filter(item => item.index !== 'warranty')
+        }
       }
-      return ar
-
+      return data
     }
-
     const bottomButtonsLine = () => {
       const arrayButtons: any = []
       for(let i of filterButtons(props.serviceSettings.generalStatusList)){
-        if(['cancel', 'close'].includes(i.index)){
+        if(['cancel', 'close', 'new', 'warranty'].includes(i.index)){
           arrayButtons.push({
             title: '🖨 ' + i.label,
             color: colorButton(i.index),
@@ -197,12 +153,15 @@ export function OpenOrder(props: any) {
             print: true,
             format: i.index,
             func: async () => {
-              // if(i.index !== 'new'){
-                await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
-              // }
-              // else if(['cancel', 'close'].includes(props.data.status) && i.index === 'new'){
-              //   await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
-              // }
+              if(i.index === 'warranty'){
+              props.data.order = 'V' + props.data.order
+              await props.data.updateOrder({order: props.data.order, soglas: false})
+              }
+              else if(i.index === 'new'){
+                props.data.order = 'N' + props.data.order
+                await props.data.updateOrder({order: props.data.order, soglas: false})
+              } 
+              await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
               return props.data
             }
           })
@@ -222,8 +181,7 @@ export function OpenOrder(props: any) {
               }
             }
           })
-        }
-            
+        } 
       }
 
       return (
@@ -428,7 +386,9 @@ export function OpenOrder(props: any) {
           <hr style={{ marginTop: '0.75vmax', marginBottom: '0.75vmax'}}></hr>
           {bottomButtonsLine()}
           {showItemsNewOrder()}
-          {historyList()}
+          <div style={{ marginTop: '2vmax', marginBottom: '2vmax'}}>
+            {historyList()}
+          </div>
           <div style={{ marginTop: '2vmax', marginBottom: '2vmax'}}>
           {dataForShow()}
           </div>

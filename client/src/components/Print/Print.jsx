@@ -4,6 +4,7 @@ import { PrintVar } from './PrintVar';
 import ReactToPrint, { PrintContextConsumer } from 'react-to-print';
 import { Button } from '@mantine/core';
 import { PrintVarCancel } from './PrintVarCancel';
+import { PrintCompWarranty } from './PrintCompWarranty';
 
 export class Print extends React.PureComponent {
     constructor(props){
@@ -17,15 +18,15 @@ export class Print extends React.PureComponent {
     }
     documentSheet(){
       if(this.props.format === 'new'){
-      // if(this.props.format === 'order'){
         return <PrintComp props={this.props} ref={el => (this.componentRef = el)}/>
       }
       else if(this.props.format === 'close'){
-      // else if(this.props.format === 'var'){
         return <PrintVar props={this.props} ref={el => (this.componentRef = el)}/>
       }
+      else if(this.props.format === 'warranty'){
+          return <PrintCompWarranty props={this.props} ref={el => (this.componentRef = el)}/>
+        }
       else if(this.props.format === 'cancel'){
-      // else if(this.props.format === 'cancel'){
         return <PrintVarCancel props={this.props} ref={el => (this.componentRef = el)}/>
       }
     }

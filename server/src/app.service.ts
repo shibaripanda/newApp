@@ -9,9 +9,9 @@ export class AppService {
   constructor(private userService: UsersService,
               private campService: CampsService){}
 
-  async onApplicationBootstrap() {
+  // async onApplicationBootstrap() {
 
-    telegramBot({campService: this.campService, userService: this.userService})
-  }
+  //   telegramBot({campService: this.campService, userService: this.userService})
+  // }
 
 }

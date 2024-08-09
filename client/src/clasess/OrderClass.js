@@ -31,7 +31,10 @@ export class OrderClass {
         this._id = order._id
         this.link = getLink()
     }
-
+    
+    async updateOrder(obj){
+          await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, obj)
+    }
     async deleteOrder(){
         await axiosCall('DELETE', `${this.link}/api/orders/${this._id}`, {})
     }

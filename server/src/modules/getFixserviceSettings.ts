@@ -558,7 +558,7 @@ export const getFixserviceSettings = () => {
     ]
     const docprint = {
 
-        namecomp: {label: 'Название сервисного центра', 
+        namecomp: {label: 'dНазвание сервисного центра', 
         text: 'XF Service'},
 
         name: {label: 'Название главного документа о приемке в ремонт', 
