@@ -17,16 +17,21 @@ export class Print extends React.PureComponent {
         this.props.close()
     }
     documentSheet(){
+      
       if(this.props.format === 'new'){
+        console.log(this.props.format)
         return <PrintComp props={this.props} ref={el => (this.componentRef = el)}/>
       }
       else if(this.props.format === 'close'){
+        console.log(this.props.format)
         return <PrintVar props={this.props} ref={el => (this.componentRef = el)}/>
       }
       else if(this.props.format === 'warranty'){
+        console.log(this.props.format)
           return <PrintCompWarranty props={this.props} ref={el => (this.componentRef = el)}/>
         }
       else if(this.props.format === 'cancel'){
+        console.log(this.props.format)
         return <PrintVarCancel props={this.props} ref={el => (this.componentRef = el)}/>
       }
     }

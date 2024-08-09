@@ -42,6 +42,7 @@ export function OpenOrder(props: any) {
 
     const printBut = (but, index) => {
       if(but.print){
+        // console.log('but ',but.format)
           // if(!but.disabled){
               return <ModalWindowPrint color={but.color} key={index} disabled={but.disabled} label={but.title} format={but.format} handler={but.func} data={props.data} settings={props.serviceSettings}/>
           // }
@@ -122,25 +123,27 @@ export function OpenOrder(props: any) {
       return false
     }
     const filterButtons = (data) => {
+      let res
   
       if(['close', 'cancel'].includes(props.data.status)){
-        data = data.filter(item => ['new', 'warranty'].includes(item.index))
+        res = data.filter(item => ['new', 'warranty'].includes(item.index))
       }
       else{
         if(props.data.soglas){
-          data = data.filter(item => item.index !== 'cancel')
+          res = data.filter(item => item.index !== 'cancel')
         }
         else{
-          data = data.filter(item => item.index !== 'close')
+          res = data.filter(item => item.index !== 'close')
         }
         if(props.data.order[0] === 'V'){
-          data = data.filter(item => item.index !== 'new')
+          res = res.filter(item => item.index !== 'new')
         }
         else{
-          data = data.filter(item => item.index !== 'warranty')
+          res = res.filter(item => item.index !== 'warranty')
         }
       }
-      return data
+
+      return res
     }
     const bottomButtonsLine = () => {
       const arrayButtons: any = []
@@ -154,14 +157,15 @@ export function OpenOrder(props: any) {
             format: i.index,
             func: async () => {
               if(i.index === 'warranty'){
-              props.data.order = 'V' + props.data.order
-              await props.data.updateOrder({order: props.data.order, soglas: false})
+                props.data.order = 'V' + props.data.order
+                await props.data.updateOrder({order: props.data.order, soglas: false})
               }
               else if(i.index === 'new'){
                 props.data.order = 'N' + props.data.order
                 await props.data.updateOrder({order: props.data.order, soglas: false})
               } 
               await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
+              console.log('print ', i.index)
               return props.data
             }
           })
@@ -173,17 +177,12 @@ export function OpenOrder(props: any) {
             disabled: disabledModeButtons(i.index),
             print: false,
             func: async () => {
-              if(i.index !== 'new'){
                 await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
-              }
-              else if(['cancel', 'close'].includes(props.data.status) && i.index === 'new'){
-                await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
-              }
             }
           })
         } 
       }
-
+      console.log(arrayButtons)
       return (
         <div>
           <Container>

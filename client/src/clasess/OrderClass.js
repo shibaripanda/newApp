@@ -47,8 +47,17 @@ export class OrderClass {
                 }})
           }
           else{
-            if(this.status === 'warranty'){
+            if(['warranty', 'new'].includes(status)){
               await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {dateOut: 0, soglas: false, status: status, $addToSet: {
+                historylist: {date: Date.now(), 
+                  text: text, 
+                  name: sessionData('read', 'name')}
+                }})
+            }
+            else if(['cancel', 'close'].includes(status)){
+              const time = Date.now()
+              this.dateOut = time
+              await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {dateOut: time, status: status, $addToSet: {
                 historylist: {date: Date.now(), 
                   text: text, 
                   name: sessionData('read', 'name')}
@@ -60,12 +69,6 @@ export class OrderClass {
                 text: text, 
                 name: sessionData('read', 'name')}
               }})
-            }
-
-            if(['cancel', 'close'].includes(status)){
-              const time = Date.now()
-              this.dateOut = time
-              await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {dateOut: time})
             }
           }
     }
