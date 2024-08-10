@@ -1,4 +1,4 @@
-import { Container, Grid, TextInput } from '@mantine/core';
+import { Container, Grid, Select, TextInput } from '@mantine/core';
 // import classes from './FeaturesGrid.module.css';
 import React from 'react';
 import { ComboBoxInput } from '../ComboInputBox/ComboBoxInput.tsx';
@@ -12,14 +12,25 @@ export function FeaturesGrid(props) {
             if(index === 12) return 12
             return 4
         }
-
-            if(field.variants){
+            if(field.index === 'title'){
+                return <Grid.Col span={sp()} key={index}>
+                <Select
+                label={field.label} 
+                placeholder={field.label} 
+                value={props.value[field.index]} 
+                clearable
+                data={props.serviceSettings.generalDataList[field.index]}
+                // onChange={(value) => setRole(value ? value : '')}
+                onChange={(value) => {props.setValue({...props.value, [field.index]: value ? value : ''})}}
+            />
+            </Grid.Col>
+            }
+            else if(field.variants){
                 return <Grid.Col span={sp()} key={index}>
                     <ComboBoxInput 
                     index={field.index} 
                     value={props.value} 
-                    setValue={props.setValue} 
-                     
+                    setValue={props.setValue}
                     label={field.label} 
                     placeholder={field.label} 
                     data={props.serviceSettings.generalDataList[field.index]}
@@ -28,8 +39,7 @@ export function FeaturesGrid(props) {
             }
             return <Grid.Col span={sp()} key={index} >
                 <TextInput  
-                value={props.value[field.index]}  
-                
+                value={props.value[field.index]}
                 label={field.label} 
                 placeholder={field.label} 
                 onChange={(event) => {props.setValue({...props.value, [field.index]: event.currentTarget.value})}}

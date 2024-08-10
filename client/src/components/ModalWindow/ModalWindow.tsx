@@ -12,7 +12,7 @@ export function ModalWindow(props) {
     return (
       <div>
         <Text 
-          fw={700}>{props.data.order + ' / ' + dateToLokalFormat(props.data.date) + ' / ' + props.data.status + ' / ' + props.data.clientTel + ' / ' + props.data.problem}
+          fw={700}>{props.data.order + ' / ' + dateToLokalFormat(props.data.date) + ' / ' + props.data.clientTel + ' / ' + props.data.problem}
         </Text>
       </div>
     )

@@ -189,10 +189,13 @@ export const getFixserviceSettings = () => {
         {label: 'Ноутбуки', request: 'Ноутбук'},
         {label: 'Телефоны', request: 'Телефон'},
         {label: 'Планшеты', request: 'Планшет'},
+        {label: 'Мониторы', request: 'Монитор'},
         {label: 'Картриджи', request: 'Картридж'},
         {label: 'ПК', request: 'ПК'},
         {label: 'Колонки', request: 'Колонка'},
         {label: 'ЗУ', request: 'ЗУ'},
+        {label: 'Телевизоры', request: 'Телевизор'},
+        {label: 'Принтер', request: 'Принтеры'},
         // {label: 'Reset', link: 'device0', request: ''}
     ]
     const listOrdersFields = [
@@ -505,11 +508,11 @@ export const getFixserviceSettings = () => {
                         ],
                    model: deviceDb(deviceslast15years),
                       sn: [],
-                    view: ['Потерт'],
+                    view: ['Потерт', 'Царапины', 'Сколы', 'бу', 'Трещины'],
                    speed: ['Standard', 'Fast'],
                     info: [],
-                    cost: [],
-                complect: ['без комплекта']
+                    cost: [75, 45, 110, 120, 150, 170],
+                complect: ['Без комплекта', 'Зарядное устройство', 'Кабель', 'Батарея', 'Зарядное и батарея', 'Запчасть заказчика']
     }
     const listOfStatuses = [
         {
@@ -559,7 +562,7 @@ export const getFixserviceSettings = () => {
     const docprint = {
 
         namecomp: {label: 'Название сервисного центра', 
-        text: 'XF Service'},
+        text: 'XF10 Сервис'},
 
         name: {label: 'Название главного документа о приемке в ремонт', 
         text: 'Заказ на оказание услуг'},
@@ -589,7 +592,7 @@ export const getFixserviceSettings = () => {
         text: 'Сухарево'},
 
         telefonnumber: {label: 'Телефоны компании', 
-        text: '+375 44 7310419 A1 +375 33 6351401 МТС'},
+        text: '+375 44 7310419 A1'},
 
         varanttext: {label: 'Текст гарантии', 
         text: `- Исполнитель берет на себя обязанность на безвозмездное устранение неисправностей связанных с выполнением выше указанных работ в течении гарантийного срока.

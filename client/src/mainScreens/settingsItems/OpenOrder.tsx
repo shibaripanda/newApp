@@ -21,8 +21,9 @@ export function OpenOrder(props: any) {
       setCamUsers(res.map(item => `${item.name} (${item.email})`))
     }
     const historyUpdate = async (text, status) => {
-      await props.data.updateHistory(text, status)
+      const res = await props.data.updateHistory(text, status)
       await props.getOrders()
+      return res
     }
     const serviceUpdate = async (service) => {
       await props.data.addNewService(service)
@@ -37,7 +38,7 @@ export function OpenOrder(props: any) {
       await props.getOrders()
     }
     const colorButton = (index) => {
-      if(index === props.data.status) return 'red'
+      if(index === props.data.status) return 'green'
     }
 
     const printBut = (but, index) => {
@@ -49,10 +50,28 @@ export function OpenOrder(props: any) {
       }
       return <Button color={but.color} disabled={but.disabled} key={index} onClick={() => but.func()}>{but.title}</Button>
     }
+    const disabledModeButtons = (status) => {
+      if(['new', 'warranty'].includes(status) && !['cancel', 'close'].includes(props.data.status)){
+        return true
+      }
+      if(['cancel', 'close'].includes(status) && !['ready'].includes(props.data.status)){
+        return true
+      }
+      if(status === 'cancel' && props.data.soglas){
+        return true
+      }
+      if(status === 'close' && !props.data.soglas){
+        return true
+      }
+      if(['diagnostics', 'agreement', 'process', 'ready'].includes(status) && ['cancel', 'close'].includes(props.data.status)){
+        return true
+      }
+      return false
+    }
     const topButtonsLine = () => {
 
       const arrayButtons = [
-          {title: 'Удалить',
+          {title: 'Delete',
             disabled: disabledModeButtons('index'),
             print: false,
             color: 'red',
@@ -62,14 +81,14 @@ export function OpenOrder(props: any) {
               props.getOrders()
             }
           },
-          {title: 'Закрыть окно',
+          {title: 'Back',
             disabled: disabledModeButtons('index'),
             print: false,
             func: async () => {
               props.close()
               }, 
           },
-          {title: '🖨 Заказ',
+          {title: '🖨 Order',
           disabled: false,
           color: 'green',
           print: true,
@@ -77,78 +96,9 @@ export function OpenOrder(props: any) {
           func: async () => {
               return props.data
           },
-          },
-          // {title: '🖨 Гарантия',
-          // disabled: disabledIfService(),
-          // color: 'green',
-          // print: true,
-          // format: 'var',
-          // func: async () => {
-          //     return props.data
-          // },
-          // },
-          // {title: '🖨 Без ремонта',
-          // disabled: disabledIfServiceCancel(),
-          // color: 'green',
-          // print: true,
-          // format: 'cancel',
-          // func: async () => {
-          //     return props.data
-          // },
-          // }
+          }
       ]
-
-        return (
-          <div>
-            <Container>
-              <SimpleGrid
-                mt={5}
-                cols={{ base: 1, sm: 2, md: 6 }}
-                spacing={{ base: 'xl', md: 15 }}
-                verticalSpacing={{ base: 'md', md: 20 }}
-              >
-              {arrayButtons.map((but, index) => printBut(but, index))}
-              </SimpleGrid>
-            </Container>
-          </div>
-        )
-    }
-    const disabledModeButtons = (status) => {
-      if(['new', 'warranty'].includes(status) && !['cancel', 'close'].includes(props.data.status)){
-        return true
-      }
-      if(['cancel', 'close'].includes(status) && !['ready'].includes(props.data.status)){
-        return true
-      }
-      return false
-    }
-    const filterButtons = (data) => {
-      let res
-  
-      if(['close', 'cancel'].includes(props.data.status)){
-        res = data.filter(item => ['new', 'warranty'].includes(item.index))
-      }
-      else{
-        if(props.data.soglas){
-          res = data.filter(item => item.index !== 'cancel')
-        }
-        else{
-          res = data.filter(item => item.index !== 'close')
-        }
-        if(props.data.order[0] === 'V'){
-          res = res.filter(item => item.index !== 'new')
-        }
-        else{
-          res = res.filter(item => item.index !== 'warranty')
-        }
-      }
-
-      return res
-    }
-    const bottomButtonsLine = () => {
-      const arrayButtons: any = []
-      for(let i of filterButtons(props.serviceSettings.generalStatusList)){
-        if(['cancel', 'close', 'new', 'warranty'].includes(i.index)){
+      for(let i of props.serviceSettings.generalStatusList.filter(item => ['cancel', 'close', 'new', 'warranty'].includes(item.index))){
           arrayButtons.push({
             title: '🖨 ' + i.label,
             color: colorButton(i.index),
@@ -156,31 +106,39 @@ export function OpenOrder(props: any) {
             print: true,
             format: i.index,
             func: async () => {
-              if(i.index === 'warranty'){
-                props.data.order = 'V' + props.data.order
-                await props.data.updateOrder({order: props.data.order, soglas: false})
-              }
-              else if(i.index === 'new'){
-                props.data.order = 'N' + props.data.order
-                await props.data.updateOrder({order: props.data.order, soglas: false})
-              } 
+              const res = await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
+              console.log(res)
+              return res
+            }
+          })
+      }
+      return (
+        <div>
+          <Container>
+            <SimpleGrid
+              mt={5}
+              cols={{ base: 1, sm: 2, md: 7 }}
+              spacing={{ base: 'xl', md: 15 }}
+              verticalSpacing={{ base: 'md', md: 20 }}
+            >
+            {arrayButtons.map((but, index) => printBut(but, index))}
+            </SimpleGrid>
+          </Container>
+        </div>
+      )
+    }
+    const bottomButtonsLine = () => {
+      const arrayButtons: any = []
+      for(let i of props.serviceSettings.generalStatusList.filter(item => !['cancel', 'close', 'new', 'warranty'].includes(item.index))){
+        arrayButtons.push({
+          title: i.label,
+          color: colorButton(i.index),
+          disabled: disabledModeButtons(i.index),
+          print: false,
+          func: async () => {
               await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
-              console.log('print ', i.index)
-              return props.data
-            }
-          })
-        }
-        else{
-          arrayButtons.push({
-            title: i.label,
-            color: colorButton(i.index),
-            disabled: disabledModeButtons(i.index),
-            print: false,
-            func: async () => {
-                await historyUpdate(`Установлен статус: "${i.label}"`, i.index)
-            }
-          })
-        } 
+          }
+        })
       }
       console.log(arrayButtons)
       return (

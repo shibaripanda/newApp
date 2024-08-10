@@ -48,20 +48,24 @@ export class OrderClass {
           }
           else{
             if(['warranty', 'new'].includes(status)){
-              await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {dateOut: 0, soglas: false, status: status, $addToSet: {
+              let newName = this.order
+              if(status === 'warranty') newName = `V` + this.order
+              const res = await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {order: newName, dateOut: 0, soglas: false, status: status, $addToSet: {
                 historylist: {date: Date.now(), 
                   text: text, 
                   name: sessionData('read', 'name')}
                 }})
+                return res.data
             }
             else if(['cancel', 'close'].includes(status)){
               const time = Date.now()
               this.dateOut = time
-              await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {dateOut: time, status: status, $addToSet: {
+              const res = await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {dateOut: time, status: status, $addToSet: {
                 historylist: {date: Date.now(), 
                   text: text, 
                   name: sessionData('read', 'name')}
                 }})
+                return res.data
             }
             else{
               await axiosCall('PUT', `${this.link}/api/orders/${this._id}`, {status: status, $addToSet: {
