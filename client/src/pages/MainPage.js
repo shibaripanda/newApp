@@ -66,6 +66,7 @@ function MainPage() {
         getAppColor()
         getText()
         getFixServiceSettings()
+        
       }
     }
     navi()
@@ -97,6 +98,7 @@ function MainPage() {
     setServiceSettings(res)
     setNewSet(res.userStatusFilter)
     setFilter(res.userDeviceFilter)
+    document.title = 'ServiceXF ' + res.documents.namecomp.text
   }
   const getNavBar = async () => {
     const res = await fixNavBarItems()

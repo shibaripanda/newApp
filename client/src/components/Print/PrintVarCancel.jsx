@@ -40,7 +40,7 @@ export const PrintVarCancel = React.forwardRef((props, ref) => {
                     <td align="left"><b><font size="2">{textFromDB('namecomp')}</font></b></td>  
                 </tr>
                 <tr>
-                    <td align="center"><b><font size="3">{textFromDB('cancelname')} № V{post.order} от {new Date(Date.now()).toLocaleString().split(',')[0]}</font></b></td>
+                    <td align="center"><b><font size="3">{textFromDB('cancelname')} № {post.order} от {new Date(Date.now()).toLocaleString().split(',')[0]}</font></b></td>
                 </tr>
             </tbody>
         </table>

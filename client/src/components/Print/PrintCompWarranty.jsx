@@ -25,7 +25,7 @@ export const PrintCompWarranty = React.forwardRef((props, ref) => {
                 <td align="left"><b><font size="2">{camp.docprint.namecomp.text ? camp.docprint.namecomp.text : 'не настроено'}</font></b></td>  
             </tr>
             <tr>
-                <td align="center"><b><font size="3">{textSet('name')} № {post.order} от {new Date(post.date).toLocaleString().split(',')[0]}</font></b></td>
+                <td align="center"><b><font size="3">{textSet('name')} № {post.order} от {new Date(Date.now()).toLocaleString().split(',')[0]}</font></b></td>
             </tr>
             </tbody>
         </table>
@@ -43,7 +43,7 @@ export const PrintCompWarranty = React.forwardRef((props, ref) => {
             <tr>
                 <td colSpan="2"><b>&nbsp;Заказ №</b></td>
                 <td align="center">&nbsp;{post.order}</td>
-                <td colSpan='2' align="center">&nbsp;{new Date(post.date).toLocaleString()}</td>
+                <td colSpan='2' align="center">&nbsp;{new Date(Date.now()).toLocaleString()}</td>
                 <td align="center">&nbsp;Сотрудник СЦ:</td>
                 <td colSpan='2' align="center">&nbsp;{sessionData('read', 'name')}</td>
             </tr>

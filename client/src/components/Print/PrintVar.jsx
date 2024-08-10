@@ -34,7 +34,7 @@ export const PrintVar = React.forwardRef((props, ref) => {
                     <td align="left"><b><font size="2">{camp.docprint.namecomp.text}</font></b></td>  
                 </tr>
                 <tr>
-                    <td align="center"><b><font size="3">{camp.docprint.varantname.text} № V{post.order} от {new Date(Date.now()).toLocaleString().split(',')[0]}</font></b></td>
+                    <td align="center"><b><font size="3">{camp.docprint.varantname.text} № {post.order} от {new Date(Date.now()).toLocaleString().split(',')[0]}</font></b></td>
                 </tr>
             </tbody>
         </table>
