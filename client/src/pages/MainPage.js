@@ -92,7 +92,6 @@ function MainPage() {
   }
   const getFixServiceSettings = async () => {
     const res = await app.fixServiceSettings()
-    console.log(res)
     const res1 = defaultValue(res.generalOrderList)
     setValue(res1)
     setServiceSettings(res)
