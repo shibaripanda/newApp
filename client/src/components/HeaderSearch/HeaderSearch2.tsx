@@ -2,6 +2,8 @@
 import { Group } from '@mantine/core'
 import classes from './HeaderSearch2.module.css'
 import React from 'react'
+import { sessionData } from '../../modules/sessionData'
+import { IconSun, IconUserSquareRounded } from '@tabler/icons-react'
 
 export function HeaderSearch2(props) {
 
@@ -17,7 +19,6 @@ export function HeaderSearch2(props) {
     <div
       key={index}
       className={classes[changeColor(link.request)]}
-      // onClick={(event) => event.preventDefault()}
       onClick={ async () => {
         let newfilter = [...props.filter]
         const res = props.filter.findIndex(item => item === link.request)
@@ -36,20 +37,15 @@ export function HeaderSearch2(props) {
 
   ))
 
-  
   return (
     <header className={classes.header}>
-      <div>
-        <div className={classes.inner}>
-          <Group>
-          </Group>
-
-          <Group>
-            <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
-            Device filter: {items}
-            </Group>
-          </Group>
-        </div>
+      <div className={classes.inner}>
+        <Group>
+          {props.serviceSettings.documents.namecomp.text}
+        </Group>
+        <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
+          Device filter: {items}
+        </Group>
       </div>
     </header>
   );

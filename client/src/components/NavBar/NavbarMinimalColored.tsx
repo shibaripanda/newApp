@@ -2,6 +2,7 @@ import React from 'react';
 import { Tooltip, UnstyledButton, Stack } from '@mantine/core';
 import classes from './NavbarMinimalColored.module.css';
 import { useNavigate } from 'react-router-dom';
+import { IconLineDotted } from '@tabler/icons-react';
 
 export function NavbarMinimalColored(props) {
   const navigate = useNavigate()
@@ -40,12 +41,15 @@ export function NavbarMinimalColored(props) {
         <Stack justify="center" gap={10}>
           {topLinks}
         </Stack>
+        {/* <Stack justify="center" gap={10}>
+        {bottomLinks}
+        </Stack> */}
       </div>
-
-      <Stack justify="center" gap={15}>
+      <div className={classes.navbarBottom}>
+      <Stack justify="center" gap={10}>
         {bottomLinks}
       </Stack>
-
+      </div>
     </nav>
   );
 }

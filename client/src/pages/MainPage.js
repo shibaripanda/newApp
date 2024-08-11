@@ -18,6 +18,7 @@ import { OwnerScreen } from '../mainScreens/OwnerScreen.tsx';
 import { AppClass } from '../clasess/AppClass.js';
 import { OrderClass } from '../clasess/OrderClass.js';
 import { sessionData } from '../modules/sessionData.js';
+import { HeaderSearch3 } from '../components/HeaderSearch/HeaderSearch3.tsx';
 
 function MainPage() {
 
@@ -76,15 +77,15 @@ function MainPage() {
   const getOrders = async () => {
     const res = await app.getOrders()
     setOrders(res.sort((a, b) => b.date - a.date))
-    setInterval(async () => {
-      if(sessionData('read', 'currentUser')){
-        const res = await app.getOrders()
-        setOrders(res.sort((a, b) => b.date - a.date))
-      }
-      else{
-        console.log('pause update orders')
-      }
-    }, await app.timeUpdate())
+    // setInterval(async () => {
+    //   if(sessionData('read', 'currentUser')){
+    //     const res = await app.getOrders()
+    //     setOrders(res.sort((a, b) => b.date - a.date))
+    //   }
+    //   else{
+    //     console.log('pause update orders')
+    //   }
+    // }, await app.timeUpdate())
   }
   const getText = async () => {
     const res = await app.getAppText()
@@ -148,9 +149,11 @@ function MainPage() {
           />
         </div>
         <div className={'NavBarTop'}>
-          <HeaderSearch app={app} textFilter={textFilter} setTextFilter={setTextFilter} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
+          <HeaderSearch2 app={app} filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>
+          
           <div className={'NavBarTop2'}>
-            <HeaderSearch2 app={app} filter={filter} setFilter={setFilter} serviceSettings={serviceSettings}/>
+            <HeaderSearch app={app} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
+            <HeaderSearch3 app={app} textFilter={textFilter} setTextFilter={setTextFilter} serviceSettings={serviceSettings} setServiceSettings={setServiceSettings} newSet={newSet} setNewSet={setNewSet}/>
             {/* <Affix>ssdd</Affix>   */}
           </div>
         </div>

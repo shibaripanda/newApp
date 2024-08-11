@@ -10,7 +10,11 @@
   
   .navbarMain {
     flex: 1;
-    margin-top: 4vmax;
+    margin-top: 8vmax;
+  }
+
+  .navbarBottom {
+    margin-bottom: 5vmax;
   }
   
   .link {

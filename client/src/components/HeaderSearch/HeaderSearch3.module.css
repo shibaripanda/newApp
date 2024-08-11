@@ -1,5 +1,5 @@
 .header {
-    height: 2.5vmax;
+    height: 4vmax;
     width: calc(99vw - 5vmax);
     background-color: var(--mantine-color-body);
     border-bottom: 0.0625vmax solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
@@ -8,7 +8,7 @@
   }
   
   .inner {
-    height: 2.5vmax;
+    height: 4vmax;
     display: flex;
     justify-content: space-between;
     align-items: center;

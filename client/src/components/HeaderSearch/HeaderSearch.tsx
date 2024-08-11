@@ -1,9 +1,9 @@
 'use client'
-import { Autocomplete, Grid, Group, SimpleGrid } from '@mantine/core'
+import { Group } from '@mantine/core'
 import classes from './HeaderSearch.module.css'
 import React from 'react'
 import { sessionData } from '../../modules/sessionData'
-import { IconSearch, IconUserSquareRounded } from '@tabler/icons-react'
+import { IconUserSquareRounded } from '@tabler/icons-react'
 
 export function HeaderSearch(props) {
 
@@ -19,7 +19,6 @@ export function HeaderSearch(props) {
     <div
       key={index}
       className={classes[changeColor(link.index)]}
-      // onClick={(event) => event.preventDefault()}
       onClick={ async () => {
         let newfilter = [...props.newSet]
         const res = props.newSet.findIndex(item => item === link.index)
@@ -42,46 +41,11 @@ export function HeaderSearch(props) {
     <header className={classes.header}>
         <div className={classes.inner}>
           <Group>
-            {/* <div> */}
               <IconUserSquareRounded/>  {sessionData('read', 'name')}
-            {/* </div> */}
-           
-          {/* <Autocomplete
-              // className={classes.search}
-              style={{width: '30vmax', marginLeft: '2vmax'}}
-              placeholder="Search"
-              leftSection={<IconSearch style={{ width: '1vmax', height: '1vmax' }} stroke={1.5} />}
-              data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-              visibleFrom="xs"
-              onChange={props.setTextFilter}
-            /> */}
           </Group>
           <Group ml={10} gap="xs" className={classes.links} visibleFrom="sm">
               Status filter: {items}
           </Group>
-
-          {/* <Grid gutter="xl" style={{marginTop: '40px'}}>
-            <Grid.Col span={2} key={1}>
-              <IconUserSquareRounded/>
-            </Grid.Col>
-            <Grid.Col span={4} key={1}>
-              {sessionData('read', 'name')}
-            </Grid.Col>
-            <Grid.Col span={4} key={2}>
-              <Autocomplete
-                  // className={classes.search}
-                  style={{width: '30vmax', marginLeft: '2vmax'}}
-                  placeholder="Search"
-                  leftSection={<IconSearch style={{ width: '1vmax', height: '1vmax' }} stroke={1.5} />}
-                  data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-                  visibleFrom="xs"
-                  onChange={props.setTextFilter}
-                />
-            </Grid.Col>
-            <Grid.Col span={5} key={3}>
-              
-            </Grid.Col>
-          </Grid> */}
         </div>
     </header>
   );
