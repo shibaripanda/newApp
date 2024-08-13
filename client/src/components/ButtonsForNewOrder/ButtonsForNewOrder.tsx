@@ -47,7 +47,7 @@ export const ButtonsForNewOrder = (props) => {
             disabled: checkDisabledSave(),
             color: 'green',
             print: true,
-            format: 'order',
+            format: 'new',
             func: async () => {
                 const newOr = await createNewOrder(props.value)
                 console.log(newOr)
@@ -70,7 +70,7 @@ export const ButtonsForNewOrder = (props) => {
     const features = controlOrderButtons.map((but, index) => printBut(but, index))
 
     return (
-        <Container style={{marginTop: '50px'}}>
+        <Container style={{marginTop: '20px'}}>
             <SimpleGrid
                 mt={30}
                 cols={{ base: 1, sm: 2, md: features.length }}

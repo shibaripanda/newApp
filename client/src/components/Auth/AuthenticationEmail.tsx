@@ -12,7 +12,6 @@ import {
 import { sessionData } from '../../modules/sessionData';
   
   export function AuthenticationEmail(props) {
-    console.log(props)
 
     const botton = () => {
       if(props.activBotton){

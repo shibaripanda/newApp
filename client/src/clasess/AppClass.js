@@ -6,7 +6,7 @@ import { OrderClass } from "./OrderClass.js"
 export class AppClass {
 
     constructor(){
-        this.time = 50000
+        this.time = 5000
         this.link = getLink()
         this.campId = sessionData('read', 'campId')
     }

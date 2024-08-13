@@ -140,7 +140,7 @@ export function OpenOrder(props: any) {
           }
         })
       }
-      console.log(arrayButtons)
+      // console.log(arrayButtons)
       return (
         <div>
           <Container>

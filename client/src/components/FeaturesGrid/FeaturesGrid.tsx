@@ -50,9 +50,9 @@ export function FeaturesGrid(props) {
     const features = props.serviceSettings.generalOrderList.filter(item => item.neworder === true).sort((a, b) => a.place - b.place).map((field, index) => makeFields(field, index));
 
     return (
-        <Container style={{marginTop: '50px'}}>
+        <Container style={{marginTop: '20px'}}>
         <ButtonsForNewOrder  getOrders={props.getOrders} orders={props.orders} value={props.value} defaultValue={props.defaultValue} setValue={props.setValue} serviceSettings={props.serviceSettings}/>
-        <Grid gutter="xl" style={{marginTop: '40px'}}>
+        <Grid gutter="xl" style={{marginTop: '20px'}}>
         {features}
         </Grid>
         </Container>

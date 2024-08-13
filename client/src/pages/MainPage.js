@@ -35,6 +35,7 @@ function MainPage() {
   const [orders, setOrders] = useState([])
 
   const app = new AppClass()
+  let interval = false
 
   const defaultValue = (r) => {
     const obj = {}
@@ -77,15 +78,19 @@ function MainPage() {
   const getOrders = async () => {
     const res = await app.getOrders()
     setOrders(res.sort((a, b) => b.date - a.date))
-    // setInterval(async () => {
-    //   if(sessionData('read', 'currentUser')){
-    //     const res = await app.getOrders()
-    //     setOrders(res.sort((a, b) => b.date - a.date))
-    //   }
-    //   else{
-    //     console.log('pause update orders')
-    //   }
-    // }, await app.timeUpdate())
+    if(!interval){
+        console.log('set interval')
+        interval = setInterval(async () => {
+          console.log('up orders')
+        if(sessionData('read', 'currentUser')){
+          const res = await app.getOrders()
+          setOrders(res.sort((a, b) => b.date - a.date))
+        }
+        else{
+          console.log('pause update orders')
+        }
+      }, await app.timeUpdate())
+    }
   }
   const getText = async () => {
     const res = await app.getAppText()
@@ -134,7 +139,7 @@ function MainPage() {
       )
       
     }
-
+    
     return (
       <div>
         <div className={'WorkScreen'}>
@@ -144,7 +149,7 @@ function MainPage() {
           <NavbarMinimalColored 
           active={active} 
           setActive={setActive} 
-          navBar={{...navBar, top: navBar.top.filter(async item => item.role.includes(await app.getRole()))}} 
+          navBar={{...navBar, top: navBar.top.filter(item => item.role.includes(sessionData('read', 'role')))}} 
           appColor={appColor}
           />
         </div>

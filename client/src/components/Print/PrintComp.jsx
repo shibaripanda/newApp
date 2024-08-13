@@ -57,10 +57,7 @@ export const PrintComp = React.forwardRef((props, ref) => {
                 <td colSpan="2">&nbsp;{post.model}</td>
                 <td colSpan="2">&nbsp;s/n: {post.sn}</td>
             </tr>
-            {/* <tr>
-                <td colSpan="2"><b>&nbsp;Серийный номер:</b></td>
-                <td colSpan="6">&nbsp;{post.sn}</td>
-            </tr> */}
+           
             <tr>
                 <td colSpan="2"><b>&nbsp;Внешний вид:</b></td>
                 <td colSpan="6">&nbsp;{post.view}</td>
@@ -72,6 +69,10 @@ export const PrintComp = React.forwardRef((props, ref) => {
             <tr>
                 <td colSpan="2"><b>&nbsp;Неисправность со слов заказчика:</b></td>
                 <td colSpan="6">&nbsp;{post.problem}</td>
+            </tr>
+            <tr>
+                <td colSpan="2"><b>&nbsp;Информация:</b></td>
+                <td colSpan="6">&nbsp;{post.info}</td>
             </tr>
             <tr>
                 <td colSpan="2"><b>&nbsp;Предварительная стоимость:</b></td>
