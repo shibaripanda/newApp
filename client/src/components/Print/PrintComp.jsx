@@ -54,7 +54,7 @@ export const PrintComp = React.forwardRef((props, ref) => {
             <tr>
                 <td colSpan="2"><b>&nbsp;Оборудование:</b></td>
                 <td colSpan="2">&nbsp;{post.title}</td>
-                <td colSpan="2">&nbsp;{post.model}</td>
+                <td colSpan="2">&nbsp;{post.firm} {post.model}</td>
                 <td colSpan="2">&nbsp;s/n: {post.sn}</td>
             </tr>
            
