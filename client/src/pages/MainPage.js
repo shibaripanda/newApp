@@ -54,7 +54,10 @@ function MainPage() {
   })
   createLisener('createNewOrderAndPrint', async (data) => {
     await app.greateOrder({...data.newOrder})
-    .then(async (res) => {setOrders([new OrderClass(res.data), ...data.orders])})
+    .then(async (res) => {
+      setOrders([new OrderClass(res.data), ...data.orders])
+      setTimeout(() => setActive(0), 7000)
+    })
   })
   useEffect(() => {
     const navi = async () => {
