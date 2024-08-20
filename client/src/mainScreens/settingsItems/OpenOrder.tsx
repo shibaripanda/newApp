@@ -6,7 +6,7 @@ import { ModalWindowPrint } from '../../components/ModalWindow/ModalWindowPrint.
 import { ServiceTable } from '../../components/ServiceTable/ServiceTable.tsx'
 
 export function OpenOrder(props: any) {
-  console.log(props.data)
+  // console.log(props.data)
 
     const [newInfo, setNewInfo] = useState('')
     const [service, setService] = useState({service: '', price: 0, master: '', varant: 0, sebes: 0})

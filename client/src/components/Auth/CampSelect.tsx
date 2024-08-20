@@ -11,7 +11,7 @@ import {
   import classes from './AuthenticationTitle.module.css';
   import { useNavigate } from 'react-router-dom';
   import { sessionData } from '../../modules/sessionData';
-import { getRole } from '../../modules/getRole';
+  import { getRole } from '../../modules/getRole';
   
   export function CampSelect(props) {
     const navigate = useNavigate()

@@ -3,6 +3,8 @@ import { axiosCall } from "../modules/axiosCall.js"
 import { sessionData } from "../modules/sessionData.js"
 import { OrderClass } from "./OrderClass.js"
 
+
+
 export class AppClass {
 
     constructor(){
@@ -73,8 +75,19 @@ export class AppClass {
         return await axiosCall('GET', `${this.link}/api/getmycamps`, {})
     }
     async getOrders(){
-        const res = (await axiosCall('GET', `${this.link}/api/orders/${this.campId}`, {})).data
-        return await res.map(item => new OrderClass(item))
+        const res = await axiosCall('GET', `${this.link}/api/orders/${this.campId}`, {})
+        return res.data.map(item => new OrderClass(item))
+    }
+    async getOrdersTime(navigate){
+        const res = await axiosCall('GET', `${this.link}/api/orders/${this.campId}`, {})
+        console.log(res.status)
+        if(res.status !== 200){
+            sessionData('exit')
+            navigate("/")
+        }
+        else{
+            return res.data.map(item => new OrderClass(item))
+        }
     }
 
 }

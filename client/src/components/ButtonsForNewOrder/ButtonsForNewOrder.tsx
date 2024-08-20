@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Container, SimpleGrid } from "@mantine/core";
 import { myEmitter } from "../../modules/createLisener";
 import { createNewOrder } from "../../modules/creatingNewOrder";
@@ -52,7 +52,7 @@ export const ButtonsForNewOrder = (props) => {
                 const newOr = await createNewOrder(props.value)
                 console.log(newOr)
                 myEmitter.emit('createNewOrderAndPrint', {newOrder: newOr, orders: props.orders})
-                // props.setValue(props.defaultValue(props.serviceSettings.generalOrderList))
+                setTimeout( () => props.setValue(props.defaultValue(props.serviceSettings.generalOrderList)), 5000)
                 return newOr
             },
         }

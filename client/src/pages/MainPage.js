@@ -35,7 +35,6 @@ function MainPage() {
   const [orders, setOrders] = useState([])
 
   const app = new AppClass()
-  let interval = false
 
   const defaultValue = (r) => {
     const obj = {}
@@ -68,29 +67,36 @@ function MainPage() {
         getAppColor()
         getText()
         getFixServiceSettings()
-        
+        getOrdersTimerUpdate()
       }
     }
     navi()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const getOrders = async () => {
-    const res = await app.getOrders()
-    setOrders(res.sort((a, b) => b.date - a.date))
-    if(!interval){
+  const getOrdersTimerUpdate = async () => {
         console.log('set interval')
-        interval = setInterval(async () => {
-          console.log('up orders')
+        const interval = sessionStorage.getItem('interval')
+        console.log(interval)
+        if(interval){
+          clearInterval(Number(interval))
+        }
+        const int = setInterval(async () => {
         if(sessionData('read', 'currentUser')){
-          const res = await app.getOrders()
+          console.log('update orders')
+          const res = await app.getOrdersTime(navigate)
           setOrders(res.sort((a, b) => b.date - a.date))
         }
         else{
           console.log('pause update orders')
         }
+        sessionStorage.setItem('interval', int)
       }, await app.timeUpdate())
-    }
+  }
+
+  const getOrders = async () => {
+    const res = await app.getOrders()
+    setOrders(res.sort((a, b) => b.date - a.date))
   }
   const getText = async () => {
     const res = await app.getAppText()
