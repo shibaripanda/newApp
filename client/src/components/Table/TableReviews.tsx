@@ -19,6 +19,7 @@ export function TableReviews(props) {
   }
 
   const rows = props.filteringOrders.map((row) => <>{makeRows(row)}</>)
+  // console.log(rows)
 
   return (
     <Table.ScrollContainer minWidth={200}>
@@ -29,7 +30,7 @@ export function TableReviews(props) {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {rows.map((row, index) => <ModalWindow app={props.app} filteringOrders={props.filteringOrders} setOrders={props.setOrders} getOrders={props.getOrders} serviceSettings={props.serviceSettings} data={props.filteringOrders[index]} key={index} row={row}/>)}
+          {rows.map((row, index) => <ModalWindow orders={props.orders} app={props.app} filteringOrders={props.filteringOrders} setOrders={props.setOrders} getOrders={props.getOrders} serviceSettings={props.serviceSettings} data={props.filteringOrders[index]} key={index} row={row}/>)}
         </Table.Tbody>
       </Table>
     </Table.ScrollContainer>
