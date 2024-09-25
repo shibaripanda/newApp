@@ -40,9 +40,15 @@ function MainPage() {
     const obj = {}
     for(let i of r){
       if(i.neworder){
-        obj[i.index] = ''
+        if(['view', 'complect'].includes(i.index)){
+          obj[i.index] = []
+        }
+        else{
+          obj[i.index] = ''
+        }
       }
     }
+    setValue(obj)
     return obj
   }
   createLisener('createNewOrder', async (data) => {
@@ -78,15 +84,15 @@ function MainPage() {
   }, [])
 
   const getOrdersTimerUpdate = async () => {
-        console.log('set interval')
+        // console.log('set interval')
         const interval = sessionStorage.getItem('interval')
-        console.log(interval)
+        // console.log(interval)
         if(interval){
           clearInterval(Number(interval))
         }
         const int = setInterval(async () => {
         if(sessionData('read', 'currentUser')){
-          console.log('update orders')
+          // console.log('update orders')
           const res = await app.getOrdersTime(navigate)
           setOrders(res.sort((a, b) => b.date - a.date))
         }

@@ -7,33 +7,34 @@ import { ModalWindowPrint } from "../ModalWindow/ModalWindowPrint.tsx";
 export const ButtonsForNewOrder = (props) => {
     
     const  checkDisabledClean = () => {
+        console.log(props.value)
         if(Object.values(props.value).filter(item => item === '').length === Object.values(props.value).length){
             return true
         }
         return false
     }
     const  checkDisabledSave = () => {
-        if(Object.values(props.value).filter(item => item !== '').length === Object.values(props.value).length){
+        if(Object.values(props.value).filter(item => item !== '').length === Object.values(props.value).length){  
             return false
         }
-        return true
+        else{
+            if((Object.values(props.value).filter(item => item !== '').length  === Object.values(props.value).length - 1) && props.value.info === ''){
+                return false
+            }
+            return true
+        }
     }
 
     const controlOrderButtons = [
         {
             title: 'Очистить',
             disabled: checkDisabledClean(),
-            print: false,
-            func: () => props.setValue(props.defaultValue(props.serviceSettings.generalOrderList)),
-        },
-        {
-            title: 'Сохранить',
-            disabled: checkDisabledSave(),
-            print: false,
+            print: false, 
             func: async () => {
-                const newOr = await createNewOrder(props.value)
-                myEmitter.emit('createNewOrder', {newOrder: newOr, orders: props.orders})
-                props.setValue(props.defaultValue(props.serviceSettings.generalOrderList))
+                // const newOr = await createNewOrder(props.value)
+                // myEmitter.emit('createNewOrder', {newOrder: newOr, orders: props.orders})
+                // props.setValue(props.defaultValue(props.serviceSettings.generalOrderList))
+                props.defaultValue(props.serviceSettings.generalOrderList)
             }, 
         },
         // {
@@ -52,7 +53,8 @@ export const ButtonsForNewOrder = (props) => {
                 const newOr = await createNewOrder(props.value)
                 console.log(newOr)
                 myEmitter.emit('createNewOrderAndPrint', {newOrder: newOr, orders: props.orders})
-                setTimeout( () => props.setValue(props.defaultValue(props.serviceSettings.generalOrderList)), 5000)
+                // setTimeout( () => props.setValue(props.defaultValue(props.serviceSettings.generalOrderList)), 5000)
+                setTimeout( () => props.defaultValue(props.serviceSettings.generalOrderList), 5000)
                 return newOr
             },
         }

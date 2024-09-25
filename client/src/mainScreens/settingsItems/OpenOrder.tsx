@@ -11,6 +11,7 @@ export function OpenOrder(props: any) {
     const [newInfo, setNewInfo] = useState('')
     const [service, setService] = useState({service: '', price: 0, master: '', varant: 0, sebes: 0})
     const [campUsers, setCamUsers] = useState([])
+    const [blockDelete, setBlockDelete] = useState('')
 
     useEffect(() => {
       getUsers()
@@ -69,11 +70,16 @@ export function OpenOrder(props: any) {
       }
       return false
     }
+
+    const blockDeletingOrder = () => {
+      if(blockDelete === props.data.order) return false
+      return true
+    }
     const topButtonsLine = () => {
 
       const arrayButtons = [
           {title: 'Delete',
-            disabled: disabledModeButtons('index'),
+            disabled: blockDeletingOrder(),
             print: false,
             color: 'red',
             func: async () =>  {
@@ -118,10 +124,17 @@ export function OpenOrder(props: any) {
           <Container>
             <SimpleGrid
               mt={5}
-              cols={{ base: 1, sm: 2, md: 7 }}
+              cols={{ base: 1, sm: 2, md: 8 }}
               spacing={{ base: 'xl', md: 15 }}
               verticalSpacing={{ base: 'md', md: 20 }}
             >
+            <TextInput
+              placeholder={props.data.order}
+              value={blockDelete}
+              onChange={(event) => {
+                setBlockDelete(event.currentTarget.value)
+              }}
+            />
             {arrayButtons.map((but, index) => printBut(but, index))}
             </SimpleGrid>
           </Container>
@@ -340,6 +353,7 @@ export function OpenOrder(props: any) {
 
     return (
         <Container>
+          
           {topButtonsLine()}
           <hr style={{ marginTop: '0.75vmax', marginBottom: '0.75vmax'}}></hr>
           {bottomButtonsLine()}
