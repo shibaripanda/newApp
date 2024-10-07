@@ -14,13 +14,13 @@ import {
       if(props.activBotton && props.activBottonName){
         return (
           <Button fullWidth mt="xl" onClick={() => props.clickOnBut()}>
-          {props.text.CreateNewService}
+          {props.text.CreateNewService[props.leng]}
           </Button>
         )
       }
       return (
           <Button fullWidth mt="xl" onClick={() => props.clickOnBut()} disabled>
-          {props.text.CreateNewService}
+          {props.text.CreateNewService[props.leng]}
           </Button>
       )
     }
@@ -29,13 +29,13 @@ import {
       <Container size={420} my={40}>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
           <Anchor size="sm" component="button" onClick={() => props.setStep(1)}>
-            {props.text.back}
+            {props.text.back[props.leng]}
           </Anchor>
         </Text>
   
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <TextInput label="Email" placeholder="email" required onChange={event => {props.setEmail(event.currentTarget.value)}} error={props.errorInputData}/>
-        <TextInput label={props.text.NameForNewService} placeholder="Service name" required onChange={event => {props.setValidatedNameNew(event.currentTarget.value)}} error={props.errorInputName}/>
+        <TextInput label={props.text.NameForNewService[props.leng]} placeholder="Service name" required onChange={event => {props.setValidatedNameNew(event.currentTarget.value)}} error={props.errorInputName}/>
           {botton()}
         </Paper>
       </Container>

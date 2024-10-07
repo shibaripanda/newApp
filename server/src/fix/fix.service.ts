@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
+
 
 @Injectable()
 export class FixService {
@@ -288,10 +289,10 @@ export class FixService {
                 badEmail: 'Некорректный емейл',
                 badPassword: 'Некорректный пароль',
                 badServiceName: 'Некорректное название сервиса',
-                welcom: 'Добро пожаловать!',
-                DoNotHaveAServiceYet: 'Еще нет сервиса?',
-                CreateService: 'Создать сервис',
-                GetPassword: 'Получить пароль',
+                welcom: {ru: 'Добро пожаловать!', en: 'Welcom'},
+                DoNotHaveAServiceYet: {ru: 'Еще нет сервиса?', en: 'No service yet?'},
+                CreateService: {ru: 'Создать сервис', en: 'Create service'},
+                GetPassword: {ru: 'Получить пароль', en: 'Get password'},
                 Enter: 'Войти',
                 back: 'Назад',
                 passwordSentToEmail: 'Пароль выслан на вашу почту',

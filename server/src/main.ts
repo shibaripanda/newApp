@@ -1,6 +1,7 @@
 import 'dotenv/config'
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
+import { openAItranslater } from './modules/openAItranslater'
 
 async function bootstrap() {
 
@@ -13,6 +14,19 @@ async function bootstrap() {
     "optionsSuccessStatus": 204
   })
 
+  // let fes = {}
+  for(const i of ['Добро пожаловать', 'Настройка', 'Создать сервис']){
+      const res = await openAItranslater(i)
+      // fes = {...fes, res}
+      console.log(res)
+      // console.log(i)
+  }
+  
+
+  const res = await openAItranslater('Добро пожаловать')
+  console.log(res)
+  
+  
   await app.listen(PORT, () => {console.log(`Server started on port = ${PORT}`)})
   
 }

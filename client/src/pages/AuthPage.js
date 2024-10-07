@@ -24,6 +24,7 @@ function AuthPage() {
   const [activBotton, setActivBotton] = useState(false)
   const [activBottonName, setActivBottonName] = useState(false)
   const [serverError, setServerError] = useState('')
+  const [leng, setLeng] = useState('en')
   
   const auth = new AuthClass()
   const app = new AppClass()
@@ -145,10 +146,12 @@ function AuthPage() {
     sessionData('write', 'role', role)
     navigate('/main')
   }
-  if(step === 1){
+
+  if(step === 1 && text){
       return (
             <div>
               <AuthenticationEmail
+              leng={leng}
               serverError={serverError} 
               setStep={stepSet} 
               text={text} 

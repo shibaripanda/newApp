@@ -1,6 +1,5 @@
 export const getFixserviceSettings = () => {
 
-
     const deviceDb = (data) => {
         let res = []
         for(const key1 in data){

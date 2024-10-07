@@ -14,13 +14,13 @@ import {
       if(props.activBotton){
         return (
           <Button fullWidth mt="xl" onClick={() => props.clickOnBut()}>
-          {props.text.Enter}
+          {props.text.Enter[props.leng]}
           </Button>
         )
       }
       return (
         <Button fullWidth mt="xl" onClick={() => props.clickOnBut()} disabled>
-          {props.text.Enter}
+          {props.text.Enter[props.leng]}
         </Button>
       )
     }
@@ -28,9 +28,9 @@ import {
     return (
       <Container size={420} my={40}>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
-          {props.text.passwordSentToEmail}{'. '}
+          {props.text.passwordSentToEmail[props.leng]}{'. '}
           <Anchor size="sm" component="button" onClick={() => props.setStep(1)}>
-            {props.text.back}
+            {props.text.back[props.leng]}
           </Anchor>
         </Text>
   

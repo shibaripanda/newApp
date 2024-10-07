@@ -8,7 +8,7 @@ export const OwnerScreen = (props: any) => {
     if(props){
        return (
             <div>
-                <SettingsItem title={props.text.CampSettings} body={<CampSettings serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>}/>
+                <SettingsItem title={props.text.CampSettings[props.leng]} body={<CampSettings serviceSettings={props.serviceSettings} setServiceSettings={props.setServiceSettings}/>}/>
             </div>
         ) 
     }

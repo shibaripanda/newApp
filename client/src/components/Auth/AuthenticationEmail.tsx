@@ -18,7 +18,7 @@ import { sessionData } from '../../modules/sessionData';
         return (
           <>
           <Button fullWidth mt="xl" onClick={() => props.clickOnBut()}>
-            {props.text.GetPassword} на email
+            {props.text.GetPassword[props.leng]} на email
           </Button>
           {/* <Button fullWidth mt="xl" onClick={() => props.clickOnBut()}>
           Вход с помощъю Telegram App
@@ -28,7 +28,7 @@ import { sessionData } from '../../modules/sessionData';
       }
       return (
         <Button fullWidth mt="xl" onClick={() => props.clickOnBut()} disabled>
-          {props.text.GetPassword}
+          {props.text.GetPassword[props.leng]}
         </Button>
       )
     }
@@ -59,16 +59,16 @@ import { sessionData } from '../../modules/sessionData';
         return []
       }
     }
-    
+    console.log(props.text)
     return (
       <Container size={420} my={40}>
         <Title ta="center" className={classes.title}>
-          {props.text.welcom}
+          {props.text.welcom[props.leng]}
         </Title>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
-          {props.text.DoNotHaveAServiceYet}{' '}
+          {props.text.DoNotHaveAServiceYet[props.leng]}{' '}
           <Anchor size="sm" component="button" onClick={() => props.setStep(3)}>
-            {props.text.CreateService}
+            {props.text.CreateService[props.leng]}
           </Anchor>
         </Text>
   
